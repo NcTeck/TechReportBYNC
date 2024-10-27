@@ -1,0 +1,65 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+
+  background: #606c88;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to right, #3f4c6b, #606c88);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right, #3f4c6b, #606c88); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+
+  padding: 4px;
+  line-height: 1.5;
+  font-weight: 400;
+color: rgb(58, 54, 48);
+  color-scheme: light dark;
+
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+input[type="radio"] {
+  width: 2em;
+  height: 2rem;
+  accent-color: rgb(31, 143, 139);
+}
+
+
+
+
+
+
+  h2{
+    font-size: xx-large;
+  }
+  
+table{
+  border: 3px double black;
+  width: 100%;
+
+}
+
+  table th{
+    padding: 7px;
+    background-color: rgb(144, 134, 209);
+  }
+
+  table td{
+    background-color: rgb(156, 156, 178);
+    padding: 7px;
+    border-bottom: 2px solid black;
+text-align: center;
+cursor: pointer;
+
+  }
+
+  hr{
+    cursor: pointer;
+    color: black;
+    background-color: rgb(113, 102, 102);
+    height: 3px;
+    border-radius: 1em;
+  }

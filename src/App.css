@@ -1,0 +1,331 @@
+.btDiag{
+
+    background-image: url(https://media.istockphoto.com/id/2082112210/photo/grasslands-and-road.webp?b=1&s=612x612&w=0&k=20&c=WrRUraCyOdQ_n2YQoReCjTYfoMSTg_Kzknoqv9MzOCU=);
+background-repeat: no-repeat;
+background-size: cover;
+background-position: center;
+
+opacity: .8;
+    color: rgb(255, 233, 40);
+
+    transition: 1s ease;
+    font-weight: bold;
+    padding:.7em;
+    margin: 2px;
+    width: 90%;
+    margin-left: 5%;
+}
+
+
+.btDiagHvac{
+
+    background-image: url(https://insights.regencysupply.com/hubfs/BLOG%20-%20HVAC.jpg);
+background-repeat: no-repeat;
+background-size: cover;
+background-position: center;
+opacity: .8;
+    color: rgb(255, 233, 40);
+    transition: 1s ease;
+    font-weight: bold;
+    padding:.7em;
+    margin: 2px;
+    width: 90%;
+    margin-left: 5%;
+}
+.btnDash{
+
+    background-image: url(https://media.istockphoto.com/id/1206004743/vector/car-dashboard.jpg?s=612x612&w=0&k=20&c=tJB0MzzYqHLX_0_ytT3-OEG-glxmdAD-XIEmA4BP4F4=);
+background-repeat: no-repeat;
+background-size: cover;
+background-position: center;
+opacity: .8;
+    color: rgb(255, 233, 40);
+    transition: 1s ease;
+    font-weight: bold;
+    padding:.7em;
+    margin: 2px;
+    width: 90%;
+    margin-left: 5%;
+}
+
+
+
+
+.btnBattery{
+
+    background-image: url(https://www.mach1services.com/wp-content/uploads/2020/09/car-battery-work.jpg);
+background-repeat: no-repeat;
+background-size: cover;
+background-position: center;
+
+opacity: .8;
+color: rgb(255, 233, 40);
+    transition: 1s ease;
+    font-weight: bold;
+    padding:.7em;
+    margin: 2px;
+    width: 90%;
+    margin-left: 5%;
+}
+
+.btnExt{
+
+    background-image: url(https://dynastyautobody.com/wp-content/uploads/2024/03/rear-light-of-blue-car-101575484-5b8cb6b846e0fb0050b35ff4.jpg);
+background-repeat: no-repeat;
+background-size: cover;
+background-position: center;
+
+opacity: .8;
+    color: rgb(255, 233, 40);
+    transition: 1s ease;
+    font-weight: bold;
+    padding:.7em;
+    margin: 2px;
+    width: 90%;
+    margin-left: 5%;
+}
+
+.btnUnderhood{
+
+    background-image: url(https://yotanation.com/cdn/shop/products/image_535x.png?v=1710298857);
+background-repeat: no-repeat;
+background-size: cover;
+background-position: center;
+
+opacity: .8;
+color: rgb(255, 233, 40);
+    transition: 1s ease;
+    font-weight: bold;
+    padding:.7em;
+    margin: 2px;
+    width: 90%;
+    margin-left: 5%;
+}
+
+
+.btnFluids{
+
+    background-image: url(https://importmotorworx.com/wp-content/uploads/Car-Fluid.webp);
+background-repeat: no-repeat;
+background-size: cover;
+background-position: center;
+
+opacity: .8;
+color: rgb(255, 233, 40);
+    transition: 1s ease;
+    font-weight: bold;
+    padding:.7em;
+    margin: 2px;
+    width: 90%;
+    margin-left: 5%;
+}
+
+.btnTires{
+
+    background-image: url(https://s3-prod.rubbernews.com/s3fs-public/tires-main_i.jpg);
+background-repeat: no-repeat;
+background-size: cover;
+background-position: center;
+
+opacity: .8;
+    color: rgb(255, 233, 40);
+    transition: 1s ease;
+    font-weight: bold;
+    padding:.7em;
+    margin: 2px;
+    width: 90%;
+    margin-left: 5%;
+}
+
+.btnBrakes{
+
+    background-image: url(https://upload.wikimedia.org/wikipedia/commons/7/72/Disk_brake_dsc03682.jpg);
+background-repeat: no-repeat;
+background-size: cover;
+background-position: center;
+
+opacity: .8;
+    color: rgb(255, 233, 40);
+    transition: 1s ease;
+    font-weight: bold;
+    padding:.7em;
+    margin: 2px;
+    width: 90%;
+    margin-left: 5%;
+}
+
+.btnSteering{
+
+    background-image: url(https://ic.carid.com/articles/do-i-have-a-steering-rack-or-a-steering-box-connected-to-my-wheel/steering-parts_0.jpg);
+background-repeat: no-repeat;
+background-size: cover;
+background-position: center;
+
+opacity: .8;
+color: rgb(255, 233, 40);
+    transition: 1s ease;
+    font-weight: bold;
+    padding:.7em;
+    margin: 2px;
+    width: 90%;
+    margin-left: 5%;
+}
+
+.btnFsuspesion{
+
+    background-image: url(https://automotiveperformancegroup.com/wp-content/uploads/2023/09/MicrosoftTeams-image-7.jpg);
+background-repeat: no-repeat;
+background-size: cover;
+background-position: center;
+
+opacity: .8;
+color: rgb(255, 233, 40);
+    transition: 1s ease;
+    font-weight: bold;
+    padding:.7em;
+    margin: 2px;
+    width: 90%;
+    margin-left: 5%;
+}
+
+.btnRsuspesion{
+
+    background-image: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTm9RlkKFRaBLSyxUtzf1V0s4wZIuT1m_fRPw&s);
+background-repeat: no-repeat;
+background-size: cover;
+background-position: center;
+opacity: .8;
+    color: rgb(255, 233, 40);
+    transition: 1s ease;
+    font-weight: bold;
+    padding:.7em;
+    margin: 2px;
+    width: 90%;
+    margin-left: 5%;
+}
+
+
+.btnExhaust{
+
+    background-image: url(https://www.carparts.com/blog/wp-content/uploads/2021/02/exhaust-system-of-a-car-1024x683.jpg);
+background-repeat: no-repeat;
+background-size: cover;
+background-position: center;
+
+opacity: .8;
+    color: rgb(255, 233, 40);
+    transition: 1s ease;
+    font-weight: bold;
+    padding:.7em;
+    margin: 2px;
+    width: 90%;
+    margin-left: 5%;
+}
+
+.btnSvc{
+
+    background-image: url(https://www.mrclutch.com/blog/wp-content/uploads/2023/01/Photo-of-a-mechanic-completing-a-full-service-on-a-car.jpg);
+background-repeat: no-repeat;
+background-size: cover;
+background-position: center;
+
+opacity: .8;
+color: rgb(255, 233, 40);
+    transition: 1s ease;
+    font-weight: bold;
+    padding:.7em;
+    margin: 2px;
+    width: 90%;
+    margin-left: 5%;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+button:hover{
+      
+    background-color: rgb(63, 90, 135);
+transform: scale(.96);   
+}
+
+.rows{
+    background-color: rgb(208, 207, 207);
+    margin: 1em;
+    padding: .5em;
+    width: 95%;
+  display: block;
+  justify-items: space-between;
+  cursor: pointer;
+
+}
+
+.btn{
+    background: #403B4A;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #E7E9BB, #403B4A);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #E7E9BB, #403B4A); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    
+
+    color: antiquewhite;
+    padding: .7em;
+
+}
