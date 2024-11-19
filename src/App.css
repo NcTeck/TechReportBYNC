@@ -1,9 +1,9 @@
 .btDiag{
 
-    background-image: url(https://media.istockphoto.com/id/2082112210/photo/grasslands-and-road.webp?b=1&s=612x612&w=0&k=20&c=WrRUraCyOdQ_n2YQoReCjTYfoMSTg_Kzknoqv9MzOCU=);
-background-repeat: no-repeat;
-background-size: cover;
-background-position: center;
+    background: #7474BF;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #348AC7, #7474BF);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #348AC7, #7474BF); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    
 
 opacity: .8;
     color: rgb(255, 233, 40);
