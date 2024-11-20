@@ -142,7 +142,7 @@ return(
 
 
 {/* hidden Admin Functions */}
-<button hidden={showButtonC} onClick={()=>{
+<button hidden={showButtonC} className="btnBar" onClick={()=>{
 if (showCustomer) {
     setShowCustomer(false)
 }else{setShowCustomer(true)}
@@ -155,16 +155,25 @@ if (showCustomer) {
 </div>
 
 <hr />
-<div hidden={allVisible}>
+<div className="bg-gray-600" hidden={allVisible}>
 
 
     
        {data.map((index:any , item:any) =>{
+
 let arraysvcs:any=[]
 const refSvcs = ref(datab , 'NewSet/'+index.ro+"/"+"srvSelected")
 onValue(refSvcs , snap =>{
     snap.forEach(snap2 =>{
         arraysvcs.push(snap2.val())
+    })
+})
+
+let arrayMedia:any=[]
+const refMedia = ref(datab , 'NewSet/'+index.ro+"/"+"url")
+onValue(refMedia , snap =>{
+    snap.forEach(snap2 =>{
+        arrayMedia.push(snap2.val())
     })
 })
 
@@ -231,6 +240,12 @@ Phone: <b> {index.phone}</b> <br />
 Vin: <b> {index.vin}</b> <br />
 Millage: <b> {index.millage}</b> <br />
 Plate: <b> {index.plate}</b> <br />
+<h4>Media</h4>
+{arrayMedia.map((i:any)=>{
+    return(
+        <img src={i} width={50} style={{display:'inline' , cursor:'pointer'}} onClick={()=>window.open(i)} />
+    )
+})}
 
 
  <table>

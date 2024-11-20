@@ -1,6 +1,6 @@
 import {  getAuth, onAuthStateChanged } from "firebase/auth";
 import { set, ref as refDb, getDatabase, onValue  } from "firebase/database";
-import { getDownloadURL, getStorage, ref as refSto, uploadBytesResumable } from "firebase/storage";
+import { getDownloadURL, getStorage, ref as refSto, uploadBytes } from "firebase/storage";
 import { useEffect, useState } from "react"
 import app from "../fireconfig";
 
@@ -48,9 +48,9 @@ console.log(isNew);
     const [plate , setplate]=useState<any>();
     const [vin , setVin]=useState<any>();
     const [ro , setRo]=useState<number>();
+    const [state , setstate]=useState<number>(0);
     const [millage , setMillsge]=useState<number>();
 
-    const [prog , setProg]=useState<number>()
     const [urls , setUrls]=useState<any[]>([])
 
     const [loged , setloged]=useState()
@@ -100,30 +100,24 @@ setServises(arraySvc)
 
 },[])
 
-const handleFiles= async ( e:any)=>{
+const handleFiles = async ( e:any)=>{
 
     if (ro!=null) {
-        
-for (let index = 0; index < e.target.files.length; index++) {
-    const element = e.target.files[index];
-    const refMediaNewSvc = refSto(store , "MediaNewSvc/" +yy+"/"+mm+"/"+dd+"/"+ro+"/"+element.name)
 
-    const uploadTask = uploadBytesResumable(refMediaNewSvc , element)
- await uploadTask.on("state_changed" , (snapShot)=>{
-    const progress = (snapShot.bytesTransferred / snapShot.totalBytes)*100;
-setProg(progress)
+    let element = e.target.files[0];
+    const refMediaNewSvc = refSto(store , "MediaNewSvc/" +yy+"/"+mm+"/"+dd+"/"+ro+"/"+element.name+state)
+  
+    await uploadBytes(refMediaNewSvc , element )
+    getDownloadURL(refMediaNewSvc)
+    .then((url) => {
+setUrls([...urls , url])
+    }
+    )
 
-getDownloadURL(uploadTask.snapshot.ref).then((downloadUrls)=>{
-arrayFiles.push(downloadUrls)
-    setUrls(arrayFiles)
-})
+setstate(state+1)
 
-
-})
-}
 
     }else{alert('Check RO first')}
-let arrayFiles:any =[]
 
 
 
@@ -211,8 +205,20 @@ is New
 <input type="text" placeholder="Vin" onChange={(e)=>setVin(e.target.value)} /> <br /> <br />
 <input type="number" placeholder="Ro Number" onChange={(e)=>setRo(parseInt(e.target.value))} /> <br /> <br />
 <input type="number" placeholder="Millage" onChange={(e)=>setMillsge(parseInt(e.target.value))} /> <br /> <br />
-<input type="file" multiple onChange={handleFiles} /> <br /> <br />
-<progress value={prog} max={100}></progress> <br /> <br />
+<input type="file"  accept="*image/jpeg" capture={true} className="camera"  onChange={handleFiles}  /> <br /> <br />
+
+
+ 
+{urls.map((i:any)=>{
+    return(
+        <div>
+            <img src={i} width={100} />
+<br />
+        </div>
+        
+    )
+})}       
+
 <hr />
 </div>
 <h2>Service</h2>

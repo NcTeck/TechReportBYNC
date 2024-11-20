@@ -307,14 +307,17 @@ snap.forEach(snap2=>{
 //llantas
 
 let llantasArray:any=[]
-const reftires = refDB(datab , 'Promise/'+index+"/"+"Tires")
+const reftires = refDB(datab , 'Promise/'+index+"/"+"Tires" + "/" + "llantass")
 onValue(reftires , snap =>{
-    
-    llantasArray.push({
-        tire1:snap.child('tirefl').val(),
-tire2:snap.child('tirefr').val(),
-tire3:snap.child('tirelr').val(),
-tire4:snap.child('tirerr').val(),
+    snap.forEach(snap2=>{
+       llantasArray.push({
+         tire1:snap2.child('tire1').val(),
+         tire2:snap2.child('tire2').val(),
+         tire3:snap2.child('tire3').val(),
+         tire4:snap2.child('tire4').val(),
+        })
+        console.log(snap.child('tire1').val())
+   
     
     })
     
@@ -346,15 +349,20 @@ snap.forEach(snap2=>{
 let frenosArray:any=[]
 onValue(refBrakes , snap =>{
     
-        
-    
-    frenosArray.push({
-        pad1:snap.child('pad1').val(),
-pad2:snap.child('pad2').val(),
-pad3:snap.child('pad3').val(),
-pad4:snap.child('pad4').val(),
+        snap.forEach(snap2=>{
+snap2.forEach(snap3=>{
+       frenosArray.push({
+        pad1:snap3.child('pad1').val(),
+pad2:snap3.child('pad2').val(),
+pad3:snap3.child('pad3').val(),
+pad4:snap3.child('pad4').val(),
     
     })
+})
+      
+        })
+    
+   
     
     
     
