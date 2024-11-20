@@ -304,7 +304,7 @@ snap.forEach(snap2=>{
    
 })
 
-//llantas
+//llantasssssssss
 
 let llantasArray:any=[]
 const reftires = refDB(datab , 'Promise/'+index+"/"+"Tires" + "/" + "llantass")
