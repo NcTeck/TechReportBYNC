@@ -357,18 +357,18 @@ snap.forEach(snap2=>{
 
 
 let frenosArray:any=[]
-onValue(refBrakes , snap =>{
+const refFrenos = refDB(datab , 'Promise/'+index+"/"+"Brakes" + "/" + "frenos")
+
+onValue(refFrenos , snap =>{
     
         snap.forEach(snap2=>{
-snap2.forEach(snap3=>{
-       frenosArray.push({
-        pad1:snap3.child('pad1').val(),
-pad2:snap3.child('pad2').val(),
-pad3:snap3.child('pad3').val(),
-pad4:snap3.child('pad4').val(),
-    
-    })
-})
+          frenosArray.push({
+            pad1:snap2.child('pad1').val(),
+    pad2:snap2.child('pad2').val(),
+    pad3:snap2.child('pad3').val(),
+    pad4:snap2.child('pad4').val(),
+        
+        })
       
         })
     
@@ -740,7 +740,7 @@ if(n.completed == true){
   set(refDB(datab , "Completed/"+ index +"/"+"Information" ), info )
       alert("SENT "+ total)
   
-   //  set(refDB(datab , "Promise/"+index),null)
+    set(refDB(datab , "Promise/"+index),null)
   
       window.location.reload();
 
