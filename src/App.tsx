@@ -82,14 +82,14 @@ setaAdmin(false)
 
 
   <div>
-<button className='bg-neutral-600 p-2 m-2' onClick={()=>{
+<button className='btnMain' onClick={()=>{
 
 if (showLogin) {
   setShowLogin(false)
 }else{setShowLogin(true)}
 
 }}>Login</button>
- <button className='bg-neutral-600 p-2 m-2' onClick={()=>{
+ <button className='btnMain' onClick={()=>{
 
 signOut(auth).then(()=>{
   setaAdmin(true)
@@ -104,7 +104,7 @@ root.render(<Today/>)
 }).catch((err)=>alert(err))
 
  }}>Logout</button> 
-<button className='bg-neutral-600 p-2 m-2'>Setting</button> 
+<button className='btnMain'>Setting</button> 
 
   </div>
 
@@ -123,7 +123,7 @@ root.render(<Today/>)
 
  <input type="email" placeholder='User Email' onChange={(e)=>setemailuser(e.target.value)} /> <br /> <br />
 <input type="password" placeholder='User password' onChange={(e)=>setpassuser(e.target.value)} />
-<button className='bg-neutral-600 p-2 m-2' onClick={()=>{
+<button className='btnMain' onClick={()=>{
 
 
 if (emailuser ==null || passuser == null) {
@@ -153,7 +153,7 @@ if (emailuser ==null || passuser == null) {
 {/* Main bar */}
 <div className='bar'>
 
-<button className='bg-neutral-600 p-2 m-2' onClick={()=>{
+<button className='btnMain' onClick={()=>{
 
 const container:any = document.getElementById('forRender')
 const root = createRoot(container)
@@ -163,7 +163,7 @@ root.render(<Today/>)
   Today
 </button >
 
-<button className='bg-neutral-600 p-2 m-2'onClick={()=>{
+<button className='btnMain'onClick={()=>{
 
 if (grade == "Admin") {
   const container:any = document.getElementById('forRender')
@@ -182,7 +182,7 @@ if (grade == "Tech") {
   Aproval
 </button>
 
-<button className='bg-neutral-600 p-2 m-2' onClick={()=>{
+<button className='btnMain' onClick={()=>{
 
 const container:any = document.getElementById('forRender')
 const root = createRoot(container)
@@ -191,7 +191,7 @@ root.render(<Review/>)
 }}>
   Review
 </button>
-<button className='bg-neutral-600 p-2 m-2' onClick={()=>{
+<button className='btnMain' onClick={()=>{
 
 const container:any = document.getElementById('forRender')
 const root = createRoot(container)
@@ -208,7 +208,7 @@ History
 
 
 
-  <button className='bg-neutral-600 p-2 m-2'onClick={()=>{
+  <button className='btnMain'onClick={()=>{
 
 const container:any = document.getElementById('forRender')
 const root = createRoot(container)
@@ -217,7 +217,7 @@ root.render(<FlatRate/>)
 }}  >
   Set Hours
 </button>
-<button className='bg-neutral-600 p-2 m-2' onClick={()=>{
+<button className='btnMain' onClick={()=>{
 
 const container:any = document.getElementById('forRender')
 const root = createRoot(container)

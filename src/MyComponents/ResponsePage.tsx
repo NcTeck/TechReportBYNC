@@ -139,7 +139,18 @@ let arrayInfo:any =[]
 const refInfo = refDB(datab , 'Promise/'+index+"/"+"Information")
 onValue(refInfo , snap =>{
 snap.forEach(snap2=>{
-   arrayInfo.push(snap2.val())
+snap2.child('srvSelected').forEach(snap3 =>{
+ 
+    
+    arrayInfo.push({
+      nameSRV: snap3.child('name').val(),
+      flat: snap3.child('flat').val()
+    })
+  
+  
+
+})
+
 })
   
    
@@ -316,7 +327,6 @@ onValue(reftires , snap =>{
          tire3:snap2.child('tire3').val(),
          tire4:snap2.child('tire4').val(),
         })
-        console.log(snap.child('tire1').val())
    
     
     })
@@ -439,6 +449,7 @@ snap.forEach(snap2=>{
 let servicesArray:any =[]
 
 const refServices = refDB(datab , 'Promise/'+index+"/"+"Services")
+
 onValue(refServices , snap =>{
 snap.forEach(snap2=>{
     snap2.forEach(snap3=>{
@@ -460,6 +471,164 @@ snap.forEach(snap2=>{
 
 
 const toSend =(index:any)=>{
+let total:number = 0
+
+
+let infoSUM:number = 0
+info.forEach(n=>{
+
+if(n.completed == true){
+
+  infoSUM = infoSUM +parseFloat(n.flat)
+  
+}
+
+})
+
+
+
+let hvacSuma:number = 0
+hvac.forEach(n=>{
+
+if(n.completed == true){
+
+  hvacSuma = hvacSuma +parseFloat(n.flat)
+  
+}
+
+})
+
+
+
+let interiorSUMA:number = 0
+interior.forEach(n=>{
+
+if(n.completed == true){
+
+  interiorSUMA = interiorSUMA +parseFloat(n.flat)
+  
+}
+
+})
+
+
+
+let exteriorSuma:number = 0
+exterior.forEach(n=>{
+
+if(n.completed == true){
+
+  exteriorSuma = exteriorSuma +parseFloat(n.flat)
+  
+}
+
+})
+
+let batterySuma:number = 0
+battery.forEach(n=>{
+
+if(n.completed == true){
+
+  batterySuma = batterySuma +parseFloat(n.flat)
+  
+}
+
+})
+
+let underhSuma:number = 0
+underh.forEach(n=>{
+
+if(n.completed == true){
+
+  underhSuma = underhSuma +parseFloat(n.flat)
+  
+}
+
+})
+
+let fluidSuma:number = 0
+fluids.forEach(n=>{
+
+if(n.completed == true){
+
+  fluidSuma = fluidSuma +parseFloat(n.flat)
+  
+}
+
+})
+
+let llantasSuma:number = 0
+tires.forEach(n=>{
+
+if(n.completed == true){
+
+  llantasSuma = llantasSuma +parseFloat(n.flat)
+  
+}
+
+})
+
+let brakeSuma:number = 0
+brakes.forEach(n=>{
+
+if(n.completed == true){
+
+  brakeSuma = brakeSuma +parseFloat(n.flat)
+  
+}
+
+})
+
+
+let steeringSuma:number = 0
+steering.forEach(n=>{
+
+if(n.completed == true){
+
+  steeringSuma = steeringSuma +parseFloat(n.flat)
+  
+}
+
+})
+
+let fsusSuma:number = 0
+fsus.forEach(n=>{
+
+if(n.completed == true){
+
+  fsusSuma = fsusSuma +parseFloat(n.flat)
+  
+}
+
+})
+
+let rsusSuma:number = 0
+rsus.forEach(n=>{
+
+if(n.completed == true){
+
+  rsusSuma = rsusSuma +parseFloat(n.flat)
+  
+}
+
+})
+
+let serrvicesSuma:number = 0
+service.forEach(n=>{
+
+if(n.completed == true){
+
+  serrvicesSuma = serrvicesSuma +parseFloat(n.flat)
+  
+}
+
+})
+
+
+
+
+ total =infoSUM + hvacSuma + interiorSUMA + exteriorSuma + batterySuma+ underhSuma + fluidSuma + llantasSuma + brakeSuma + steeringSuma + fsusSuma + rsusSuma + serrvicesSuma
+
 
 
 
@@ -549,7 +718,12 @@ const toSend =(index:any)=>{
       service
       
       } )
+      set(refDB(datab , "Completed/"+ index +"/"+"Total" ) ,{
   
+        total
+        
+        } )
+
       set(refDB(datab , "Completed/"+ index +"/"+"Time" ) ,{
   
         yy:yy,
@@ -564,11 +738,12 @@ const toSend =(index:any)=>{
   
   
   set(refDB(datab , "Completed/"+ index +"/"+"Information" ), info )
-      alert("SENT")
+      alert("SENT "+ total)
   
-   //  set(ref(datab , "Completed/"+index),null)
+   //  set(refDB(datab , "Promise/"+index),null)
   
       window.location.reload();
+
   } catch (error) {
       alert(error)
   }
@@ -607,6 +782,38 @@ setInfo(arrayInfo)
 
 {visible == index ? <div>
 
+<table>
+  INFORMATION
+<tr>
+  <th>
+    Service description
+  </th>
+  <th>
+    Flat rate
+  </th>
+  <th>
+    Completed
+  </th>
+</tr>
+
+
+{info.map(k =>{
+  return(
+    <tr>
+      <td>{k.nameSRV}</td>
+      <td>{k.flat}</td>
+      <td><input type="radio" onClick={()=>{
+
+k.completed = true
+
+      }} /> </td>
+    </tr>
+  )
+
+})}
+
+
+</table>
 
   <h3 className="text-gray-300 text-2xl">ROAD TEST</h3> <hr />
     <table> 

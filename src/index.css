@@ -4,15 +4,11 @@
 
 :root {
 
-  background: #606c88;  /* fallback for old browsers */
-background: -webkit-linear-gradient(to right, #3f4c6b, #606c88);  /* Chrome 10-25, Safari 5.1-6 */
-background: linear-gradient(to right, #3f4c6b, #606c88); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
-
+background-color:  #274d60;
   padding: 4px;
   line-height: 1.5;
   font-weight: 400;
-color: rgb(58, 54, 48);
+color: rgb(201, 201, 201);
   color-scheme: light dark;
 
   text-rendering: optimizeLegibility;
@@ -27,6 +23,14 @@ input[type="radio"] {
   accent-color: rgb(31, 143, 139);
 }
 
+input[type="number"],input[type="text"],input[type="file"],input[type="email"], input[type="password"], textarea {
+  width: 10em;
+  height: 2.5rem;
+  padding: 1em;
+  border-radius: .3em;
+  background-color: rgb(228, 233, 233);
+  color: #274d60;
+}
 
 
 

@@ -247,85 +247,138 @@ color: rgb(255, 233, 40);
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-button:hover{
-      
-    background-color: rgb(63, 90, 135);
-transform: scale(.96);   
+/* CSS */
+.btnBar {
+    padding: 1rem;
+    border-radius: 0.3rem;
+    border: 2px solid rgb(144, 144, 182);
+    font-size: 1rem;
+    color: #f4f0ff;
+    background-color:  #43738a;
+    text-align: center;
+transition: 1s;
+    cursor: pointer;
 }
 
-.rows{
-    background-color: rgb(208, 207, 207);
-    margin: 1em;
-    padding: .5em;
-    width: 95%;
-  display: block;
-  justify-items: space-between;
+
+.btnBar:hover{
+    transform: scale(.9);
+    background-color: #345f7d;
+}
+
+
+/* CSS */
+.approve {
+    background: #74d5a0;
+    border: 1px solid #29ca7c;
+    border-radius: 6px;
+    box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px;
+    box-sizing: border-box;
+    color: #FFFFFF;
+    cursor: pointer;
+    display: inline-block;
+    font-family: nunito,roboto,proxima-nova,"proxima nova",sans-serif;
+    font-size: 16px;
+    font-weight: 800;
+    line-height: 16px;
+    min-height: 40px;
+    outline: 0;
+    padding: 12px 14px;
+    text-align: center;
+    text-rendering: geometricprecision;
+    text-transform: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    vertical-align: middle;
+  }
+  
+  .approve:hover,
+  .approve:active {
+    background-color: initial;
+    background-position: 0 0;
+    color: #7ae09f;
+  }
+  
+  .approve:active {
+    opacity: .5;
+  }
+
+
+
+
+/* CSS */
+.decline {
+  background: #FF4742;
+  border: 1px solid #FF4742;
+  border-radius: 6px;
+  box-shadow: rgba(0, 0, 0, 0.1) 1px 2px 4px;
+  box-sizing: border-box;
+  color: #FFFFFF;
   cursor: pointer;
-
+  display: inline-block;
+  font-family: nunito,roboto,proxima-nova,"proxima nova",sans-serif;
+  font-size: 16px;
+  font-weight: 800;
+  line-height: 16px;
+  min-height: 40px;
+  outline: 0;
+  padding: 12px 14px;
+  text-align: center;
+  text-rendering: geometricprecision;
+  text-transform: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: middle;
 }
 
-.btn{
-    background: #403B4A;  /* fallback for old browsers */
-    background: -webkit-linear-gradient(to right, #E7E9BB, #403B4A);  /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to right, #E7E9BB, #403B4A); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-    
-
-    color: antiquewhite;
-    padding: .7em;
-
+.decline:hover,
+.decline:active {
+  background-color: initial;
+  background-position: 0 0;
+  color: #FF4742;
 }
+
+.decline:active {
+  opacity: .5;
+}
+
+
+/* CSS */
+.btnMain {
+    background: #377071;
+    border: 1px solid #128197;
+    border-radius: 6px;
+    box-shadow: rgba(71, 33, 33, 0.1) 1px 2px 4px;
+    box-sizing: border-box;
+    color: #FFFFFF;
+    cursor: pointer;
+    display: inline-block;
+    font-family: nunito,roboto,proxima-nova,"proxima nova",sans-serif;
+    font-size: 16px;
+    font-weight: 800;
+    line-height: 16px;
+    min-height: 40px;
+    outline: 0;
+    padding: 12px 14px;
+    text-align: center;
+    text-rendering: geometricprecision;
+    text-transform: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    vertical-align: middle;
+  }
+  
+  .btnMain:hover,
+  .btnMain:active {
+    background-color: initial;
+    background-position: 0 0;
+    color: #FF4742;
+  }
+  
+  .btnMain:active {
+    opacity: .5;
+  }
+  

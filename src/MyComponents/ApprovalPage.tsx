@@ -514,7 +514,6 @@ onValue(refServices , snap =>{
 const toSend =(index:any)=>{
 
 
-
     try {
     
         set(refDB(datab , "Promise/"+ index +"/"+"RoadTest" ) ,{
@@ -617,13 +616,13 @@ const toSend =(index:any)=>{
             
             } )
     
-    //set(refDB(datab, "Promise/"+ index +"/"+"Estado"  ) , "NOAP")
+    set(refDB(datab, "Promise/"+ index +"/"+"Estado"  ) , "NOAP")
     
     
     set(refDB(datab , "Promise/"+ index +"/"+"Information" ), info )
         alert("SENT")
     
-       set(ref(datab , "Completed/"+index),null)
+       set(ref(datab , "PreAproval/"+index),null)
     
         window.location.reload();
     } catch (error) {
@@ -1160,7 +1159,7 @@ setunderDef([...underDef , "Declined"])
 <hr />
             </td>
             
-            <td>{ind.resp}
+            <td >  {ind.resp}
                 
                 {(ind.resp != "Declined" && underDef[x] != null  ) ? <div>Approved</div>  : null }
 
@@ -1694,7 +1693,7 @@ setService([...service , {
     <th>Description</th>
     <th>Media</th>
     <th>Note</th>
-    <th>Actions <br />             <input type="number" placeholder="Flat Rate" onChange={(e)=>setserviceFlat(e.target.value)} />
+    <th>Actions <br />             <input id="campo" type="number" placeholder="Flat Rate" onChange={(e)=>setserviceFlat(e.target.value)} />
     </th>
     <th>Status</th>
 </tr>
@@ -1715,10 +1714,11 @@ setService([...service , {
 
 if (serviceFlat != null || serviceFlat == 0) {
 
-    ind.resp = serviceFlat
+    ind.resp = parseFloat(serviceFlat)
 
     setserviceDef([...serviceDef , serviceFlat])
 
+  //  document.getElementById('campo').value =0;
 
 }else{alert("Check Flat rate")}
 
@@ -1748,6 +1748,8 @@ setserviceDef([...serviceDef , "Declined"])
     )
 })}
     
+
+
  </table>
 
 <br />

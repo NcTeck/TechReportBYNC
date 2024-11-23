@@ -257,10 +257,11 @@ setSvcSelected( srvSelected.filter((e:any) => e!=index) )
 
 <br /> <br />
     <textarea placeholder="Other Servise"  onChange={(e)=>setOther(e.target.value)}/>
+        <br />
         <input type="number" placeholder="Flat Rate" onChange={(e)=>setOtherValue(e.target.value)}/>
     <br /> <br />
 
-    <button onClick={()=>{
+    <button className="btnBar" onClick={()=>{
 if (other==null ||otherValue==null) {
     alert('Please check Servise')
 } else {
@@ -274,7 +275,7 @@ if (other==null ||otherValue==null) {
 
     <br /> <br />
 
-    <select onChange={(e)=>setTechSelected(e.target.value)}>
+    <select className="btnBar" onChange={(e)=>setTechSelected(e.target.value)}>
         <option>Select Tech </option>
 
 {techs.map(index=>{
@@ -288,7 +289,7 @@ if (other==null ||otherValue==null) {
     </select>
     <br /> <br />
 
-<button onClick={()=>assign()} >Set</button>
+<button className="btnBar" onClick={()=>assign()} >Set</button>
 
 </div>
 
