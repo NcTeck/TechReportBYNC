@@ -182,8 +182,8 @@ const toggleVisibility =(itm:any)=>{
 
 
 
-<h2>Aproval</h2>
-Ro
+<h2>Approval</h2>
+
 {ros.map((item:any , index )=>{
 
 //INFO
@@ -622,7 +622,7 @@ const toSend =(index:any)=>{
     set(refDB(datab , "Promise/"+ index +"/"+"Information" ), info )
         alert("SENT")
     
-       set(ref(datab , "PreAproval/"+index),null)
+       set(ref(datab , "PreAprobal/"+index),null)
     
         window.location.reload();
     } catch (error) {
@@ -637,9 +637,6 @@ const toSend =(index:any)=>{
 
     return(
         <div key={index} >
-
-
-
 
 
             <button className="bg-opacity-50 bg-slate-700 rounded p-3 w-full" onClick={()=>{
@@ -663,19 +660,13 @@ const toSend =(index:any)=>{
             }} >{item}</button>
             {visible == index  ? <div>
 
-
-
-
-
-
-
 <button className="btnBar" onClick={()=>{
 
 if(hiddenInfo){
     setHiddeninfo(false)
 }else{setHiddeninfo(true)}
 
-}}>INFO</button>
+}}>SEE INFORMATION</button>
 
             
                 <div hidden={hiddenInfo} className="infoBloq">

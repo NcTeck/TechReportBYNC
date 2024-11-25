@@ -31,7 +31,14 @@ input[type="number"],input[type="text"],input[type="file"],input[type="email"], 
   background-color: rgb(228, 233, 233);
   color: #274d60;
 }
-
+select{
+  width: 10em;
+  height: 3.5rem;
+  padding: 1em;
+  border-radius: .3em;
+  background-color: rgb(228, 233, 233);
+  color: #5d696f;
+}
 
 
 
@@ -48,12 +55,15 @@ table{
 
   table th{
     padding: 7px;
-    background-color: rgb(144, 134, 209);
+    background-color: rgb(113, 106, 162);
   }
 
   table td{
-    background-color: rgb(156, 156, 178);
+    background-color: rgb(134, 134, 151);
     padding: 7px;
+    color: rgb(13, 94, 116);
+    font-style: oblique;
+    font-weight: bold;
     border-bottom: 2px solid black;
 text-align: center;
 cursor: pointer;

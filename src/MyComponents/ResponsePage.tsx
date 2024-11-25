@@ -135,10 +135,13 @@ const toggleVisibility =(itm:any)=>{
 {ros2.map((index:any)=>{
 
 let arrayInfo:any =[]
+let totalInfo:any=[]
 
 const refInfo = refDB(datab , 'Promise/'+index+"/"+"Information")
 onValue(refInfo , snap =>{
 snap.forEach(snap2=>{
+totalInfo.push(snap2.val())
+
 snap2.child('srvSelected').forEach(snap3 =>{
  
     
@@ -737,8 +740,9 @@ if(n.completed == true){
   //set(refDB(datab, "Promise/"+ index +"/"+"Estado"  ) , "NOAP")
   
   
-  set(refDB(datab , "Completed/"+ index +"/"+"Information" ), info )
-      alert("SENT "+ total)
+  set(refDB(datab , "Completed/"+ index +"/"+"Information" ), totalInfo )
+  set(refDB(datab , "Completed/"+ index +"/"+"Infoflat" ), info )
+      alert("COMPLETED")
   
     set(refDB(datab , "Promise/"+index),null)
   

@@ -179,7 +179,7 @@ if (grade == "Tech") {
 
 
 }}  >
-  Aproval
+  Approval
 </button>
 
 <button className='btnMain' onClick={()=>{

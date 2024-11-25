@@ -23,7 +23,12 @@ export const SetCustomer =()=>{
     const store = getStorage(app);
     const refdataEmp = refDb(datab , "Users")
     const refSvc = refDb(datab , "Services")
+    const refNames = refDb(datab , "Completed")
     // Customer Data
+    const [allNames , setallnames]=useState<string[]>([]);
+
+
+
     const [custName , setCustName]=useState<string>();
     const [custLast , setCustLast]=useState<string>();
     const [cusPhone , setCustPhone]=useState<number>();
@@ -38,8 +43,6 @@ export const SetCustomer =()=>{
     const [srvSelected , setSvcSelected] =useState<any>([])
     const [other ,setOther]=useState<any>()
     const [otherValue ,setOtherValue]=useState<any>()
-    const [isNew ,setIsNew]=useState<any>()
-console.log(isNew);
 
     // Vehicle data
     const [make , setmake]=useState<any>();
@@ -81,6 +84,32 @@ let arrayTechs =[]
                 })
             })
         }
+
+
+let namesArrays:any=[]
+onValue(refNames , snap=>{
+    snap.forEach(snap2 =>{
+snap2.child('Information').forEach(snap3=>{
+  namesArrays.push({
+    name:snap3.child('name').val(),
+    last:snap3.child('last').val(),
+    phone:snap3.child('phone').val(),
+    zip:snap3.child('zip').val(),
+    state:snap3.child('state').val(),
+    city:snap3.child('city').val(),
+    street:snap3.child('street').val(),
+    make:snap3.child('make').val(),
+    model:snap3.child('model').val(),
+    vin:snap3.child('vin').val(),
+    plate:snap3.child('plate').val(),
+    millage:snap3.child('millage').val(),
+    yearcar:snap3.child('yearcar').val(),
+  }) 
+setallnames(namesArrays)
+})
+    })
+    
+})
 
 let arraySvc =[]
 onValue(refSvc , snap=>{
@@ -169,44 +198,71 @@ set(refDb(datab , "NewSet/" + ro   ) , {
     
 }
 
+
+
     return(
         <div>
 
-<div className="CCustomers">
-<div>
-is New
-<input type="checkbox" onChange={(e)=>setIsNew(e.target.value)} />
+<div className="Customers">
+<div >
+Customer exist?
 
-{/* <select onChange={(e)=>setIsNew(e.target.value)}>
 
-<option>Please Select</option>
-<option>Exist</option>
-<option>New</option>
+<input type="text" placeholder="Search Name" />
 
-</select> */}
-<br /> <br />
+{allNames.map((i:any)=>{
+    return(
+        <li>
+{i.name} {i.last} <button className="btnBar" onClick={()=>{
+setCustName(i.name)
+setCustLast(i.last)
+setCustPhone(i.phone)
+setCustState(i.state)
+setCuscity(i.city)
+setCustStreet(i.street)
+setMillsge(i.millage)
+setmake(i.make)
+setYearCar(i.yearcar)
+setmodel(i.model)
+setplate(i.plate)
+setVin(i.vin)
+setCustZip(i.zip)
+}}>Select</button>
+        </li>
+    )
+})}
 
-<input type="text" placeholder="First Name" onChange={(e)=>setCustName(e.target.value)} /> <br /> <br />
-<input type="text" placeholder="Last Name" onChange={(e)=>setCustLast(e.target.value)} /> <br /> <br />
-<input type="number" placeholder="Phone" onChange={(e)=>setCustPhone(parseInt(e.target.value))} /> <br /> <br />
-
-<input type="text" placeholder="State" onChange={(e)=>setCustState(e.target.value)} /> <br /> <br />
-<input type="text" placeholder="City" onChange={(e)=>setCuscity(e.target.value)} /> <br /> <br />
-<input type="text" placeholder="Street" onChange={(e)=>setCustStreet(e.target.value)} /> <br /> <br />
-<input type="text" placeholder="ZipCode" onChange={(e)=>setCustZip(e.target.value)} /> <br /> <br />
 <hr />
+
+
+<br /> <br />
+<div className="grid md:grid-cols-3 lg:grid-cols-4 justify-center ">
+
+<input type="text" value={custName} placeholder="First Name" onChange={(e)=>setCustName(e.target.value)} /> <br /> <br />
+<input type="text"  value={custLast} placeholder="Last Name" onChange={(e)=>setCustLast(e.target.value)} /> <br /> <br />
+<input type="number" value={cusPhone} placeholder="Phone" onChange={(e)=>setCustPhone(parseInt(e.target.value))} /> <br /> <br />
+
+<input type="text" value={custState} placeholder="State" onChange={(e)=>setCustState(e.target.value)} /> <br /> <br />
+<input type="text" value={custcity} placeholder="City" onChange={(e)=>setCuscity(e.target.value)} /> <br /> <br />
+<input type="text" value={custStreet} placeholder="Street" onChange={(e)=>setCustStreet(e.target.value)} /> <br /> <br />
+<input type="text" value={custZip} placeholder="ZipCode" onChange={(e)=>setCustZip(e.target.value)} /> <br /> <br />
+
+
 <h2>Vehicle</h2>
+<hr />
 
 
-<input type="text" placeholder="Make" onChange={(e)=>setmake(e.target.value)} /> <br /> <br />
-<input type="text" placeholder="Model" onChange={(e)=>setmodel(e.target.value)} /> <br /> <br />
-<input type="number" placeholder="Year" onChange={(e)=>setYearCar(e.target.value)} /> <br /> <br />
-<input type="text" placeholder="Plate" onChange={(e)=>setplate(e.target.value)} /> <br /> <br />
-<input type="text" placeholder="Vin" onChange={(e)=>setVin(e.target.value)} /> <br /> <br />
-<input type="number" placeholder="Ro Number" onChange={(e)=>setRo(parseInt(e.target.value))} /> <br /> <br />
-<input type="number" placeholder="Millage" onChange={(e)=>setMillsge(parseInt(e.target.value))} /> <br /> <br />
+
+<input type="text" value={make} placeholder="Make" onChange={(e)=>setmake(e.target.value)} /> <br /> <br />
+<input type="text"  value={model} placeholder="Model" onChange={(e)=>setmodel(e.target.value)} /> <br /> <br />
+<input type="number" value={yearCar} placeholder="Year" onChange={(e)=>setYearCar(e.target.value)} /> <br /> <br />
+<input type="text" value={plate} placeholder="Plate" onChange={(e)=>setplate(e.target.value)} /> <br /> <br />
+<input type="text" value={vin} placeholder="Vin" onChange={(e)=>setVin(e.target.value)} /> <br /> <br />
+<input type="number"   placeholder="Ro Number" onChange={(e)=>setRo(parseInt(e.target.value))} /> <br /> <br />
+<input type="number" value={millage} placeholder="Millage" onChange={(e)=>setMillsge(parseInt(e.target.value))} /> <br /> <br />
 <input type="file"  accept="*image/jpeg" capture={true} className="camera"  onChange={handleFiles}  /> <br /> <br />
 
+</div>
 
  
 {urls.map((i:any)=>{
@@ -223,9 +279,12 @@ is New
 </div>
 <h2>Service</h2>
 
+<div className="bg-stone-600 w-full h-72 overflow-scroll rounded p-4">
+
+
 {services.map(index=>{
     return(
-        <li>{index.name}- ({index.flat}) <button onClick={()=>{
+        <li>{index.name}- ({index.flat}) <button className="btnBar" onClick={()=>{
             
             setSvcSelected([...srvSelected , {
 name:index.name,
@@ -240,14 +299,14 @@ flat:index.flat
     )
 })}
 
-
+</div>
 
 {srvSelected.map((index:any)=>{
     return(
 
         <table key={index.name}>{index.name} - ({index.flat})
         
-        <button onClick={()=>{
+        <button className="btnBar" onClick={()=>{
         
 setSvcSelected( srvSelected.filter((e:any) => e!=index) )
 

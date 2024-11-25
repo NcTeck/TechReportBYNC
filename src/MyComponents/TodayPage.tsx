@@ -4,6 +4,7 @@ import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { getDatabase, onValue, ref,  set as setBD } from "firebase/database";
 import app from "../fireconfig";
 import { Forms } from "./FormsPage";
+import './mas.css'
 
 
 
@@ -200,7 +201,7 @@ return(
 
 <tr>
  <td> {index.ro} </td>
-        <td> {index.make } <img  src={index.url} className="w-16 h-16" /> </td>
+        <td  style={{backgroundImage: `url(${index.url})` , backgroundSize:'cover' , backgroundRepeat:'no-repeat' , backgroundPosition:'center center'}} >    {index.make }    </td>
         <td> {index.model} </td>
         <td> {index.currentMonth}/{index.currentDay}/{index.currentYear} - {index.currentHour}  </td>
          <td>Advisor: <b>{index.advisor}</b>  <br />
@@ -234,20 +235,49 @@ setBD(ref(datab , "NewSet/" + index.ro) , null).then(()=>{
 
        {visibleItems === item  ? <div>
 
-Customer: <b>{index.name} {index.last}</b> <br />
+<br />
 
-Phone: <b> {index.phone}</b> <br />
-Vin: <b> {index.vin}</b> <br />
-Millage: <b> {index.millage}</b> <br />
-Plate: <b> {index.plate}</b> <br />
-<h4>Media</h4>
+<div className="grid grid-cols-1 md:grid-cols-2  lg:grid-cols-3">
+
+<div >
+ Customer: <b className="fields">{index.name} {index.last}</b> <br /><br /> <br />
+</div>
+<div>
+Phone: <b className="fields"> {index.phone}</b> <br /> <br /> <br />
+</div>
+<div>
+Vin: <b className="fields"> {index.vin}</b> <br /> <br /> <br />
+</div>
+<div>
+Millage: <b className="fields"> {index.millage}</b> <br /> <br /> <br />
+</div>
+<div>
+Plate: <b className="fields"> {index.plate}</b> <br /> <br /> <br />
+</div>
+<div>
+State: <b className="fields"> {index.state}</b> <br /> <br /> <br />
+</div>
+<div>
+City: <b className="fields"> {index.city}</b> <br /> <br /> <br />
+</div>
+<div>
+Street: <b className="fields"> {index.street}</b> <br /> <br /> <br />
+</div>
+<div>
+Zip: <b className="fields"> {index.zip}</b> <br /> <br /> <br />
+</div>
+<div>
+State: <b className="fields"> {index.state}</b> <br /> <br /> <br />
+</div>
+
+
+
+</div>
 {arrayMedia.map((i:any)=>{
     return(
         <img src={i} width={50} style={{display:'inline' , cursor:'pointer'}} onClick={()=>window.open(i)} />
     )
 })}
-
-
  <table>
      <tr>
     <td>Description</td>

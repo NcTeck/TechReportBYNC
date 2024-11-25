@@ -1,0 +1,9 @@
+.fields{
+    background-color: rgba(20, 97, 81, 0.333);
+    padding: .8em;
+    border: 2px solid rgb(44, 41, 41);
+    border-radius: .3em;
+    box-shadow: 2px 1px 2px aquamarine;
+    opacity: .7;
+    margin-top: 1em;
+}

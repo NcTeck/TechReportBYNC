@@ -310,9 +310,9 @@ set(refDB(datab , "PreAprobal/"+ test +"/"+"Information" ), info )
                     setRoadShow(false)
                 }else{setRoadShow(true)}
             }}>Road Test</button>
-            <br />
-            <br />
-            <br />
+
+
+
 <div hidden={roadShot}>
     <table>
     <tr>
@@ -356,6 +356,9 @@ set(refDB(datab , "PreAprobal/"+ test +"/"+"Information" ), info )
 </div>   
 
 <br /><br />
+
+
+
             {/* HVAC  */}
 
 <button className="btDiagHvac"  onClick={()=>{
@@ -363,45 +366,39 @@ set(refDB(datab , "PreAprobal/"+ test +"/"+"Information" ), info )
                     setAcShiw(false)
                 }else{setAcShiw(true)}
             }}>Ac / Heat</button>
-<div hidden={acShow}>
+<div className="bg-opacity-65 border-e-green-200" hidden={acShow}>
 
 <div>
 
 
 
-<br />
-<br />
-<br />
+
 <br />
 <hr />
 <br /><br />
 
-    <table >
 
-<select  onChange={(e)=>sethvac(e.target.value)}>
+<select   onChange={(e)=>sethvac(e.target.value)}>
     <option>All OK</option>
     <option>No Heat</option>
     <option>No Cold</option>
     <option>Others</option>
 </select>
 
-<input type="text" placeholder="Notes" onChange={(e)=>sethvacNotes(e.target.value)} />
-
-<br />
-
-    <td className={acColor}> Status</td>
-    <td>Good<input type="radio" name="ac"  onChange={()=>{
+    <td className={acColor}>Good<input type="radio" name="ac"  onChange={()=>{
         setAcColor(green)
         sethvacStatus("good")}} /></td>
-  <td>Moderate<input type="radio" name="ac"  onChange={()=>{
+  <td className={acColor}>Moderate<input type="radio" name="ac"  onChange={()=>{
         setAcColor(yellow)
         sethvacStatus("Moderate")}} /></td>
-    <td>Bad<input type="radio" name="ac"  onChange={()=>{
+    <td className={acColor}>Bad<input type="radio" name="ac"  onChange={()=>{
         setAcColor(red)
         sethvacStatus("bad")}} /></td>
 
 <br />
-</table>
+
+<input type="text" placeholder="Notes" onChange={(e)=>sethvacNotes(e.target.value)} />
+<br /><br />
             <input type="file" accept="*image/jpeg" capture={true}  className="camera" onChange={ async (param:any)=> {
 
 const file = param.target.files[0];
@@ -450,7 +447,7 @@ setHvacUrls("Empty")
 
     <tr>
 
-    <td>Descriptionn</td>
+    <td>Description</td>
   <td>Status</td>
     <td>Media</td>
     <td>Note</td>
@@ -523,15 +520,11 @@ sethvacArray( hvacArray.filter((e:any) => e!=index) )
 <div>
 
 
-
-<br />
-<br />
-<br />
 <br />
 <hr />
 <br /><br />
 
-    <table >
+    <div >
 
 <select  onChange={(e)=>setinterior(e.target.value)}>
     <option>All OK</option>
@@ -540,23 +533,24 @@ sethvacArray( hvacArray.filter((e:any) => e!=index) )
     <option>Others</option>
 </select>
 
-<input type="text" placeholder="Notes" onChange={(e)=>setinteriorNotes(e.target.value)} />
 
 <br />
 
-    <td className={interiorColor}> Status</td>
-    <td>Good<input type="radio" name="int"  onChange={()=>{
+    <td className={interiorColor}>Good<input type="radio" name="int"  onChange={()=>{
         setinteriorColor(green)
         setinteriorStatus("good")}} /></td>
-  <td>Moderate<input type="radio" name="int"  onChange={()=>{
+  <td className={interiorColor}>Moderate<input type="radio" name="int"  onChange={()=>{
         setinteriorColor(yellow)
         setinteriorStatus("Moderate")}} /></td>
-    <td>Bad<input type="radio" name="int"  onChange={()=>{
+    <td className={interiorColor}>Bad<input type="radio" name="int"  onChange={()=>{
         setinteriorColor(red)
         setinteriorStatus("bad")}} /></td>
 
 <br />
-</table>
+</div>
+<input type="text" placeholder="Notes" onChange={(e)=>setinteriorNotes(e.target.value)} />
+<br />
+<br />
             <input type="file" accept="*image/jpeg" capture={true}  className="camera" onChange={ async (param:any)=> {
 
 const file = param.target.files[0];
@@ -683,13 +677,10 @@ setinteriorArray( interiorArray.filter((e:any) => e!=index) )
 
 
 <br />
-<br />
-<br />
-<br />
 <hr />
 <br /><br />
 
-    <table >
+    <div >
 
 <select  onChange={(e)=>setexterior(e.target.value)}>
     <option>All OK</option>
@@ -706,23 +697,24 @@ setinteriorArray( interiorArray.filter((e:any) => e!=index) )
     <option>Others</option>
 </select>
 
-<input type="text" placeholder="Notes" onChange={(e)=>setexteriorNotes(e.target.value)} />
 
 <br />
 
-    <td className={exteriorColor}> Status</td>
-    <td>Good<input type="radio" name="ext"  onChange={()=>{
+    <td className={exteriorColor}>Good<input type="radio" name="ext"  onChange={()=>{
         setexteriorColor(green)
         setexteriorStatus("good")}} /></td>
-  <td>Moderate<input type="radio" name="ext"  onChange={()=>{
+  <td className={exteriorColor}>Moderate<input type="radio" name="ext"  onChange={()=>{
         setexteriorColor(yellow)
         setexteriorStatus("Moderate")}} /></td>
-    <td>Bad<input type="radio" name="ext"  onChange={()=>{
+    <td className={exteriorColor}>Bad<input type="radio" name="ext"  onChange={()=>{
         setexteriorColor(red)
         setexteriorStatus("bad")}} /></td>
 
 <br />
-</table>
+</div>
+<input type="text" placeholder="Notes" onChange={(e)=>setexteriorNotes(e.target.value)} />
+<br />
+<br />
             <input type="file" accept="*image/jpeg" capture={true}  className="camera" onChange={ async (param:any)=> {
 
 const file = param.target.files[0];
@@ -849,13 +841,10 @@ setexteriorArray( exteriorArray.filter((e:any) => e!=index) )
 
 
 <br />
-<br />
-<br />
-<br />
 <hr />
 <br /><br />
 
-    <table >
+    <div >
 
 <select  onChange={(e)=>setbattery(e.target.value)}>
     <option>Battery</option>
@@ -864,23 +853,23 @@ setexteriorArray( exteriorArray.filter((e:any) => e!=index) )
     <option>Others</option>
 </select>
 
-<input type="text" placeholder="Notes" onChange={(e)=>setbatteryNotes(e.target.value)} />
 
 <br />
 
-    <td className={batteryColor}> Status</td>
-    <td>Good<input type="radio" name="bat"  onChange={()=>{
+    <td className={batteryColor}>Good<input type="radio" name="bat"  onChange={()=>{
         setbatteryColor(green)
         setbatteryStatus("good")}} /></td>
-  <td>Moderate<input type="radio" name="bat"  onChange={()=>{
+  <td className={batteryColor}>Moderate<input type="radio" name="bat"  onChange={()=>{
         setbatteryColor(yellow)
         setbatteryStatus("Moderate")}} /></td>
-    <td>Bad<input type="radio" name="bat"  onChange={()=>{
+    <td className={batteryColor}>Bad<input type="radio" name="bat"  onChange={()=>{
         setbatteryColor(red)
         setbatteryStatus("bad")}} /></td>
 
 <br />
-</table>
+</div>
+<input type="text" placeholder="Notes" onChange={(e)=>setbatteryNotes(e.target.value)} />
+<br /><br />
             <input type="file" accept="*image/jpeg" capture={true}  className="camera" onChange={ async (param:any)=> {
 
 const file = param.target.files[0];
@@ -1006,16 +995,11 @@ setbatteryArray( batteryArray.filter((e:any) => e!=index) )
 
 <div>
 
-
-
-<br />
-<br />
-<br />
 <br />
 <hr />
 <br /><br />
 
-    <table >
+    <div >
 
 <select  onChange={(e)=>setunderH(e.target.value)}>
     <option>All OK</option>
@@ -1027,23 +1011,23 @@ setbatteryArray( batteryArray.filter((e:any) => e!=index) )
     <option>Others</option>
 </select>
 
-<input type="text" placeholder="Notes" onChange={(e)=>setunderHNotes(e.target.value)} />
 
 <br />
 
-    <td className={underHColor}> Status</td>
-    <td>Good<input type="radio" name="underh"  onChange={()=>{
+    <td className={underHColor}>Good<input type="radio" name="underh"  onChange={()=>{
         setunderHColor(green)
         setunderHStatus("good")}} /></td>
-  <td>Moderate<input type="radio" name="underh"  onChange={()=>{
+  <td className={underHColor}>Moderate<input type="radio" name="underh"  onChange={()=>{
         setunderHColor(yellow)
         setunderHStatus("Moderate")}} /></td>
-    <td>Bad<input type="radio" name="underh"  onChange={()=>{
+    <td className={underHColor}>Bad<input type="radio" name="underh"  onChange={()=>{
         setunderHColor(red)
         setunderHStatus("bad")}} /></td>
 
 <br />
-</table>
+</div>
+<input type="text" placeholder="Notes" onChange={(e)=>setunderHNotes(e.target.value)} />
+<br /><br />
             <input type="file" accept="*image/jpeg" capture={true}  className="camera" onChange={ async (param:any)=> {
 
 const file = param.target.files[0];
@@ -1171,15 +1155,11 @@ setunderHArray( underHArray.filter((e:any) => e!=index) )
 <div>
 
 
-
-<br />
-<br />
-<br />
 <br />
 <hr />
 <br /><br />
 
-    <table >
+    <div >
 
 <select  onChange={(e)=>setfluids(e.target.value)}>
     <option>All Fluids Good</option>
@@ -1191,23 +1171,23 @@ setunderHArray( underHArray.filter((e:any) => e!=index) )
     <option>Others</option>
 </select>
 
-<input type="text" placeholder="Notes" onChange={(e)=>setfluidNotes(e.target.value)} />
 
 <br />
 
-    <td className={fluidColor}> Status</td>
-    <td>Good<input type="radio" name="fluids"  onChange={()=>{
+    <td  className={fluidColor}>Good<input type="radio" name="fluids"  onChange={()=>{
         setfluidColor(green)
         setfluidsstatus("good")}} /></td>
-  <td>Moderate<input type="radio" name="fluids"  onChange={()=>{
+  <td  className={fluidColor}>Moderate<input type="radio" name="fluids"  onChange={()=>{
         setfluidColor(yellow)
         setfluidsstatus("Moderate")}} /></td>
-    <td>Bad<input type="radio" name="fluids"  onChange={()=>{
+    <td  className={fluidColor}>Bad<input type="radio" name="fluids"  onChange={()=>{
         setfluidColor(red)
         setfluidsstatus("bad")}} /></td>
 
 <br />
-</table>
+</div>
+<input type="text" placeholder="Notes" onChange={(e)=>setfluidNotes(e.target.value)} />
+<br /><br />
             <input type="file" accept="*image/jpeg" capture={true}  className="camera" onChange={ async (param:any)=> {
 
 const file = param.target.files[0];
@@ -1331,22 +1311,31 @@ setfluidsArray( fluidsArray.filter((e:any) => e!=index) )
 
 <div>
 
-
-
-<br />
-<br />
-<br />
 <br />
 <hr />
 <br /><br />
 
-  Front left  <input type="number" onChange={(e)=>settirefl(parseInt(e.target.value))} />
+<div className="grid grid-cols-1 lg:grid-cols-2">
+
+
+<span>
+     Front left  <input type="number" onChange={(e)=>settirefl(parseInt(e.target.value))} /> 
+    </span> 
+    <span>
       Front right  <input type="number" onChange={(e)=>settirefr(parseInt(e.target.value))} />
+    </span>
+    <span>
       Rear left  <input type="number" onChange={(e)=>settirelr(parseInt(e.target.value))} />
+    </span>
+    <span>
+
       Rear right  <input type="number" onChange={(e)=>settirerr(parseInt(e.target.value))} />
+    </span>
+
+    </div>
 
 
-    <table >
+    <div >
 
     
 <select  onChange={(e)=>setTires(e.target.value)}>
@@ -1355,23 +1344,23 @@ setfluidsArray( fluidsArray.filter((e:any) => e!=index) )
     <option>Others</option>
 </select>
 
-<input type="text" placeholder="Notes" onChange={(e)=>setTiresNotes(e.target.value)} />
-
+<br />
 <br />
 
-    <td className={tiresColor}> Status</td>
-    <td>Good<input type="radio" name="tires"  onChange={()=>{
+    <td  className={tiresColor}>Good<input type="radio" name="tires"  onChange={()=>{
         settiresColor(green)
         settiresStatus("good")}} /></td>
-  <td>Moderate<input type="radio" name="tires"  onChange={()=>{
+  <td  className={tiresColor}>Moderate<input type="radio" name="tires"  onChange={()=>{
         settiresColor(yellow)
         settiresStatus("Moderate")}} /></td>
-    <td>Bad<input type="radio" name="tires"  onChange={()=>{
+    <td  className={tiresColor}>Bad<input type="radio" name="tires"  onChange={()=>{
         settiresColor(red)
         settiresStatus("bad")}} /></td>
 
 <br />
-</table>
+</div>
+<input type="text" placeholder="Notes" onChange={(e)=>setTiresNotes(e.target.value)} />
+<br /><br />
             <input type="file" accept="*image/jpeg" capture={true}  className="camera" onChange={ async (param:any)=> {
 
 const file = param.target.files[0];
@@ -1496,23 +1485,34 @@ settiresArray( tiresArray.filter((e:any) => e!=index) )
 
 <div>
 
-
-
-<br />
-<br />
-<br />
 <br />
 <hr />
 <br /><br />
 
+
+<div className="grid grid-cols-1 lg:grid-cols-2">
+
+
+<span>
 Front left B.Pad  <input type="number" onChange={(e)=>setpad1(parseInt(e.target.value))} />
+</span>
+<span>
       Front right B.Pad  <input type="number" onChange={(e)=>setpad2(parseInt(e.target.value))} />
+</span>
+<span>
       Rear left B.Pad <input type="number" onChange={(e)=>setpad3(parseInt(e.target.value))} />
+</span>
+<span>
+
       Rear right B.Pad <input type="number" onChange={(e)=>setpad4(parseInt(e.target.value))} />
+</span>
 
 
 
-    <table >
+</div>
+
+
+    <div >
 
 <select  onChange={(e)=>setBrakes(e.target.value)}>
     <option>All OK</option>
@@ -1524,23 +1524,25 @@ Front left B.Pad  <input type="number" onChange={(e)=>setpad1(parseInt(e.target.
     <option>Others</option>
 </select>
 
-<input type="text" placeholder="Notes" onChange={(e)=>setbrakeNotes(e.target.value)} />
 
 <br />
 
-    <td className={brakesColor}> Status</td>
-    <td>Good<input type="radio" name="brakes"  onChange={()=>{
+    <td className={brakesColor}>Good<input type="radio" name="brakes"  onChange={()=>{
         setbrakesColor(green)
         setbrakesStatus("good")}} /></td>
-  <td>Moderate<input type="radio" name="brakes"  onChange={()=>{
+  <td className={brakesColor}>Moderate<input type="radio" name="brakes"  onChange={()=>{
         setbrakesColor(yellow)
         setbrakesStatus("Moderate")}} /></td>
-    <td>Bad<input type="radio" name="brakes"  onChange={()=>{
+    <td className={brakesColor}>Bad<input type="radio" name="brakes"  onChange={()=>{
         setbrakesColor(red)
         setbrakesStatus("bad")}} /></td>
 
 <br />
-</table>
+</div>
+
+<input type="text" placeholder="Notes" onChange={(e)=>setbrakeNotes(e.target.value)} />
+
+<br /><br />
             <input type="file" accept="*image/jpeg" capture={true}  className="camera" onChange={ async (param:any)=> {
 
 const file = param.target.files[0];
@@ -1665,15 +1667,11 @@ setbrakesArray( brakesArray.filter((e:any) => e!=index) )
 <div>
 
 
-
-<br />
-<br />
-<br />
 <br />
 <hr />
 <br /><br />
 
-    <table >
+    <div >
 
 <select  onChange={(e)=>setsteering(e.target.value)}>
     <option>All OK</option>
@@ -1686,23 +1684,24 @@ setbrakesArray( brakesArray.filter((e:any) => e!=index) )
     <option>Others</option>
 </select>
 
-<input type="text" placeholder="Notes" onChange={(e)=>setsteeringNotes(e.target.value)} />
 
 <br />
 
-    <td className={steeringColor}> Status</td>
-    <td>Good<input type="radio" name="steering"  onChange={()=>{
+    <td className={steeringColor}>Good<input type="radio" name="steering"  onChange={()=>{
         setsteeringColor(green)
         setsteeringStatus("good")}} /></td>
-  <td>Moderate<input type="radio" name="steering"  onChange={()=>{
+  <td className={steeringColor}>Moderate<input type="radio" name="steering"  onChange={()=>{
         setsteeringColor(yellow)
         setsteeringStatus("Moderate")}} /></td>
-    <td>Bad<input type="radio" name="steering"  onChange={()=>{
+    <td className={steeringColor}>Bad<input type="radio" name="steering"  onChange={()=>{
         setsteeringColor(red)
         setsteeringStatus("bad")}} /></td>
 
 <br />
-</table>
+<input type="text" placeholder="Notes" onChange={(e)=>setsteeringNotes(e.target.value)} />
+<br />
+<br />
+</div>
             <input type="file" accept="*image/jpeg" capture={true}  className="camera" onChange={ async (param:any)=> {
 
 const file = param.target.files[0];
@@ -1829,15 +1828,11 @@ setSteeringArray( steeringArray.filter((e:any) => e!=index) )
 <div>
 
 
-
-<br />
-<br />
-<br />
 <br />
 <hr />
 <br /><br />
 
-    <table >
+    <div >
 
 <select  onChange={(e)=>setffSuspe(e.target.value)}>
     <option>All OK</option>
@@ -1851,23 +1846,24 @@ setSteeringArray( steeringArray.filter((e:any) => e!=index) )
     <option>Others</option>
 </select>
 
-<input type="text" placeholder="Notes" onChange={(e)=>setfSuspeNotes(e.target.value)} />
 
 <br />
 
-    <td className={fSuspeColor}> Status</td>
-    <td>Good<input type="radio" name="fsus"  onChange={()=>{
+    <td> Status</td>
+    <td className={fSuspeColor}>Good<input type="radio" name="fsus"  onChange={()=>{
         setfSuspeColor(green)
         setfSuspeStatus("good")}} /></td>
-  <td>Moderate<input type="radio" name="fsus"  onChange={()=>{
+  <td className={fSuspeColor}>Moderate<input type="radio" name="fsus"  onChange={()=>{
         setfSuspeColor(yellow)
         setfSuspeStatus("Moderate")}} /></td>
-    <td>Bad<input type="radio" name="fsus"  onChange={()=>{
+    <td className={fSuspeColor}>Bad<input type="radio" name="fsus"  onChange={()=>{
         setfSuspeColor(red)
         setfSuspeStatus("bad")}} /></td>
 
 <br />
-</table>
+</div>
+<input type="text" placeholder="Notes" onChange={(e)=>setfSuspeNotes(e.target.value)} />
+<br /><br />
             <input type="file" accept="*image/jpeg" capture={true}  className="camera" onChange={ async (param:any)=> {
 
 const file = param.target.files[0];
@@ -1992,16 +1988,11 @@ setfSuspeArray( fSuspeArray.filter((e:any) => e!=index) )
 
 <div>
 
-
-
-<br />
-<br />
-<br />
 <br />
 <hr />
 <br /><br />
 
-    <table >
+    <div >
 
 <select  onChange={(e)=>setrSuspe(e.target.value)}>
     <option>All OK</option>
@@ -2013,11 +2004,9 @@ setfSuspeArray( fSuspeArray.filter((e:any) => e!=index) )
     <option>Others</option>
 </select>
 
-<input type="text" placeholder="Notes" onChange={(e)=>setrSuspeNotes(e.target.value)} />
 
 <br />
 
-    <td className={rSuspeColor}> Status</td>
     <td>Good<input type="radio" name="rsus"  onChange={()=>{
         setrSuspeColor(green)
         setrSuspeStatus("good")}} /></td>
@@ -2029,7 +2018,9 @@ setfSuspeArray( fSuspeArray.filter((e:any) => e!=index) )
         setrSuspeStatus("bad")}} /></td>
 
 <br />
-</table>
+</div>
+<input type="text" placeholder="Notes" onChange={(e)=>setrSuspeNotes(e.target.value)} />
+<br /><br />
             <input type="file" accept="*image/jpeg" capture={true}  className="camera" onChange={ async (param:any)=> {
 
 const file = param.target.files[0];
@@ -2156,16 +2147,11 @@ setrSuspeArray( rSuspeArray.filter((e:any) => e!=index) )
 
 <div>
 
-
-
-<br />
-<br />
-<br />
 <br />
 <hr />
 <br /><br />
 
-    <table >
+    <div >
 
 <select  onChange={(e)=>setservice(e.target.value)}>
     <option>All OK</option>
@@ -2175,23 +2161,23 @@ setrSuspeArray( rSuspeArray.filter((e:any) => e!=index) )
     <option>Others</option>
 </select>
 
-<input type="text" placeholder="Notes" onChange={(e)=>setserviceNotes(e.target.value)} />
 
 <br />
 
-    <td className={serviceColor}> Status</td>
-    <td>Good<input type="radio" name="scv"  onChange={()=>{
+    <td className={serviceColor}>Good<input type="radio" name="scv"  onChange={()=>{
         setserviceColor(green)
         setserviceStatus("good")}} /></td>
-  <td>Moderate<input type="radio" name="scv"  onChange={()=>{
+  <td className={serviceColor}>Moderate<input type="radio" name="scv"  onChange={()=>{
         setserviceColor(yellow)
         setserviceStatus("Moderate")}} /></td>
-    <td>Bad<input type="radio" name="scv"  onChange={()=>{
+    <td className={serviceColor}>Bad<input type="radio" name="scv"  onChange={()=>{
         setserviceColor(red)
         setserviceStatus("bad")}} /></td>
 
 <br />
-</table>
+</div>
+<input type="text" placeholder="Notes" onChange={(e)=>setserviceNotes(e.target.value)} />
+<br /><br />
             <input type="file" accept="*image/jpeg" capture={true}  className="camera" onChange={ async (param:any)=> {
 
 const file = param.target.files[0];
