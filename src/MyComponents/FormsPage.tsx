@@ -3,6 +3,7 @@ import app from "../fireconfig"
 import {  useEffect, useState } from "react"
 import { getDownloadURL, getStorage, ref as refSto, uploadBytes } from "firebase/storage"
 import React from 'react';
+import './mas.css'
 
 interface propi{
 
@@ -101,10 +102,10 @@ const [tiresUrl, settiresUrl] =useState<any>("Empty")
 const [tiresColor , settiresColor] =useState<string>()
 const [TiresNotes , setTiresNotes] =useState<string>("Empty")
 const [tiresShow , settiresShow] =useState(true)
-const [tirefr , settirefr] =useState<number>()
-const [tirefl , settirefl] =useState<number>()
-const [tirelr , settirelr] =useState<number>()
-const [tirerr , settirerr] =useState<number>()
+const [tirefr , settirefr] =useState<number>(-1)
+const [tirefl , settirefl] =useState<number>(-1)
+const [tirelr , settirelr] =useState<number>(-1)
+const [tirerr , settirerr] =useState<number>(-1)
 
 
 
@@ -117,10 +118,10 @@ const [brakesUrl, setbrakesUrl] =useState<any>("Empty")
 const [brakesColor , setbrakesColor] =useState<string>()
 const [brakeNotes , setbrakeNotes] =useState<string>("Empty")
 const [brakeShow , setbrakeShow] =useState(true)
-const [pad1 , setpad1] =useState<number>()
-const [pad2 , setpad2] =useState<number>()
-const [pad3 , setpad3] =useState<number>()
-const [pad4 , setpad4] =useState<number>()
+const [pad1 , setpad1] =useState<number>(-1)
+const [pad2 , setpad2] =useState<number>(-1)
+const [pad3 , setpad3] =useState<number>(-1)
+const [pad4 , setpad4] =useState<number>(-1)
     
 const [steeringArray , setSteeringArray] =useState<any[]>([])
 const [steering , setsteering] =useState<any>("All OK")
@@ -271,6 +272,8 @@ set(refDB(datab , "PreAprobal/"+ test +"/"+"Services" ) ,{
     
     } )
 
+ 
+
     set(refDB(datab , "PreAprobal/"+ test +"/"+"Time" ) ,{
 
       yy:yy,
@@ -313,8 +316,7 @@ set(refDB(datab , "PreAprobal/"+ test +"/"+"Information" ), info )
 
 
 
-<div hidden={roadShot}>
-    <table>
+<div className="rows"  hidden={roadShot}>
     <tr>
     <td>Description</td>
     <td>Yes</td>
@@ -352,10 +354,9 @@ set(refDB(datab , "PreAprobal/"+ test +"/"+"Information" ), info )
  <br />
  
  
- </table>
 </div>   
 
-<br /><br />
+
 
 
 
@@ -365,25 +366,22 @@ set(refDB(datab , "PreAprobal/"+ test +"/"+"Information" ), info )
                 if(acShow){
                     setAcShiw(false)
                 }else{setAcShiw(true)}
-            }}>Ac / Heat</button>
-<div className="bg-opacity-65 border-e-green-200" hidden={acShow}>
-
-<div>
+            }}>    Ac / Heat  { hvacArray.length == 0 ? <span className="text-red-800 m-5 font-bold">*</span> : <span className="text-red-700 m-5">({hvacArray.length})</span> } </button>
+<div className="rows" hidden={acShow}>
 
 
 
-
-<br />
 <hr />
 <br /><br />
 
 
-<select   onChange={(e)=>sethvac(e.target.value)}>
+<select className="w-full"   onChange={(e)=>sethvac(e.target.value)}>
     <option>All OK</option>
     <option>No Heat</option>
     <option>No Cold</option>
     <option>Others</option>
 </select>
+
 
     <td className={acColor}>Good<input type="radio" name="ac"  onChange={()=>{
         setAcColor(green)
@@ -397,9 +395,9 @@ set(refDB(datab , "PreAprobal/"+ test +"/"+"Information" ), info )
 
 <br />
 
-<input type="text" placeholder="Notes" onChange={(e)=>sethvacNotes(e.target.value)} />
+<input   className="w-full" type="text" placeholder="Notes" onChange={(e)=>sethvacNotes(e.target.value)} />
 <br /><br />
-            <input type="file" accept="*image/jpeg" capture={true}  className="camera" onChange={ async (param:any)=> {
+            <input  type="file" accept="*image/jpeg" capture={true}  className="camera" onChange={ async (param:any)=> {
 
 const file = param.target.files[0];
 
@@ -497,16 +495,14 @@ sethvacArray( hvacArray.filter((e:any) => e!=index) )
 
 
 </table>
-<br />
-<br />
-<br />
 
 
 
-<br />
-<br />
-</div></div>
-<br /><br />
+
+
+
+</div>
+
 
             {/* INTERIOR Dash  */}
 
@@ -514,19 +510,19 @@ sethvacArray( hvacArray.filter((e:any) => e!=index) )
                 if(interiorShow){
                     setinteriorShow(false)
                 }else{setinteriorShow(true)}
-            }}>Interior / Dash</button>
-<div hidden={interiorShow}>
-
-<div>
+            }}>Interior / Dash  { interiorArray.length == 0 ? <span className="text-red-800 m-5 font-bold">*</span> : <span className="text-red-700 m-5">({interiorArray.length})</span> }</button>
+<div  className="rows" hidden={interiorShow}>
 
 
-<br />
+
+
+
 <hr />
-<br /><br />
+<br />
 
     <div >
 
-<select  onChange={(e)=>setinterior(e.target.value)}>
+<select  className="w-full"  onChange={(e)=>setinterior(e.target.value)}>
     <option>All OK</option>
     <option>Bulb out</option>
     <option>Dash light</option>
@@ -548,10 +544,10 @@ sethvacArray( hvacArray.filter((e:any) => e!=index) )
 
 <br />
 </div>
-<input type="text" placeholder="Notes" onChange={(e)=>setinteriorNotes(e.target.value)} />
+<input  className="w-full" type="text" placeholder="Notes" onChange={(e)=>setinteriorNotes(e.target.value)} />
 <br />
 <br />
-            <input type="file" accept="*image/jpeg" capture={true}  className="camera" onChange={ async (param:any)=> {
+            <input  type="file" accept="*image/jpeg" capture={true}  className="camera" onChange={ async (param:any)=> {
 
 const file = param.target.files[0];
 
@@ -649,19 +645,12 @@ setinteriorArray( interiorArray.filter((e:any) => e!=index) )
 
 
 </table>
-<br />
-<br />
-<br />
 
 
-
-<br />
-<br />
-</div>
 
 
 </div>
-<br /><br />
+
 
             {/* Exteriors Lights  */}
 
@@ -669,20 +658,16 @@ setinteriorArray( interiorArray.filter((e:any) => e!=index) )
                 if(exteriorShow){
                     setexteriorShow(false)
                 }else{setexteriorShow(true)}
-            }}>Exterior / Lights</button>
-<div hidden={exteriorShow}>
-
-<div>
+            }}>Exterior / Lights  { exteriorArray.length == 0 ? <span className="text-red-800 m-5 font-bold">*</span> : <span className="text-red-700 m-5">({exteriorArray.length})</span> }</button>
+<div  className="rows" hidden={exteriorShow}>
 
 
-
-<br />
 <hr />
 <br /><br />
 
     <div >
 
-<select  onChange={(e)=>setexterior(e.target.value)}>
+<select className="w-full" onChange={(e)=>setexterior(e.target.value)}>
     <option>All OK</option>
     <option>High Beams</option>
     <option>Low Beams</option>
@@ -712,7 +697,7 @@ setinteriorArray( interiorArray.filter((e:any) => e!=index) )
 
 <br />
 </div>
-<input type="text" placeholder="Notes" onChange={(e)=>setexteriorNotes(e.target.value)} />
+<input className="w-full" type="text" placeholder="Notes" onChange={(e)=>setexteriorNotes(e.target.value)} />
 <br />
 <br />
             <input type="file" accept="*image/jpeg" capture={true}  className="camera" onChange={ async (param:any)=> {
@@ -813,40 +798,27 @@ setexteriorArray( exteriorArray.filter((e:any) => e!=index) )
 
 
 </table>
-<br />
-<br />
-<br />
-
-
-
-<br />
-<br />
-</div>
 
 
 
 </div>
-<br /><br />
+
             {/* Battery and Wipers  */}
 
             <button className="btnBattery"  onClick={()=>{
                 if(batteryShow){
                     setbatteryShow(false)
                 }else{setbatteryShow(true)}
-            }}>Battery / Wiper Blades</button>
-<div hidden={batteryShow}>
-
-<div>
+            }}>Battery / Wiper Blades  { batteryArray.length == 0 ? <span className="text-red-800 m-5 font-bold">*</span> : <span className="text-red-700 m-5">({batteryArray.length})</span> }</button>
+<div  className="rows" hidden={batteryShow}>
 
 
-
-<br />
 <hr />
 <br /><br />
 
     <div >
 
-<select  onChange={(e)=>setbattery(e.target.value)}>
+<select className="w-full"  onChange={(e)=>setbattery(e.target.value)}>
     <option>Battery</option>
     <option>Front wiper blades</option>
     <option>Rear wiper blades</option>
@@ -868,7 +840,7 @@ setexteriorArray( exteriorArray.filter((e:any) => e!=index) )
 
 <br />
 </div>
-<input type="text" placeholder="Notes" onChange={(e)=>setbatteryNotes(e.target.value)} />
+<input className="w-full" type="text" placeholder="Notes" onChange={(e)=>setbatteryNotes(e.target.value)} />
 <br /><br />
             <input type="file" accept="*image/jpeg" capture={true}  className="camera" onChange={ async (param:any)=> {
 
@@ -968,20 +940,12 @@ setbatteryArray( batteryArray.filter((e:any) => e!=index) )
 
 
 </table>
-<br />
-<br />
-<br />
 
-
-
-<br />
-<br />
-</div>
 
 
 
 </div> 
-<br /><br />
+
 
             {/* Underhood things */}
 
@@ -990,18 +954,15 @@ setbatteryArray( batteryArray.filter((e:any) => e!=index) )
                 if(underHShow){
                     setunderHShow(false)
                 }else{setunderHShow(true)}
-            }}>Underhood</button>
-<div hidden={underHShow}>
+            }}>Underhood  { underHArray.length == 0 ? <span className="text-red-800 m-5 font-bold">*</span> : <span className="text-red-700 m-5">({underHArray.length})</span> }</button>
+<div  className="rows" hidden={underHShow}>
 
-<div>
-
-<br />
 <hr />
 <br /><br />
 
     <div >
 
-<select  onChange={(e)=>setunderH(e.target.value)}>
+<select className="w-full"  onChange={(e)=>setunderH(e.target.value)}>
     <option>All OK</option>
     <option>Timing belt</option>
     <option>Drive belt</option>
@@ -1026,7 +987,7 @@ setbatteryArray( batteryArray.filter((e:any) => e!=index) )
 
 <br />
 </div>
-<input type="text" placeholder="Notes" onChange={(e)=>setunderHNotes(e.target.value)} />
+<input className="w-full" type="text" placeholder="Notes" onChange={(e)=>setunderHNotes(e.target.value)} />
 <br /><br />
             <input type="file" accept="*image/jpeg" capture={true}  className="camera" onChange={ async (param:any)=> {
 
@@ -1126,20 +1087,12 @@ setunderHArray( underHArray.filter((e:any) => e!=index) )
 
 
 </table>
-<br />
-<br />
-<br />
 
-
-
-<br />
-<br />
-</div>
 
 
 </div>
  
-<br /><br />
+
 
 
             {/* Underhood Fluids */}
@@ -1149,19 +1102,16 @@ setunderHArray( underHArray.filter((e:any) => e!=index) )
                 if(fluidShow){
                     setfluidShow(false)
                 }else{setfluidShow(true)}
-            }}>Underhood Fluids</button>
-<div hidden={fluidShow}>
-
-<div>
+            }}>Underhood Fluids  { fluidsArray.length == 0 ? <span className="text-red-800 m-5 font-bold">*</span> : <span className="text-red-700 m-5">({fluidsArray.length})</span> }</button>
+<div  className="rows" hidden={fluidShow}>
 
 
-<br />
 <hr />
 <br /><br />
 
     <div >
 
-<select  onChange={(e)=>setfluids(e.target.value)}>
+<select className="w-full"  onChange={(e)=>setfluids(e.target.value)}>
     <option>All Fluids Good</option>
     <option>Engine Oil</option>
     <option>Transmission Oil</option>
@@ -1186,7 +1136,7 @@ setunderHArray( underHArray.filter((e:any) => e!=index) )
 
 <br />
 </div>
-<input type="text" placeholder="Notes" onChange={(e)=>setfluidNotes(e.target.value)} />
+<input className="w-full" type="text" placeholder="Notes" onChange={(e)=>setfluidNotes(e.target.value)} />
 <br /><br />
             <input type="file" accept="*image/jpeg" capture={true}  className="camera" onChange={ async (param:any)=> {
 
@@ -1286,19 +1236,11 @@ setfluidsArray( fluidsArray.filter((e:any) => e!=index) )
 
 
 </table>
-<br />
-<br />
-<br />
 
-
-
-<br />
-<br />
-</div>
 
 
 </div> 
-<br /><br />
+
          {/* TIRES */}
 
 
@@ -1306,28 +1248,25 @@ setfluidsArray( fluidsArray.filter((e:any) => e!=index) )
                 if(tiresShow){
                     settiresShow(false)
                 }else{settiresShow(true)}
-            }}>Tires</button>
-<div hidden={tiresShow}>
+            }}>Tires  { tiresArray.length == 0 ? <span className="text-red-800 m-5 font-bold">*</span> : <span className="text-red-700 m-5">({tiresArray.length})</span> }</button>
+<div  className="rows" hidden={tiresShow}>
 
-<div>
-
-<br />
 <hr />
 <br /><br />
 
 <div className="grid grid-cols-1 lg:grid-cols-2">
 
 
-<span>
+<span className="fields">
      Front left  <input type="number" onChange={(e)=>settirefl(parseInt(e.target.value))} /> 
     </span> 
-    <span>
+    <span className="fields">
       Front right  <input type="number" onChange={(e)=>settirefr(parseInt(e.target.value))} />
     </span>
-    <span>
+    <span className="fields">
       Rear left  <input type="number" onChange={(e)=>settirelr(parseInt(e.target.value))} />
     </span>
-    <span>
+    <span className="fields">
 
       Rear right  <input type="number" onChange={(e)=>settirerr(parseInt(e.target.value))} />
     </span>
@@ -1338,7 +1277,7 @@ setfluidsArray( fluidsArray.filter((e:any) => e!=index) )
     <div >
 
     
-<select  onChange={(e)=>setTires(e.target.value)}>
+<select className="w-full"  onChange={(e)=>setTires(e.target.value)}>
     <option>All OK</option>
     <option>Spare</option>
     <option>Others</option>
@@ -1359,7 +1298,7 @@ setfluidsArray( fluidsArray.filter((e:any) => e!=index) )
 
 <br />
 </div>
-<input type="text" placeholder="Notes" onChange={(e)=>setTiresNotes(e.target.value)} />
+<input className="w-full" type="text" placeholder="Notes" onChange={(e)=>setTiresNotes(e.target.value)} />
 <br /><br />
             <input type="file" accept="*image/jpeg" capture={true}  className="camera" onChange={ async (param:any)=> {
 
@@ -1459,18 +1398,8 @@ settiresArray( tiresArray.filter((e:any) => e!=index) )
 
 
 </table>
-<br />
-<br />
-<br />
-
-
-
-<br />
-<br />
-</div>
 
 </div>
-<br /><br />
 
 
          {/* Brkaes */}
@@ -1480,12 +1409,10 @@ settiresArray( tiresArray.filter((e:any) => e!=index) )
                 if(brakeShow){
                     setbrakeShow(false)
                 }else{setbrakeShow(true)}
-            }}>Brakes</button>
-<div hidden={brakeShow}>
+            }}>Brakes  { brakesArray.length == 0 ? <span className="text-red-800 m-5 font-bold">*</span> : <span className="text-red-700 m-5">({brakesArray.length})</span> }</button>
+<div className="rows" hidden={brakeShow}>
 
-<div>
-
-<br />
+ 
 <hr />
 <br /><br />
 
@@ -1493,16 +1420,16 @@ settiresArray( tiresArray.filter((e:any) => e!=index) )
 <div className="grid grid-cols-1 lg:grid-cols-2">
 
 
-<span>
+<span className="fields">
 Front left B.Pad  <input type="number" onChange={(e)=>setpad1(parseInt(e.target.value))} />
 </span>
-<span>
+<span className="fields">
       Front right B.Pad  <input type="number" onChange={(e)=>setpad2(parseInt(e.target.value))} />
 </span>
-<span>
+<span className="fields">
       Rear left B.Pad <input type="number" onChange={(e)=>setpad3(parseInt(e.target.value))} />
 </span>
-<span>
+<span className="fields">
 
       Rear right B.Pad <input type="number" onChange={(e)=>setpad4(parseInt(e.target.value))} />
 </span>
@@ -1514,7 +1441,7 @@ Front left B.Pad  <input type="number" onChange={(e)=>setpad1(parseInt(e.target.
 
     <div >
 
-<select  onChange={(e)=>setBrakes(e.target.value)}>
+<select className="w-full"  onChange={(e)=>setBrakes(e.target.value)}>
     <option>All OK</option>
     <option>Front Brakes</option>
     <option>Rear Brakes</option>
@@ -1540,7 +1467,7 @@ Front left B.Pad  <input type="number" onChange={(e)=>setpad1(parseInt(e.target.
 <br />
 </div>
 
-<input type="text" placeholder="Notes" onChange={(e)=>setbrakeNotes(e.target.value)} />
+<input className="w-full" type="text" placeholder="Notes" onChange={(e)=>setbrakeNotes(e.target.value)} />
 
 <br /><br />
             <input type="file" accept="*image/jpeg" capture={true}  className="camera" onChange={ async (param:any)=> {
@@ -1641,18 +1568,10 @@ setbrakesArray( brakesArray.filter((e:any) => e!=index) )
 
 
 </table>
-<br />
-<br />
-<br />
 
 
-
-<br />
-<br />
 </div>
 
-</div>
-<br /><br />
 
             {/* Steering */}
 
@@ -1661,19 +1580,16 @@ setbrakesArray( brakesArray.filter((e:any) => e!=index) )
                 if(steeringShow){
                     setsteeringShow(false)
                 }else{setsteeringShow(true)}
-            }}>Steering</button>
-<div hidden={steeringShow}>
-
-<div>
+            }}>Steering  { steeringArray.length == 0 ? <span className="text-red-800 m-5 font-bold">*</span> : <span className="text-red-700 m-5">({steeringArray.length})</span> }</button>
+<div className="rows" hidden={steeringShow}>
 
 
-<br />
 <hr />
 <br /><br />
 
     <div >
 
-<select  onChange={(e)=>setsteering(e.target.value)}>
+<select className="w-full"  onChange={(e)=>setsteering(e.target.value)}>
     <option>All OK</option>
     <option>Steering box</option>
     <option>Outer Tie rod</option>
@@ -1698,7 +1614,7 @@ setbrakesArray( brakesArray.filter((e:any) => e!=index) )
         setsteeringStatus("bad")}} /></td>
 
 <br />
-<input type="text" placeholder="Notes" onChange={(e)=>setsteeringNotes(e.target.value)} />
+<input className="w-full" type="text" placeholder="Notes" onChange={(e)=>setsteeringNotes(e.target.value)} />
 <br />
 <br />
 </div>
@@ -1800,19 +1716,10 @@ setSteeringArray( steeringArray.filter((e:any) => e!=index) )
 
 
 </table>
-<br />
-<br />
-<br />
-
-
-
-<br />
-<br />
-</div>
 
 
 </div>
-<br /><br /> 
+ 
 
 
          {/* Front Suspension */}
@@ -1822,19 +1729,15 @@ setSteeringArray( steeringArray.filter((e:any) => e!=index) )
                 if(fsuspeShow){
                     setfsuspeShow(false)
                 }else{setfsuspeShow(true)}
-            }}>Front Suspension</button>
-<div hidden={fsuspeShow}>
+            }}>Front Suspension  { fSuspeArray.length == 0 ? <span className="text-red-800 m-5 font-bold">*</span> : <span className="text-red-700 m-5">({fSuspeArray.length})</span> }</button>
+<div className="rows" hidden={fsuspeShow}>
 
-<div>
-
-
-<br />
 <hr />
 <br /><br />
 
     <div >
 
-<select  onChange={(e)=>setffSuspe(e.target.value)}>
+<select className="w-full"  onChange={(e)=>setffSuspe(e.target.value)}>
     <option>All OK</option>
     <option>Shocks</option>
     <option>Control Arms</option>
@@ -1862,7 +1765,7 @@ setSteeringArray( steeringArray.filter((e:any) => e!=index) )
 
 <br />
 </div>
-<input type="text" placeholder="Notes" onChange={(e)=>setfSuspeNotes(e.target.value)} />
+<input className="w-full" type="text" placeholder="Notes" onChange={(e)=>setfSuspeNotes(e.target.value)} />
 <br /><br />
             <input type="file" accept="*image/jpeg" capture={true}  className="camera" onChange={ async (param:any)=> {
 
@@ -1962,18 +1865,9 @@ setfSuspeArray( fSuspeArray.filter((e:any) => e!=index) )
 
 
 </table>
-<br />
-<br />
-<br />
 
-
-
-<br />
-<br />
-</div>
 
 </div>
-<br /><br />
 
 
          {/* Rear Suspension */}
@@ -1983,18 +1877,16 @@ setfSuspeArray( fSuspeArray.filter((e:any) => e!=index) )
                 if(rsuspeShow){
                     setrsuspeShow(false)
                 }else{setrsuspeShow(true)}
-            }}>Rear Suspension</button>
-<div hidden={rsuspeShow}>
+            }}>Rear Suspension  { rSuspeArray.length == 0 ? <span className="text-red-800 m-5 font-bold">*</span> : <span className="text-red-700 m-5">({rSuspeArray.length})</span> }</button>
+<div className="rows" hidden={rsuspeShow}>
 
-<div>
 
-<br />
 <hr />
 <br /><br />
 
     <div >
 
-<select  onChange={(e)=>setrSuspe(e.target.value)}>
+<select className="w-full" onChange={(e)=>setrSuspe(e.target.value)}>
     <option>All OK</option>
     <option>Shocks</option>
     <option>Control Arms</option>
@@ -2007,19 +1899,19 @@ setfSuspeArray( fSuspeArray.filter((e:any) => e!=index) )
 
 <br />
 
-    <td>Good<input type="radio" name="rsus"  onChange={()=>{
+    <td className={rSuspeColor}>Good<input type="radio" name="rsus"  onChange={()=>{
         setrSuspeColor(green)
         setrSuspeStatus("good")}} /></td>
-  <td>Moderate<input type="radio" name="rsus"  onChange={()=>{
+  <td className={rSuspeColor}>Moderate<input type="radio" name="rsus"  onChange={()=>{
         setrSuspeColor(yellow)
         setrSuspeStatus("Moderate")}} /></td>
-    <td>Bad<input type="radio" name="rsus"  onChange={()=>{
+    <td className={rSuspeColor}>Bad<input type="radio" name="rsus"  onChange={()=>{
         setrSuspeColor(red)
         setrSuspeStatus("bad")}} /></td>
 
 <br />
 </div>
-<input type="text" placeholder="Notes" onChange={(e)=>setrSuspeNotes(e.target.value)} />
+<input className="w-full" type="text" placeholder="Notes" onChange={(e)=>setrSuspeNotes(e.target.value)} />
 <br /><br />
             <input type="file" accept="*image/jpeg" capture={true}  className="camera" onChange={ async (param:any)=> {
 
@@ -2119,20 +2011,10 @@ setrSuspeArray( rSuspeArray.filter((e:any) => e!=index) )
 
 
 </table>
-<br />
-<br />
-<br />
 
 
-
-<br />
-<br />
 </div>
 
-</div>
-<br /><br />
-
-           
 
 
             {/* Services */}
@@ -2142,18 +2024,15 @@ setrSuspeArray( rSuspeArray.filter((e:any) => e!=index) )
                 if(serviceShow){
                     setserviceShow(false)
                 }else{setserviceShow(true)}
-            }}>Services</button>
-<div hidden={serviceShow}>
+            }}>Services  { serviceArray.length == 0 ? <span className="text-red-800 m-5 font-bold">*</span> : <span className="text-red-700 m-5">({serviceArray.length})</span> }</button>
+<div className="rows" hidden={serviceShow}>
 
-<div>
-
-<br />
 <hr />
 <br /><br />
 
     <div >
 
-<select  onChange={(e)=>setservice(e.target.value)}>
+<select className="w-full"  onChange={(e)=>setservice(e.target.value)}>
     <option>All OK</option>
     <option>Fuel Clean</option>
     <option>Induction Clean</option>
@@ -2176,7 +2055,7 @@ setrSuspeArray( rSuspeArray.filter((e:any) => e!=index) )
 
 <br />
 </div>
-<input type="text" placeholder="Notes" onChange={(e)=>setserviceNotes(e.target.value)} />
+<input className="w-full" type="text" placeholder="Notes" onChange={(e)=>setserviceNotes(e.target.value)} />
 <br /><br />
             <input type="file" accept="*image/jpeg" capture={true}  className="camera" onChange={ async (param:any)=> {
 
@@ -2276,26 +2155,13 @@ setserviceArray( serviceArray.filter((e:any) => e!=index) )
 
 
 </table>
-<br />
-<br />
-<br />
-
-
-
-<br />
-<br />
-</div>
 
 </div>
-<br /><br />
 
 
 
 
 
-<br />
-<br />
-<br /><br />
 <br />
 <button className="btn" onClick={()=>toSend()}>SEND</button>
 

@@ -1,9 +1,33 @@
-.fields{
-    background-color: rgba(20, 97, 81, 0.333);
+  .fields{
+    background-color: rgba(163, 193, 187, 0.333);
     padding: .8em;
-    border: 2px solid rgb(44, 41, 41);
+    border: 2px solid rgb(186, 176, 176);
     border-radius: .3em;
     box-shadow: 2px 1px 2px aquamarine;
     opacity: .7;
-    margin-top: 1em;
+    transition: .8s;
+    width: 100%;
+    margin: .5em;
+}
+
+.fields:hover{
+    background-color: beige;
+}
+
+.rows{
+    border: 1px solid rgb(193, 170, 170);
+    background-color: #d3d3d3;
+    border-radius: .5em;
+    padding: .8em;
+    margin: 1em;
+    box-shadow: 1px 1px 1px rgb(197, 207, 209);
+}
+
+.bloq1{
+    background-color: rgb(237, 240, 240);
+    border-radius: .2em;
+  
+    box-shadow: 1px 2px  rgb(189, 178, 178);
+    padding: 1em;
+    margin: 1em;
 }

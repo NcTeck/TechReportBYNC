@@ -741,6 +741,15 @@ if(n.completed == true){
   
   
   set(refDB(datab , "Completed/"+ index +"/"+"Information" ), totalInfo )
+
+  {totalInfo.map((op:any)=>{
+
+    set(refDB(datab , "ALLCUSTOMERS/" + op.phone ), totalInfo )
+
+
+  })}
+
+
   set(refDB(datab , "Completed/"+ index +"/"+"Infoflat" ), info )
       alert("COMPLETED")
   

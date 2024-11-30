@@ -3,12 +3,14 @@ import { set, ref as refDb, getDatabase, onValue  } from "firebase/database";
 import { getDownloadURL, getStorage, ref as refSto, uploadBytes } from "firebase/storage";
 import { useEffect, useState } from "react"
 import app from "../fireconfig";
+import removeAccents from 'remove-accents';
 
 
 
 
 
 export const SetCustomer =()=>{
+
     let today = new Date();
     let dd = String(today.getDate()).padStart(2, '0');
     let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
@@ -23,7 +25,8 @@ export const SetCustomer =()=>{
     const store = getStorage(app);
     const refdataEmp = refDb(datab , "Users")
     const refSvc = refDb(datab , "Services")
-    const refNames = refDb(datab , "Completed")
+    const refNames = refDb(datab , "ALLCUSTOMERS")
+    const refROS = refDb(datab , "ROS")
     // Customer Data
     const [allNames , setallnames]=useState<string[]>([]);
 
@@ -43,6 +46,7 @@ export const SetCustomer =()=>{
     const [srvSelected , setSvcSelected] =useState<any>([])
     const [other ,setOther]=useState<any>()
     const [otherValue ,setOtherValue]=useState<any>()
+    const [findName ,setfindName]=useState<string>()
 
     // Vehicle data
     const [make , setmake]=useState<any>();
@@ -50,7 +54,7 @@ export const SetCustomer =()=>{
     const [yearCar , setYearCar]=useState<any>();
     const [plate , setplate]=useState<any>();
     const [vin , setVin]=useState<any>();
-    const [ro , setRo]=useState<number>();
+    const [ro , setRo]=useState<number>(0);
     const [state , setstate]=useState<number>(0);
     const [millage , setMillsge]=useState<number>();
 
@@ -58,6 +62,7 @@ export const SetCustomer =()=>{
 
     const [loged , setloged]=useState()
 
+    // const vinSCaner = vinDecoder("dwdd")
 
 
 useEffect(()=>{
@@ -86,10 +91,17 @@ let arrayTechs =[]
         }
 
 
+onValue(refROS , snap =>{
+    snap.forEach(snap2 =>{
+        setRo(parseInt(snap2.val()))
+    })
+})
+
 let namesArrays:any=[]
 onValue(refNames , snap=>{
     snap.forEach(snap2 =>{
-snap2.child('Information').forEach(snap3=>{
+snap2.forEach(snap3=>{
+
   namesArrays.push({
     name:snap3.child('name').val(),
     last:snap3.child('last').val(),
@@ -102,7 +114,6 @@ snap2.child('Information').forEach(snap3=>{
     model:snap3.child('model').val(),
     vin:snap3.child('vin').val(),
     plate:snap3.child('plate').val(),
-    millage:snap3.child('millage').val(),
     yearcar:snap3.child('yearcar').val(),
   }) 
 setallnames(namesArrays)
@@ -127,7 +138,7 @@ setServises(arraySvc)
 
  
 
-},[])
+},[ro])
 
 const handleFiles = async ( e:any)=>{
 
@@ -153,17 +164,19 @@ setstate(state+1)
 }
 
 function assign() {
+    setRo(ro+1)
 
     if (custName == null||custLast == null||cusPhone == null||custState == null||custcity == null||custStreet == null||custZip == null||make == null||model == null||yearCar == null||plate == null||vin == null||srvSelected == null||techSelected == null || ro==null||millage==null) {
         
 alert('please check fields')
     } else {
 
+        
   
-    
+
      
-set(refDb(datab , "NewSet/" + ro   ) , {
-    
+set(refDb(datab , "NewSet/" + ro ) , {
+    estado:"NOAP",
     phone:cusPhone,
     currentYear:yy,
     currentMonth:mm,
@@ -188,10 +201,10 @@ set(refDb(datab , "NewSet/" + ro   ) , {
     srvSelected
 
 }).then(()=>{
+    set(refDb(datab , "ROS/" +ro+1 ) , ro+1)
     alert('Success')
     window.location.reload();
 }).catch((err)=>alert(err))
-
 
 
     }
@@ -199,18 +212,29 @@ set(refDb(datab , "NewSet/" + ro   ) , {
 }
 
 
-
     return(
-        <div>
+        <div className="bloq1">
 
-<div className="Customers">
-<div >
+<div>
+
 Customer exist?
 
 
-<input type="text" placeholder="Search Name" />
+<input type="text" placeholder="Search Name" onChange={(e:any)=>setfindName(e.target.value)} />
+
+
+
+
+
+
 
 {allNames.map((i:any)=>{
+let fullname:any = i.name+" "+i.last;
+for (let m = 0; m < fullname.length; m++) {
+
+    if (fullname.substring(0,m) == findName ) {
+        
+     
     return(
         <li>
 {i.name} {i.last} <button className="btnBar" onClick={()=>{
@@ -230,61 +254,121 @@ setCustZip(i.zip)
 }}>Select</button>
         </li>
     )
+
+
+    }
+    
+    
+}
+
+
+
 })}
 
 <hr />
 
 
 <br /> <br />
-<div className="grid md:grid-cols-3 lg:grid-cols-4 justify-center ">
+<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 text-center justify-center ">
+<span>
+{custName != null ?null: <span className="text-red-600">*Required</span> }<input type="text" value={custName} placeholder="First Name" onChange={(e)=>setCustName(e.target.value)} /> <br /> <br />
+</span>
+    <span>
+{custLast != null ?null: <span className="text-red-600">*Required</span> }<input type="text"  value={custLast} placeholder="Last Name" onChange={(e)=>setCustLast(e.target.value)} /> <br /> <br />
+    </span>
+    <span>
+{cusPhone != null ?null: <span className="text-red-600">*Required</span> }<input type="number" value={cusPhone} placeholder="Phone" onChange={(e)=>setCustPhone(parseInt(e.target.value))} /> <br /> <br />
+    </span>
+<span>
 
-<input type="text" value={custName} placeholder="First Name" onChange={(e)=>setCustName(e.target.value)} /> <br /> <br />
-<input type="text"  value={custLast} placeholder="Last Name" onChange={(e)=>setCustLast(e.target.value)} /> <br /> <br />
-<input type="number" value={cusPhone} placeholder="Phone" onChange={(e)=>setCustPhone(parseInt(e.target.value))} /> <br /> <br />
+{custState != null ?null: <span className="text-red-600">*Required</span> }<input type="text" value={custState} placeholder="State" onChange={(e)=>setCustState(e.target.value)} /> <br /> <br />
+</span>
+<span>
 
-<input type="text" value={custState} placeholder="State" onChange={(e)=>setCustState(e.target.value)} /> <br /> <br />
-<input type="text" value={custcity} placeholder="City" onChange={(e)=>setCuscity(e.target.value)} /> <br /> <br />
-<input type="text" value={custStreet} placeholder="Street" onChange={(e)=>setCustStreet(e.target.value)} /> <br /> <br />
-<input type="text" value={custZip} placeholder="ZipCode" onChange={(e)=>setCustZip(e.target.value)} /> <br /> <br />
+{custcity != null ?null: <span className="text-red-600">*Required</span> }<input type="text" value={custcity} placeholder="City" onChange={(e)=>setCuscity(e.target.value)} /> <br /> <br />
+</span>
+<span>
 
+{custStreet != null ?null: <span className="text-red-600">*Required</span> }<input type="text" value={custStreet} placeholder="Street" onChange={(e)=>setCustStreet(e.target.value)} /> <br /> <br />
+</span>
+<span>
+
+{custZip != null ?null: <span className="text-red-600">*Required</span> }<input type="text" value={custZip} placeholder="ZipCode" onChange={(e)=>setCustZip(e.target.value)} /> <br /> <br />
+</span>
+
+</div>
 
 <h2>Vehicle</h2>
 <hr />
 
+<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 text-center justify-center ">
+
+<span>
+
+{make != null ?null: <span className="text-red-600">*Required</span> }<input type="text" value={make} placeholder="Make" onChange={(e)=>setmake(e.target.value)} /> <br /> <br />
+</span>
+<span>
+
+{model != null ?null: <span className="text-red-600">*Required</span> }<input type="text"  value={model} placeholder="Model" onChange={(e)=>setmodel(e.target.value)} /> <br /> <br />
+</span>
+<span>
+
+{yearCar != null ?null: <span className="text-red-600">*Required</span> }<input type="number" value={yearCar} placeholder="Year" onChange={(e)=>setYearCar(e.target.value)} /> <br /> <br />
+</span>
+<span>
+
+{plate != null ?null: <span className="text-red-600">*Required</span> }<input type="text" value={plate} placeholder="Plate" onChange={(e)=>setplate(e.target.value)} /> <br /> <br />
+</span>
+<span>
 
 
-<input type="text" value={make} placeholder="Make" onChange={(e)=>setmake(e.target.value)} /> <br /> <br />
-<input type="text"  value={model} placeholder="Model" onChange={(e)=>setmodel(e.target.value)} /> <br /> <br />
-<input type="number" value={yearCar} placeholder="Year" onChange={(e)=>setYearCar(e.target.value)} /> <br /> <br />
-<input type="text" value={plate} placeholder="Plate" onChange={(e)=>setplate(e.target.value)} /> <br /> <br />
-<input type="text" value={vin} placeholder="Vin" onChange={(e)=>setVin(e.target.value)} /> <br /> <br />
-<input type="number"   placeholder="Ro Number" onChange={(e)=>setRo(parseInt(e.target.value))} /> <br /> <br />
-<input type="number" value={millage} placeholder="Millage" onChange={(e)=>setMillsge(parseInt(e.target.value))} /> <br /> <br />
+
+{vin != null ?null: <span className="text-red-600">*Required</span> }<input type="text" value={vin} placeholder="Vin" onChange={(e)=>setVin(e.target.value)} /> <br /> <br />
+</span>
+<span>
+
+
+
+
+
+
+
+<input type="number" value={ro} onChange={(e)=>setRo(parseInt(e.target.value))} /> <br /> <br />
+</span>
+<span>
+
+{millage != null ?null: <span className="text-red-600">*Required</span> }<input type="number"  placeholder="Millage" onChange={(e)=>setMillsge(parseInt(e.target.value))} /> <br /> <br />
+</span>
+<span>
+
 <input type="file"  accept="*image/jpeg" capture={true} className="camera"  onChange={handleFiles}  /> <br /> <br />
+</span>
 
 </div>
 
- 
+ <div className="flex">
+
 {urls.map((i:any)=>{
     return(
-        <div>
+        <span>
             <img src={i} width={100} />
-<br />
-        </div>
+
+        </span>
         
     )
 })}       
+ </div>
 
 <hr />
 </div>
-<h2>Service</h2>
+<h2>Services</h2>
 
-<div className="bg-stone-600 w-full h-72 overflow-scroll rounded p-4">
+<div className="rows h-80 overflow-scroll">
 
 
 {services.map(index=>{
     return(
-        <li>{index.name}- ({index.flat}) <button className="btnBar" onClick={()=>{
+        <li>{index.name}- ({index.flat}) <button className="approve" onClick={()=>{
             
             setSvcSelected([...srvSelected , {
 name:index.name,
@@ -301,26 +385,15 @@ flat:index.flat
 
 </div>
 
-{srvSelected.map((index:any)=>{
-    return(
 
-        <table key={index.name}>{index.name} - ({index.flat})
-        
-        <button className="btnBar" onClick={()=>{
-        
-setSvcSelected( srvSelected.filter((e:any) => e!=index) )
-
-        }}>Delete</button></table>
-    )
-})}
 
 <br /> <br />
-    <textarea placeholder="Other Servise"  onChange={(e)=>setOther(e.target.value)}/>
+    <textarea className="w-full" placeholder="Other Servise"  onChange={(e)=>setOther(e.target.value)}/>
         <br />
-        <input type="number" placeholder="Flat Rate" onChange={(e)=>setOtherValue(e.target.value)}/>
+        <input className="w-full" type="number" placeholder="Flat Rate" onChange={(e)=>setOtherValue(e.target.value)}/>
     <br /> <br />
-
-    <button className="btnBar" onClick={()=>{
+<span className="grid justify-center">
+    <button className="approve w-64" onClick={()=>{
 if (other==null ||otherValue==null) {
     alert('Please check Servise')
 } else {
@@ -331,16 +404,54 @@ if (other==null ||otherValue==null) {
 }
            
             }} >Add</button>
-
+ </span>
     <br /> <br />
+   <table>
 
-    <select className="btnBar" onChange={(e)=>setTechSelected(e.target.value)}>
-        <option>Select Tech </option>
+    <tr>
+        <th>
+            Description
+        </th>
+        <th>
+            Flat rate
+        </th>
+        <th>
+            Action
+        </th>
+    </tr>
+
+    {srvSelected.map((index:any)=>{
+    return(
+<tr>
+    <td>{index.name}</td>
+         <td>{index.flat} </td> 
+        <td>
+                    <button className="decline" onClick={()=>{
+        
+setSvcSelected( srvSelected.filter((e:any) => e!=index) )
+
+        }}>Delete</button>
+        </td>
+
+
+   </tr>
+    )
+})}
+
+   
+   </table>
+
+<br /><br />
+    <select className="btnBar w-64" onChange={(e)=>setTechSelected(e.target.value)}>
+        <option >Select Tech </option>
 
 {techs.map(index=>{
+
+    
     return(
         <option>
-            {index}
+            {removeAccents(index)
+            }
         </option>
     )
 })}
@@ -348,9 +459,11 @@ if (other==null ||otherValue==null) {
     </select>
     <br /> <br />
 
-<button className="btnBar" onClick={()=>assign()} >Set</button>
+<button className="btnBar w-full m-2 font-bold" onClick={()=>assign()} >SET</button>
 
-</div>
+
+
+<br /><br /><br /><br />
 
 
 

@@ -1,13 +1,17 @@
-.btDiag{
 
-    background: #7474BF;  /* fallback for old browsers */
-    background: -webkit-linear-gradient(to right, #348AC7, #7474BF);  /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to right, #348AC7, #7474BF); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+.btDiag{
+    background: #8e9eab;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #eef2f3, #8e9eab);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #eef2f3, #8e9eab); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     
 
+    /* background-image: url(https://insights.regencysupply.com/hubfs/BLOG%20-%20HVAC.jpg);
+background-repeat: no-repeat;
+background-size: cover;
+background-position: center; */
 opacity: .8;
-    color: rgb(255, 233, 40);
-
+    color: rgb(25, 78, 91);
     transition: 1s ease;
     font-weight: bold;
     padding:.7em;
@@ -16,15 +20,40 @@ opacity: .8;
     margin-left: 5%;
 }
 
+.btDiag::after{
+    content: "";
+    width: 35%;
+    height: 30px;
+    opacity: .4;
+border-top-right-radius: 2em ;   
+border-bottom-left-radius: 2em ;   
+   background-image: url(https://media.istockphoto.com/id/1082720986/photo/expressway-and-modern-urban-architecture-in-qiantang-river-new-town-hangzhou-china.jpg?s=612x612&w=0&k=20&c=NgXXcxKTldhCwkS0P7ocDtkZs1Yd2pp5GNbBu1JJmdo=);
+background-repeat: no-repeat;
+background-size: cover;
+background-position: center;
+float: right;
+margin-right: 1px;
+transition: 1s;
+}
+
+.btDiag:hover::after{
+
+    opacity: 1;
+    
+}
 
 .btDiagHvac{
+    background: #8e9eab;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #eef2f3, #8e9eab);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #eef2f3, #8e9eab); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    
 
-    background-image: url(https://insights.regencysupply.com/hubfs/BLOG%20-%20HVAC.jpg);
+    /* background-image: url(https://insights.regencysupply.com/hubfs/BLOG%20-%20HVAC.jpg);
 background-repeat: no-repeat;
 background-size: cover;
-background-position: center;
+background-position: center; */
 opacity: .8;
-    color: rgb(255, 233, 40);
+    color: rgb(25, 78, 91);
     transition: 1s ease;
     font-weight: bold;
     padding:.7em;
@@ -32,14 +61,38 @@ opacity: .8;
     width: 90%;
     margin-left: 5%;
 }
+
+.btDiagHvac::after{
+    content: "";
+    width: 35%;
+    height: 30px;
+    opacity: .4;
+border-top-right-radius: 2em ;   
+border-bottom-left-radius: 2em ;   
+   background-image: url(https://insights.regencysupply.com/hubfs/BLOG%20-%20HVAC.jpg);
+background-repeat: no-repeat;
+background-size: cover;
+background-position: center;
+float: right;
+margin-right: 1px;
+transition: 1s;
+}
+
+.btDiagHvac:hover::after{
+
+    opacity: 1;
+    
+}
+
 .btnDash{
 
-    background-image: url(https://media.istockphoto.com/id/1206004743/vector/car-dashboard.jpg?s=612x612&w=0&k=20&c=tJB0MzzYqHLX_0_ytT3-OEG-glxmdAD-XIEmA4BP4F4=);
-background-repeat: no-repeat;
-background-size: cover;
-background-position: center;
+    background: #8e9eab;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #eef2f3, #8e9eab);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #eef2f3, #8e9eab); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    color: rgb(25, 78, 91);
+
+
 opacity: .8;
-    color: rgb(255, 233, 40);
     transition: 1s ease;
     font-weight: bold;
     padding:.7em;
@@ -48,18 +101,39 @@ opacity: .8;
     margin-left: 5%;
 }
 
+.btnDash::after{
+    content: "";
+    width: 35%;
+    height: 30px;
+    opacity: .4;
+    border-top-right-radius: 2em ;   
+    background-image: url(https://media.istockphoto.com/id/1206004743/vector/car-dashboard.jpg?s=612x612&w=0&k=20&c=tJB0MzzYqHLX_0_ytT3-OEG-glxmdAD-XIEmA4BP4F4=);
+border-bottom-left-radius: 2em ;   
+background-repeat: no-repeat;
+background-size: cover;
+background-position: center;
+float: right;
+margin-right: 1px;
+transition: 1s;
+}
+
+.btnDash:hover::after{
+
+    opacity: 1;
+    
+}
 
 
 
 .btnBattery{
-
-    background-image: url(https://www.mach1services.com/wp-content/uploads/2020/09/car-battery-work.jpg);
-background-repeat: no-repeat;
-background-size: cover;
-background-position: center;
-
-opacity: .8;
-color: rgb(255, 233, 40);
+    
+    background: #8e9eab;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #eef2f3, #8e9eab);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #eef2f3, #8e9eab); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    color: rgb(25, 78, 91);
+    
+    
+    opacity: .8;
     transition: 1s ease;
     font-weight: bold;
     padding:.7em;
@@ -67,177 +141,415 @@ color: rgb(255, 233, 40);
     width: 90%;
     margin-left: 5%;
 }
+
+.btnBattery::after{
+    content: "";
+    width: 35%;
+    height: 30px;
+    opacity: .4;
+    border-top-right-radius: 2em ;   
+    border-bottom-left-radius: 2em ;   
+    background-repeat: no-repeat;
+    background-image: url(https://www.mach1services.com/wp-content/uploads/2020/09/car-battery-work.jpg);
+background-size: cover;
+background-position: center;
+float: right;
+margin-right: 1px;
+transition: 1s;
+}
+
+.btnBattery:hover::after{
+
+    opacity: 1;
+    
+}
+
+
+
 
 .btnExt{
+    
+        background: #8e9eab;  /* fallback for old browsers */
+        background: -webkit-linear-gradient(to right, #eef2f3, #8e9eab);  /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to right, #eef2f3, #8e9eab); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        color: rgb(25, 78, 91);
+        
+        
+        opacity: .8;
+        transition: 1s ease;
+        font-weight: bold;
+        padding:.7em;
+        margin: 2px;
+        width: 90%;
+        margin-left: 5%;
+    }
+    
+    .btnExt::after{
+        background-image: url(https://dynastyautobody.com/wp-content/uploads/2024/03/rear-light-of-blue-car-101575484-5b8cb6b846e0fb0050b35ff4.jpg);
+        content: "";
+        width: 35%;
+        height: 30px;
+        opacity: .4;
+        border-top-right-radius: 2em ;   
+        border-bottom-left-radius: 2em ;   
+        background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    float: right;
+    margin-right: 1px;
+    transition: 1s;
+    }
+    
+    .btnExt:hover::after{
+    
+        opacity: 1;
+        
+    }
 
-    background-image: url(https://dynastyautobody.com/wp-content/uploads/2024/03/rear-light-of-blue-car-101575484-5b8cb6b846e0fb0050b35ff4.jpg);
-background-repeat: no-repeat;
-background-size: cover;
-background-position: center;
-
-opacity: .8;
-    color: rgb(255, 233, 40);
-    transition: 1s ease;
-    font-weight: bold;
-    padding:.7em;
-    margin: 2px;
-    width: 90%;
-    margin-left: 5%;
-}
-
-.btnUnderhood{
-
-    background-image: url(https://yotanation.com/cdn/shop/products/image_535x.png?v=1710298857);
-background-repeat: no-repeat;
-background-size: cover;
-background-position: center;
-
-opacity: .8;
-color: rgb(255, 233, 40);
-    transition: 1s ease;
-    font-weight: bold;
-    padding:.7em;
-    margin: 2px;
-    width: 90%;
-    margin-left: 5%;
-}
 
 
-.btnFluids{
 
-    background-image: url(https://importmotorworx.com/wp-content/uploads/Car-Fluid.webp);
-background-repeat: no-repeat;
-background-size: cover;
-background-position: center;
 
-opacity: .8;
-color: rgb(255, 233, 40);
-    transition: 1s ease;
-    font-weight: bold;
-    padding:.7em;
-    margin: 2px;
-    width: 90%;
-    margin-left: 5%;
-}
 
-.btnTires{
 
-    background-image: url(https://s3-prod.rubbernews.com/s3fs-public/tires-main_i.jpg);
-background-repeat: no-repeat;
-background-size: cover;
-background-position: center;
 
-opacity: .8;
-    color: rgb(255, 233, 40);
-    transition: 1s ease;
-    font-weight: bold;
-    padding:.7em;
-    margin: 2px;
-    width: 90%;
-    margin-left: 5%;
-}
+    
+    .btnUnderhood{
+        
+        background: #8e9eab;  /* fallback for old browsers */
+        background: -webkit-linear-gradient(to right, #eef2f3, #8e9eab);  /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to right, #eef2f3, #8e9eab); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        color: rgb(25, 78, 91);
+        
+        
+        opacity: .8;
+        transition: 1s ease;
+        font-weight: bold;
+        padding:.7em;
+        margin: 2px;
+        width: 90%;
+        margin-left: 5%;
+    }
+    
+    .btnUnderhood::after{
+        content: "";
+        background-image: url(https://yotanation.com/cdn/shop/products/image_535x.png?v=1710298857);
+        width: 35%;
+        height: 30px;
+        opacity: .4;
+        border-top-right-radius: 2em ;   
+        border-bottom-left-radius: 2em ;   
+        background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    float: right;
+    margin-right: 1px;
+    transition: 1s;
+    }
+    
+    .btnUnderhood:hover::after{
+    
+        opacity: 1;
+        
+    }
 
-.btnBrakes{
 
-    background-image: url(https://upload.wikimedia.org/wikipedia/commons/7/72/Disk_brake_dsc03682.jpg);
-background-repeat: no-repeat;
-background-size: cover;
-background-position: center;
 
-opacity: .8;
-    color: rgb(255, 233, 40);
-    transition: 1s ease;
-    font-weight: bold;
-    padding:.7em;
-    margin: 2px;
-    width: 90%;
-    margin-left: 5%;
-}
 
-.btnSteering{
+    
+    .btnFluids{
+        
+        background: #8e9eab;  /* fallback for old browsers */
+        background: -webkit-linear-gradient(to right, #eef2f3, #8e9eab);  /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to right, #eef2f3, #8e9eab); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        color: rgb(25, 78, 91);
+        
+        
+        opacity: .8;
+        transition: 1s ease;
+        font-weight: bold;
+        padding:.7em;
+        margin: 2px;
+        width: 90%;
+        margin-left: 5%;
+    }
+    
+    .btnFluids::after{
+        content: "";
+        width: 35%;
+        height: 30px;
+        opacity: .4;
+        background-image: url(https://importmotorworx.com/wp-content/uploads/Car-Fluid.webp);
+        border-top-right-radius: 2em ;   
+        border-bottom-left-radius: 2em ;   
+        background-repeat: no-repeat;
+        background-size: cover;
+    background-position: center;
+    float: right;
+    margin-right: 1px;
+    transition: 1s;
+    }
+    
+    .btnFluids:hover::after{
+    
+        opacity: 1;
+        
+    }
 
-    background-image: url(https://ic.carid.com/articles/do-i-have-a-steering-rack-or-a-steering-box-connected-to-my-wheel/steering-parts_0.jpg);
-background-repeat: no-repeat;
-background-size: cover;
-background-position: center;
 
-opacity: .8;
-color: rgb(255, 233, 40);
-    transition: 1s ease;
-    font-weight: bold;
-    padding:.7em;
-    margin: 2px;
-    width: 90%;
-    margin-left: 5%;
-}
 
-.btnFsuspesion{
+    
+    .btnTires{
+        
+        background: #8e9eab;  /* fallback for old browsers */
+        background: -webkit-linear-gradient(to right, #eef2f3, #8e9eab);  /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to right, #eef2f3, #8e9eab); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        color: rgb(25, 78, 91);
+        
+        
+        opacity: .8;
+        transition: 1s ease;
+        font-weight: bold;
+        padding:.7em;
+        margin: 2px;
+        width: 90%;
+        margin-left: 5%;
+    }
+    
+    .btnTires::after{
+        content: "";
+        background-image: url(https://s3-prod.rubbernews.com/s3fs-public/tires-main_i.jpg);
+        width: 35%;
+        height: 30px;
+        opacity: .4;
+        border-top-right-radius: 2em ;   
+        border-bottom-left-radius: 2em ;   
+        background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    float: right;
+    margin-right: 1px;
+    transition: 1s;
+    }
+    
+    .btnTires:hover::after{
+    
+        opacity: 1;
+        
+    }
 
+
+
+    
+    .btnBrakes{
+    
+        background: #8e9eab;  /* fallback for old browsers */
+        background: -webkit-linear-gradient(to right, #eef2f3, #8e9eab);  /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to right, #eef2f3, #8e9eab); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        color: rgb(25, 78, 91);
+        
+        
+        opacity: .8;
+        transition: 1s ease;
+        font-weight: bold;
+        padding:.7em;
+        margin: 2px;
+        width: 90%;
+        margin-left: 5%;
+    }
+    
+    .btnBrakes::after{
+        content: "";
+        width: 35%;
+        background-image: url(https://upload.wikimedia.org/wikipedia/commons/7/72/Disk_brake_dsc03682.jpg);
+        height: 30px;
+        opacity: .4;
+        border-top-right-radius: 2em ;   
+        border-bottom-left-radius: 2em ;   
+        background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    float: right;
+    margin-right: 1px;
+    transition: 1s;
+    }
+    
+    .btnBrakes:hover::after{
+    
+        opacity: 1;
+        
+    }
+
+
+
+    
+    .btnSteering{
+        
+        background: #8e9eab;  /* fallback for old browsers */
+        background: -webkit-linear-gradient(to right, #eef2f3, #8e9eab);  /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to right, #eef2f3, #8e9eab); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        color: rgb(25, 78, 91);
+        
+        
+        opacity: .8;
+        transition: 1s ease;
+        font-weight: bold;
+        padding:.7em;
+        margin: 2px;
+        width: 90%;
+        margin-left: 5%;
+    }
+    
+    .btnSteering::after{
+        content: "";
+        width: 35%;
+        background-image: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR5Ks9L_RlhMj5s265dGTTJ3Aa8b7Xu_aACpA&s);
+        height: 30px;
+        opacity: .4;
+        border-top-right-radius: 2em ;   
+        border-bottom-left-radius: 2em ;   
+        background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    float: right;
+    margin-right: 1px;
+    transition: 1s;
+    }
+    
+    .btnSteering:hover::after{
+    
+        opacity: 1;
+        
+    }
+
+
+
+    
+    .btnFsuspesion{
+    
+        background: #8e9eab;  /* fallback for old browsers */
+        background: -webkit-linear-gradient(to right, #eef2f3, #8e9eab);  /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to right, #eef2f3, #8e9eab); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        color: rgb(25, 78, 91);
+        
+        
+        opacity: .8;
+        transition: 1s ease;
+        font-weight: bold;
+        padding:.7em;
+        margin: 2px;
+        width: 90%;
+        margin-left: 5%;
+    }
+    
+    .btnFsuspesion::after{
+        content: "";
+        width: 35%;
+        height: 30px;
     background-image: url(https://automotiveperformancegroup.com/wp-content/uploads/2023/09/MicrosoftTeams-image-7.jpg);
-background-repeat: no-repeat;
-background-size: cover;
-background-position: center;
-
-opacity: .8;
-color: rgb(255, 233, 40);
-    transition: 1s ease;
-    font-weight: bold;
-    padding:.7em;
-    margin: 2px;
-    width: 90%;
-    margin-left: 5%;
-}
-
-.btnRsuspesion{
-
-    background-image: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTm9RlkKFRaBLSyxUtzf1V0s4wZIuT1m_fRPw&s);
-background-repeat: no-repeat;
-background-size: cover;
-background-position: center;
-opacity: .8;
-    color: rgb(255, 233, 40);
-    transition: 1s ease;
-    font-weight: bold;
-    padding:.7em;
-    margin: 2px;
-    width: 90%;
-    margin-left: 5%;
-}
+        opacity: .4;
+        border-top-right-radius: 2em ;   
+        border-bottom-left-radius: 2em ;   
+        background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    float: right;
+    margin-right: 1px;
+    transition: 1s;
+    }
+    
+    .btnFsuspesion:hover::after{
+    
+        opacity: 1;
+        
+    }
 
 
-.btnExhaust{
 
-    background-image: url(https://www.carparts.com/blog/wp-content/uploads/2021/02/exhaust-system-of-a-car-1024x683.jpg);
-background-repeat: no-repeat;
-background-size: cover;
-background-position: center;
+    
+    .btnRsuspesion{
+        
+        background: #8e9eab;  /* fallback for old browsers */
+        background: -webkit-linear-gradient(to right, #eef2f3, #8e9eab);  /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to right, #eef2f3, #8e9eab); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        color: rgb(25, 78, 91);
+        
+        
+        opacity: .8;
+        transition: 1s ease;
+        font-weight: bold;
+        padding:.7em;
+        margin: 2px;
+        width: 90%;
+        margin-left: 5%;
+    }
+    
+    .btnRsuspesion::after{
+        content: "";
+        width: 35%;
+        height: 30px;
+        opacity: .4;
+        background-image: url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTm9RlkKFRaBLSyxUtzf1V0s4wZIuT1m_fRPw&s);
+        border-top-right-radius: 2em ;   
+        border-bottom-left-radius: 2em ;   
+        background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    float: right;
+    margin-right: 1px;
+    transition: 1s;
+    }
+    
+    .btnRsuspesion:hover::after{
+    
+        opacity: 1;
+        
+    }
 
-opacity: .8;
-    color: rgb(255, 233, 40);
-    transition: 1s ease;
-    font-weight: bold;
-    padding:.7em;
-    margin: 2px;
-    width: 90%;
-    margin-left: 5%;
-}
 
-.btnSvc{
 
-    background-image: url(https://www.mrclutch.com/blog/wp-content/uploads/2023/01/Photo-of-a-mechanic-completing-a-full-service-on-a-car.jpg);
-background-repeat: no-repeat;
-background-size: cover;
-background-position: center;
 
-opacity: .8;
-color: rgb(255, 233, 40);
-    transition: 1s ease;
-    font-weight: bold;
-    padding:.7em;
-    margin: 2px;
-    width: 90%;
-    margin-left: 5%;
-}
+
+
+    
+    .btnSvc{
+    
+        background: #8e9eab;  /* fallback for old browsers */
+        background: -webkit-linear-gradient(to right, #eef2f3, #8e9eab);  /* Chrome 10-25, Safari 5.1-6 */
+        background: linear-gradient(to right, #eef2f3, #8e9eab); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+        color: rgb(25, 78, 91);
+        
+        
+        opacity: .8;
+        transition: 1s ease;
+        font-weight: bold;
+        padding:.7em;
+        margin: 2px;
+        width: 90%;
+        margin-left: 5%;
+    }
+    
+    .btnSvc::after{
+        content: "";
+        width: 35%;
+        height: 30px;
+        opacity: .4;
+        border-top-right-radius: 2em ;   
+        background-image: url(https://www.mrclutch.com/blog/wp-content/uploads/2023/01/Photo-of-a-mechanic-completing-a-full-service-on-a-car.jpg);
+        border-bottom-left-radius: 2em ;   
+        background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    float: right;
+    margin-right: 1px;
+    transition: 1s;
+    }
+    
+    .btnSvc:hover::after{
+    
+        opacity: 1;
+        
+    }
 
 
 
@@ -400,3 +712,28 @@ transition: 1s;
 transform: scale(1.1);
 background-color: #43738a;
 }
+
+
+.sidepanel {
+    height: 100%; /* Specify a height */
+ /* 0 width - change this with JavaScript */
+    position: absolute; /* Stay in place */
+    z-index: 1; /* Stay on top */
+    color: red;
+    font-size: x-large;
+    box-shadow: 2px 2px 2px rgb(213, 224, 226);
+    padding-bottom: 1em;
+    top: 0;
+    left: 0;
+border-radius: .5em;
+    background-color: #e8e8e8; /* Black*/
+    overflow-x: hidden; /* Disable horizontal scroll */
+    padding-top: 10px; /* Place content 60px from the top */
+    transition: 0.6s; /* 0.5 second transition effect to slide in the sidepanel */
+  }
+  
+ 
+  
+ 
+  
+ 

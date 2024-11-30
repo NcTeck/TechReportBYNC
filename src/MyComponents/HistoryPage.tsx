@@ -14,6 +14,8 @@ export const History =()=>{
 
     const nameUserRef = refDB(datab , "Users")
     const [namelogin , setnameogin] = useState<string>();
+    const [findRo , setFindRo] = useState<number>();
+    const [finddate , setFindDate] = useState<any>();
     const [ros , setros] = useState<number[]>([]);
     const [visible , setvisible] = useState<any>();
 
@@ -44,14 +46,13 @@ if (user != null) {
     let arrayros:any =[]
     onValue(nameAdvRef , snap=>{
         snap.forEach(snap2=>{
-            snap2.child("Information").forEach(snap3=>{
-if (snap3.child("emp").val() == namelogin || snap3.child("advisor").val() == namelogin ) {
+          
     arrayros.push(snap2.key)
     setros(arrayros)
     
-}
+
                     
-            })
+            
            
             
     
@@ -81,7 +82,18 @@ const toggleVisibility =(itm:any)=>{
 
 
 
-<div>History</div>
+
+<h2>History</h2>
+
+
+
+<input type="number" placeholder="Search RO" onChange={(e)=>setFindRo(parseInt(e.target.value))} />
+
+<input type="date" onChange={(e)=>setFindDate(e.target.value)}  />
+
+
+
+
 
 {ros.map((index:any)=>{
 
@@ -445,12 +457,20 @@ snap.forEach(snap2=>{
 
 
 
+ for (let n = 0; n <= index.length; n++) {
+
+        if (index.substring(0, n) == findRo ||  finddate == yy+"-"+mm+"-"+dd ) {
+
+            return(
 
 
 
 
 
-    return(<div>
+<div>
+
+
+
         <button className="bg-opacity-80 bg-orange-300 rounded p-3 w-full" onClick={()=>{
                             toggleVisibility(index)
 
@@ -548,6 +568,10 @@ return(
 
 
     </table>          
+
+
+
+
 
 <br />
 TOTAL LABOR: <b> {horas} </b> 
@@ -939,12 +963,16 @@ TOTAL LABOR: <b> {horas} </b>
 
              </div> : null }
 
+</div>
 
 
+            )
+            
+        }
+        
+    }
 
 
-    </div>
-    )
 })}
 
 

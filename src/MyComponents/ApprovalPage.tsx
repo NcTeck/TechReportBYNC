@@ -1,4 +1,4 @@
-import { getDatabase, onValue, ref, ref as refDB, set } from "firebase/database";
+import { getDatabase, onValue, ref, ref as refDB, set, update } from "firebase/database";
 import app from "../fireconfig";
 import { useEffect, useState } from "react";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
@@ -21,6 +21,7 @@ const auth = getAuth(app)
 const nameAdvRef = refDB(datab , "PreAprobal")
 const nameUserRef = refDB(datab , "Users")
 
+const [grade , setGrade] = useState<string>();
 
 const [ros , setros] = useState<number[]>([]);
 const [namelogin , setnameogin] = useState<string>();
@@ -126,11 +127,14 @@ if (user != null) {
         snap2.forEach(snap3=>{
             if (user?.email ==snap3.child("email").val() ) {
                 setnameogin(snap3.child("name").val())
-                
+                setGrade(snap3.child('condition').val())
             }
         })
     })
 })
+
+
+
 
 
 
@@ -139,7 +143,10 @@ onValue(nameAdvRef , snap=>{
     snap.forEach(snap2=>{
         snap2.child("Information").forEach(snap3 =>{
           if (namelogin == snap3.child("advisor").val() || namelogin == snap3.child("emp").val()  ) {
-            arrayros.push(snap2.key)
+            arrayros.push({
+                ros:snap2.key,
+                redux:snap2.child('Estado').val()
+            })
           }  
           setros(arrayros)
 
@@ -158,11 +165,13 @@ onValue(nameAdvRef , snap=>{
 })
 
 
+if (grade=="Admin") {
+    true
+
+}else{false}
 
 
-
-
-},[namelogin , hvacFlat])
+},[namelogin ,grade , mins , visible , info  ])
 
 
 const toggleVisibility =(itm:any)=>{
@@ -187,24 +196,35 @@ const toggleVisibility =(itm:any)=>{
 {ros.map((item:any , index )=>{
 
 //INFO
-
+//srvSelected
 let arrayInfo:any =[]
+let servicios:any =[]
 
-const refInfo = refDB(datab , 'PreAprobal/'+item+"/"+"Information")
+const refInfo = refDB(datab , 'PreAprobal/'+item.ros+"/"+"Information")
 onValue(refInfo , snap =>{
 snap.forEach(snap2=>{
    arrayInfo.push(snap2.val())
+
+snap2.child("srvSelected").forEach(snap3=>{
+servicios.push({
+    name:snap3.child("name").val(),
+    flat:snap3.child("flat").val()
 })
-  
-   
+
 })
+
+
+})
+})
+
+
 
 
 // ROAD TEST
 
 let roadTest:any;
 let stiker:any;
-const refRoad = refDB(datab , 'PreAprobal/'+item+"/"+"RoadTest")
+const refRoad = refDB(datab , 'PreAprobal/'+item.ros+"/"+"RoadTest")
 onValue(refRoad , snap =>{
 
    roadTest = snap.child("road").val()
@@ -215,7 +235,7 @@ onValue(refRoad , snap =>{
 
 let hvacArray:any =[]
 
-const refHvac = refDB(datab , 'PreAprobal/'+item+"/"+"HVAC")
+const refHvac = refDB(datab , 'PreAprobal/'+item.ros+"/"+"HVAC")
 onValue(refHvac , snap =>{
 snap.forEach(snap2=>{
     snap2.forEach(snap3=>{
@@ -239,7 +259,7 @@ snap.forEach(snap2=>{
 let interiorArrya:any =[]
 
 //interior
-const refInterior = refDB(datab , 'PreAprobal/'+item+"/"+"Interior")
+const refInterior = refDB(datab , 'PreAprobal/'+item.ros+"/"+"Interior")
 onValue(refInterior , snap =>{
     snap.forEach(snap2=>{
         snap2.forEach(snap3=>{
@@ -260,7 +280,7 @@ onValue(refInterior , snap =>{
 
 //Exterior
 let exteroirArray:any=[]
-const refExterior = refDB(datab , 'PreAprobal/'+item+"/"+"Exterior")
+const refExterior = refDB(datab , 'PreAprobal/'+item.ros+"/"+"Exterior")
 onValue(refExterior , snap =>{
     snap.forEach(snap2=>{
         snap2.forEach(snap3=>{
@@ -280,7 +300,7 @@ onValue(refExterior , snap =>{
 
     //battery
 let batteryArray:any=[]
-const refBattery = refDB(datab , 'PreAprobal/'+item+"/"+"Battery")
+const refBattery = refDB(datab , 'PreAprobal/'+item.ros+"/"+"Battery")
 onValue(refBattery , snap =>{
     snap.forEach(snap2=>{
         snap2.forEach(snap3=>{
@@ -302,7 +322,7 @@ onValue(refBattery , snap =>{
     
 //Front Suspension
 let fsusArray:any=[]
-const refFsus = refDB(datab , 'PreAprobal/'+item+"/"+"FrontSuspension")
+const refFsus = refDB(datab , 'PreAprobal/'+item.ros+"/"+"FrontSuspension")
 onValue(refFsus , snap =>{
     snap.forEach(snap2=>{
         snap2.forEach(snap3=>{
@@ -323,7 +343,7 @@ onValue(refFsus , snap =>{
 
 //UnderHood
 let underHoodArray:any=[]
-const refUnderhood = refDB(datab , 'PreAprobal/'+item+"/"+"Underhood")
+const refUnderhood = refDB(datab , 'PreAprobal/'+item.ros+"/"+"Underhood")
 onValue(refUnderhood , snap =>{
     snap.forEach(snap2=>{
         snap2.forEach(snap3=>{
@@ -344,7 +364,7 @@ onValue(refUnderhood , snap =>{
 
 //Fluids
 let fluidArray:any=[]
-const refFluids = refDB(datab , 'PreAprobal/'+item+"/"+"UnderhoodFluids")
+const refFluids = refDB(datab , 'PreAprobal/'+item.ros+"/"+"UnderhoodFluids")
 onValue(refFluids , snap =>{
     snap.forEach(snap2=>{
         snap2.forEach(snap3=>{
@@ -369,7 +389,7 @@ onValue(refFluids , snap =>{
 
 
 let llantasArray:any=[]
-const reftires = refDB(datab , 'PreAprobal/'+item+"/"+"Tires")
+const reftires = refDB(datab , 'PreAprobal/'+item.ros+"/"+"Tires")
 onValue(reftires , snap =>{
     
     llantasArray.push({
@@ -410,7 +430,7 @@ onValue(reftires , snap =>{
 
 //Brakes
 let brakesArrya:any=[]
-const refBrakes = refDB(datab , 'PreAprobal/'+item+"/"+"Brakes")
+const refBrakes = refDB(datab , 'PreAprobal/'+item.ros+"/"+"Brakes")
 onValue(refBrakes , snap =>{
     snap.forEach(snap2=>{
         snap2.forEach(snap3=>{
@@ -450,7 +470,7 @@ pad4:snap.child('pad4').val(),
 
 //Steering
 let steeringArray:any=[]
-const refSteerin = refDB(datab , 'PreAprobal/'+item+"/"+"Steering")
+const refSteerin = refDB(datab , 'PreAprobal/'+item.ros+"/"+"Steering")
 onValue(refSteerin , snap =>{
     snap.forEach(snap2=>{
         snap2.forEach(snap3=>{
@@ -471,7 +491,7 @@ onValue(refSteerin , snap =>{
 
 //Rear Suspension
 let rsusArray:any=[]
-const refrsus = refDB(datab , 'PreAprobal/'+item+"/"+"RearSuspension")
+const refrsus = refDB(datab , 'PreAprobal/'+item.ros+"/"+"RearSuspension")
 onValue(refrsus , snap =>{
     snap.forEach(snap2=>{
         snap2.forEach(snap3=>{
@@ -492,7 +512,7 @@ onValue(refrsus , snap =>{
 
 //Services
 let servicesArray:any=[]
-const refServices = refDB(datab , 'PreAprobal/'+item+"/"+"Services")
+const refServices = refDB(datab , 'PreAprobal/'+item.ros+"/"+"Services")
 onValue(refServices , snap =>{
     snap.forEach(snap2=>{
         snap2.forEach(snap3=>{
@@ -633,7 +653,7 @@ const toSend =(index:any)=>{
        
     }
     
-
+    
 
     return(
         <div key={index} >
@@ -657,8 +677,17 @@ const toSend =(index:any)=>{
                 setLLantas(llantasArray)
                 setFrenos(frenosArray)
 
-            }} >{item}</button>
+
+update(refDB(datab , "PreAprobal/"+item.ros) ,{
+    Estado:"SEEN"
+
+} )
+
+            }} >{item.ros}  {item.redux == "NOAP" ?  <span className="text-orange-700 m-20">*NEW</span> : <span>v</span> }   </button>
+
             {visible == index  ? <div>
+
+
 
 <button className="btnBar" onClick={()=>{
 
@@ -668,80 +697,114 @@ if(hiddenInfo){
 
 }}>SEE INFORMATION</button>
 
-            
+
                 <div hidden={hiddenInfo} className="infoBloq">
 
 
+               INFORMATION
+                    <table>
+<tr>
+    <th>Name</th>
+    <th>LastName</th>
+    <th>Phone</th>
+    <th>Date </th>
 
+</tr>
 {info.map((id:any)=>{
 
-let arraysvcs:any=[]
-const refSvcs = ref(datab , 'PreAprobal/'+item+"/"+"Information")
-onValue(refSvcs , snap =>{
-    snap.forEach(snap2 =>{
-        snap2.forEach(snap3 =>{
-            snap3.forEach(snap4=>{
+    return(
 
-                arraysvcs.push({
-                flat:snap4.child('flat').val(),
-                name:snap4.child('name').val()
-                })
-            })
-            
-        })
-        
-        
-    })
-})
+<tr>
+        <td> <b>{id.name}</b> </td>
+        <td> <b>{id.last}</b> </td>
+        <td> <b>{id.phone}</b> </td>
+        <td> <b>{id.currentMonth}/{id.currentDay}/{id.currentYear}-{id.currentHour}</b>  </td>
+    </tr>
+
+    )
+})}
+
+<tr>
+    <th>State</th>
+    <th>City</th>
+    <th>Street</th>
+    <th>zip</th>
+</tr>
+{info.map((id:any)=>{
 
     return(
-        <div>
-               <h4 className="text-xl font-bold">SERVICES</h4>
-               <hr />
-      {
-        arraysvcs.map((i:any)=>{
 
-            return(
-                <div>
-                    Service: <b>{i.name}</b>
-                    Flat Rate: <b>{i.flat}</b>
-                </div>
-            )
-        })
-      }
-               
+<tr>
+        <td> <b>{id.state}</b> </td>
+        <td> <b>{id.city}</b> </td>
+        <td> <b>{id.street}</b> </td>
+        <td> <b>{id.zip}</b> </td>
+    </tr>
 
-            <br />
-            <h4 className="text-xl font-bold">INFORMATION</h4>
-<hr />
-            Name: <b>{id.name}</b>  -   LastName: <b>{id.last}</b> <br />
-            Phone: <b>{id.phone}</b>  -   Techician: <b>{id.emp}</b> <br />
-            Advisor: <b>{id.advisor}</b> <br />
-            State: <b>{id.state}</b>  -   City: <b>{id.city}</b> - Street: <b>{id.street}</b>  -   Zip: <b>{id.zip}</b> <br />
-            State: <b>{id.state}</b>  -   City: <b>{id.city}</b> - Street: <b>{id.street}</b>  -   Zip: <b>{id.zip}</b> <br />
-     
-     <br />
-            <h4 className="text-xl font-bold">Vehicle</h4>
-            <hr />
-
-            Make: <b>{id.make}</b>  -   Model: <b>{id.model}</b> <br />
-            Plate: <b>{id.plate}</b>  -   Vin: <b>{id.vin}</b> <br />
-            Year: <b>{id.yearcar}</b>  -   Millage: <b>{id.millage}</b> <br />
-            
-            <br />
-            <h4 className="text-xl font-bold">Date sumbited</h4>
-            <hr />
-
-            Date: <b>{id.currentMonth}/{id.currentDay}/{id.currentYear}</b>  -   Hour: <b>{id.currentHour}</b> <br />
-            Plate: <b>{id.plate}</b>  -   Vin: <b>{id.vin}</b> <br />
-            Year: <b>{id.yearcar}</b>  -   Millage: <b>{id.millage}</b> <br />
-
-     
-        </div>
     )
 })}
 
 
+<tr>
+    <th>Vehicle</th>
+    <th>Model</th>
+    <th>Year</th>
+    <th>Plate</th>
+</tr>
+
+{info.map((id:any)=>{
+
+return(
+
+<tr>
+    <td> <b>{id.make}</b> </td>
+    <td> <b>{id.model}</b> </td>
+    <td> <b>{id.yearcar}</b> </td>
+    <td> <b>{id.plate}</b> </td>
+</tr>
+
+)
+})}
+
+<tr>
+    <th>Advisor</th>
+    <th>Technician</th>
+    <th>Milage in</th>
+    <th>Vin</th>
+</tr>
+
+{info.map((id:any)=>{
+
+
+
+
+return(
+
+<tr>
+    <td> <b>{id.advisor}</b> </td>
+    <td> <b>{id.emp}</b> </td>
+    <td> <b>{id.millage}</b> </td>
+    <td> <b>{id.vin}</b> </td>
+</tr>
+
+)
+})}
+
+<tr>
+    <th>Service</th>
+    <th>flat</th>
+</tr>
+
+{servicios.map((id:any)=>{
+    return(
+        <tr>
+            <td>{id.name}</td>
+            <td>{id.flat}</td>
+        </tr>
+    )
+})}
+
+</table>
 
 
 
@@ -793,7 +856,7 @@ sethvac([...hvac , {
     <th>Status</th>
 </tr>
 
-{hvac.map((ind:any , x)=>{
+{hvac.map((ind:any )=>{
     return(
         <tr>
             <td className={ind.color} >{ind.valor}</td>
@@ -836,7 +899,6 @@ sethvacDef([...hvacDef , "Declined"])
 
             <td>{ind.resp}
                 
-                {(ind.resp != "Declined" && hvacDef[x] != null  ) ? <div>Approved</div>  : null }
 
                  </td>
 
@@ -879,7 +941,7 @@ setinterior([...interior , {
 </tr>
 
 
-{interior.map((ind:any , x)=>{
+{interior.map((ind:any )=>{
     return(
         <tr>
             <td className={ind.color} >{ind.valor}</td>
@@ -918,7 +980,6 @@ setinteriorDef([...interiorDef , "Declined"])
             
             <td>{ind.resp}
                 
-                {(ind.resp != "Declined" && interiorDef[x] != null  ) ? <div>Approved</div>  : null }
 
                  </td>
         </tr>
@@ -956,7 +1017,7 @@ setexterior([...exterior , {
 </tr>
 
 
-{exterior.map((ind:any , x)=>{
+{exterior.map((ind:any )=>{
     return(
         <tr>
             <td className={ind.color} >{ind.valor}</td>
@@ -995,7 +1056,6 @@ setexteriorDef([...exteriorDef , "Declined"])
             
             <td>{ind.resp}
                 
-                {(ind.resp != "Declined" && exteriorDef[x] != null  ) ? <div>Approved</div>  : null }
 
                  </td>
 
@@ -1033,7 +1093,7 @@ setbattery([...battery , {
 </tr>
 
 
-{battery.map((ind:any , x)=>{
+{battery.map((ind:any )=>{
     return(
         <tr>
             <td className={ind.color} >{ind.valor}</td>
@@ -1073,7 +1133,6 @@ setbatteryDef([...batteryDef , "Declined"])
             
             <td>{ind.resp}
                 
-                {(ind.resp != "Declined" && batteryDef[x] != null  ) ? <div>Approved</div>  : null }
 
                  </td>
 
@@ -1090,7 +1149,7 @@ setbatteryDef([...batteryDef , "Declined"])
 <br />
 
 
-<h3 className="text-gray-300 text-2xl">Underhood</h3> <hr />
+<h3 className="text-gray-300 text-2xl">UNDERHOOD</h3> <hr />
 <div className=" float-right "><input type="text" placeholder="Add" onChange={(e)=>setUnderhExtra(e.target.value)} /> <button className="btn" onClick={()=>{
 
 setunderh([...underh , {
@@ -1113,7 +1172,7 @@ setunderh([...underh , {
     <th>Status</th>
 </tr>
 
-{underh.map((ind:any , x)=>{
+{underh.map((ind:any )=>{
     return(
         <tr>
             <td className={ind.color} >{ind.valor}</td>
@@ -1152,7 +1211,6 @@ setunderDef([...underDef , "Declined"])
             
             <td >  {ind.resp}
                 
-                {(ind.resp != "Declined" && underDef[x] != null  ) ? <div>Approved</div>  : null }
 
                  </td>
       
@@ -1166,7 +1224,7 @@ setunderDef([...underDef , "Declined"])
 <hr />
 <br />
 
-<h3 className="text-gray-300 text-2xl"> Fluids</h3> <hr />
+<h3 className="text-gray-300 text-2xl"> FLUIDS</h3> <hr />
 
 <div className=" float-right "><input type="text" placeholder="Add" onChange={(e)=>setFluidsExtra(e.target.value)} /> <button className="btn" onClick={()=>{
 
@@ -1191,7 +1249,7 @@ setFluids([...fluids , {
     <th>Status</th>
 </tr>
 
-{fluids.map((ind:any , x)=>{
+{fluids.map((ind:any )=>{
     return(
         <tr>
             <td className={ind.color} >{ind.valor}</td>
@@ -1230,7 +1288,6 @@ setfluidDef([...fluidDef , "Declined"])
             
             <td>{ind.resp}
                 
-                {(ind.resp != "Declined" && fluidDef[x] != null  ) ? <div>Approved</div>  : null }
 
                  </td>
 
@@ -1246,7 +1303,7 @@ setfluidDef([...fluidDef , "Declined"])
 <br />
 
 
-<h3 className="text-gray-300 text-2xl">Tires</h3> <hr />
+<h3 className="text-gray-300 text-2xl">TIRES</h3> <hr />
 
 <div className=" float-right "><input type="text" placeholder="Add" onChange={(e)=>setTiresExtra(e.target.value)} /> <button className="btn" onClick={()=>{
 
@@ -1284,7 +1341,7 @@ setTires([...tires , {
     <th>Status</th>
 </tr>
 
-{tires.map((ind:any , x)=>{
+{tires.map((ind:any)=>{
     return(
         <tr>
             <td className={ind.color} >{ind.valor}</td>
@@ -1324,7 +1381,6 @@ settireDef([...tireDef , "Declined"])
             
             <td>{ind.resp}
                 
-                {(ind.resp != "Declined" && tireDef[x] != null  ) ? <div>Approved</div>  : null }
 
                  </td>
 
@@ -1339,7 +1395,7 @@ settireDef([...tireDef , "Declined"])
 <hr />
 <br />
 
-<h3 className="text-gray-300 text-2xl">Brakes</h3> <hr />
+<h3 className="text-gray-300 text-2xl">BRAKES</h3> <hr />
 <div className=" float-right "><input type="text" placeholder="Add" onChange={(e)=>setBrakesExtra(e.target.value)} /> <button className="btn" onClick={()=>{
 
 setBrakes([...brakes , {
@@ -1377,7 +1433,7 @@ setBrakes([...brakes , {
     <th>Status</th>
 </tr>
 
-{brakes.map((ind:any ,x)=>{
+{brakes.map((ind:any)=>{
     return(
         <tr>
             <td className={ind.color} >{ind.valor}</td>
@@ -1416,7 +1472,6 @@ setbatteryDef([...brakeDef , "Declined"])
             
             <td>{ind.resp}
                 
-                {(ind.resp != "Declined" && brakeDef[x] != null  ) ? <div>Approved</div>  : null }
 
                  </td>
 
@@ -1430,7 +1485,7 @@ setbatteryDef([...brakeDef , "Declined"])
 <hr />
 <br />
 
-<h3 className="text-gray-300 text-2xl">Steering</h3> <hr />
+<h3 className="text-gray-300 text-2xl">STEERING</h3> <hr />
 <div className=" float-right "><input type="text" placeholder="Add" onChange={(e)=>setSteeringExtra(e.target.value)} /> <button className="btn" onClick={()=>{
 
 setSteering([...steering , {
@@ -1453,7 +1508,7 @@ setSteering([...steering , {
     <th>Status</th>
 </tr>
 
-{steering.map((ind:any , x)=>{
+{steering.map((ind:any )=>{
     return(
         <tr>
             <td className={ind.color} >{ind.valor}</td>
@@ -1492,7 +1547,6 @@ setsteerinDef([...steerinDef , "Declined"])
             
             <td>{ind.resp}
                 
-                {(ind.resp != "Declined" && steerinDef[x] != null  ) ? <div>Approved</div>  : null }
 
                  </td>
 
@@ -1532,7 +1586,7 @@ setfsus([...fsus , {
     <th>Status</th>
 </tr>
 
-{fsus.map((ind:any , x)=>{
+{fsus.map((ind:any)=>{
     return(
         <tr>
             <td className={ind.color} >{ind.valor}</td>
@@ -1571,7 +1625,6 @@ setfluidDef([...fsusDef , "Declined"])
             
             <td>{ind.resp}
                 
-                {(ind.resp != "Declined" && fsusDef[x] != null  ) ? <div>Approved</div>  : null }
 
                  </td>
 
@@ -1609,7 +1662,7 @@ setrsus([...rsus , {
     <th>Status</th>
 </tr>
 
-{rsus.map((ind:any , x)=>{
+{rsus.map((ind:any )=>{
     return(
         <tr>
             <td className={ind.color} >{ind.valor}</td>
@@ -1648,7 +1701,6 @@ setrsusDef([...rsusDef , "Declined"])
             
             <td>{ind.resp}
                 
-                {(ind.resp != "Declined" && rsusDef[x] != null  ) ? <div>Approved</div>  : null }
 
                  </td>
 
@@ -1689,7 +1741,7 @@ setService([...service , {
     <th>Status</th>
 </tr>
 
-{service.map((ind:any ,x)=>{
+{service.map((ind:any)=>{
     return(
         <tr>
             <td className={ind.color} >{ind.valor}</td>
@@ -1729,7 +1781,6 @@ setserviceDef([...serviceDef , "Declined"])
             
             <td>{ind.resp}
                 
-                {(ind.resp != "Declined" && serviceDef[x] != null  ) ? <div>Approved</div>  : null }
 
                  </td>
 
@@ -1751,7 +1802,7 @@ setserviceDef([...serviceDef , "Declined"])
 
 
 
-<button className="btnBar" onClick={()=>toSend(item)}>Send</button>
+<button className="btnBar" onClick={()=>toSend(item.ros)}>Send</button>
 
 </div>
     

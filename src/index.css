@@ -1,14 +1,17 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+::-webkit-scrollbar {
+  display: none;
+}
 :root {
 
-background-color:  #274d60;
+  background-color: rgb(245, 245, 245);
+/* background-color:  #274d60; */
   padding: 4px;
   line-height: 1.5;
   font-weight: 400;
-color: rgb(201, 201, 201);
+color: rgb(56, 56, 56);
   color-scheme: light dark;
 
   text-rendering: optimizeLegibility;
@@ -23,8 +26,7 @@ input[type="radio"] {
   accent-color: rgb(31, 143, 139);
 }
 
-input[type="number"],input[type="text"],input[type="file"],input[type="email"], input[type="password"], textarea {
-  width: 10em;
+input[type="number"],input[type="text"],input[type="file"],input[type="email"], input[type="password"], input[type="date"], textarea {
   height: 2.5rem;
   padding: 1em;
   border-radius: .3em;
@@ -32,7 +34,6 @@ input[type="number"],input[type="text"],input[type="file"],input[type="email"], 
   color: #274d60;
 }
 select{
-  width: 10em;
   height: 3.5rem;
   padding: 1em;
   border-radius: .3em;
@@ -48,27 +49,31 @@ select{
   }
   
 table{
-  border: 3px double black;
+  border: 2px solid rgb(108, 112, 124);
   width: 100%;
-
+margin: .2em;
 }
 
   table th{
-    padding: 7px;
-    background-color: rgb(113, 106, 162);
+    padding: 8px;
+    color: #274d60;
+    text-shadow: 1px 1px rgb(168, 168, 173);
+    background-color: rgb(198, 201, 201);
   }
-
+  
   table td{
-    background-color: rgb(134, 134, 151);
-    padding: 7px;
-    color: rgb(13, 94, 116);
+    background-color: rgb(222, 222, 222);
+    padding: 4px;
+    color: rgb(29, 85, 106);
     font-style: oblique;
     font-weight: bold;
-    border-bottom: 2px solid black;
+    border-bottom: 1px solid rgb(75, 62, 62);
 text-align: center;
 cursor: pointer;
 
   }
+
+
 
   hr{
     cursor: pointer;

@@ -5,6 +5,7 @@ import { getDatabase, onValue, ref,  set as setBD } from "firebase/database";
 import app from "../fireconfig";
 import { Forms } from "./FormsPage";
 import './mas.css'
+import borrar from './imgs/delete.png'
 
 
 
@@ -62,13 +63,7 @@ useEffect(()=>{
             let arrayDataAct:any =[];
             onValue(refDataAct , snap=>{
                 snap.forEach(snap2 => {
-                    snap2.forEach(snap3 =>{
-snap3.forEach(snap4 =>{
- console.log(snap4.val())
-
-})
-
-                    })
+                  
                     
                     if (nameUser ==  snap2.child('emp').val() || grade == "Admin") {
                             arrayDataAct.push({
@@ -156,7 +151,7 @@ if (showCustomer) {
 </div>
 
 <hr />
-<div className="bg-gray-600" hidden={allVisible}>
+<div className="bg-neutral-100 " hidden={allVisible}>
 
 
     
@@ -183,7 +178,7 @@ return(
 
 
 
-<div className="rows">
+<div>
     
 
 <table onClick={()=> toggleVisibility(item)}>
@@ -192,7 +187,6 @@ return(
 <tr>
     <th>RO</th>
     <th>Vehicle</th>
-    <th>Model</th>
     <th>Date</th>
     <th>Team</th>
     <th>Actions</th>
@@ -201,8 +195,7 @@ return(
 
 <tr>
  <td> {index.ro} </td>
-        <td  style={{backgroundImage: `url(${index.url})` , backgroundSize:'cover' , backgroundRepeat:'no-repeat' , backgroundPosition:'center center'}} >    {index.make }    </td>
-        <td> {index.model} </td>
+        <td  className=" text-yellow-500 font-extrabold  "  style={{backgroundImage: `url(${index.url})` , backgroundSize:'cover' , backgroundRepeat:'no-repeat' , backgroundPosition:'center center' }} >    {index.make }  {index.model}   </td>
         <td> {index.currentMonth}/{index.currentDay}/{index.currentYear} - {index.currentHour}  </td>
          <td>Advisor: <b>{index.advisor}</b>  <br />
         Tech: <b> {index.emp} </b>
@@ -217,8 +210,7 @@ setBD(ref(datab , "NewSet/" + index.ro) , null).then(()=>{
      window.location.reload()
     }).catch((err)=>alert(err))
 
-}} >Erase</button>
-<button>Modify</button>
+}}> <img src={borrar} width={25} /> </button>
        </div>
              </td>
                    
@@ -236,43 +228,47 @@ setBD(ref(datab , "NewSet/" + index.ro) , null).then(()=>{
        {visibleItems === item  ? <div>
 
 <br />
+<div className="bloq1">
 
-<div className="grid grid-cols-1 md:grid-cols-2  lg:grid-cols-3">
-
-<div >
- Customer: <b className="fields">{index.name} {index.last}</b> <br /><br /> <br />
-</div>
-<div>
-Phone: <b className="fields"> {index.phone}</b> <br /> <br /> <br />
-</div>
-<div>
-Vin: <b className="fields"> {index.vin}</b> <br /> <br /> <br />
-</div>
-<div>
-Millage: <b className="fields"> {index.millage}</b> <br /> <br /> <br />
-</div>
-<div>
-Plate: <b className="fields"> {index.plate}</b> <br /> <br /> <br />
-</div>
-<div>
-State: <b className="fields"> {index.state}</b> <br /> <br /> <br />
-</div>
-<div>
-City: <b className="fields"> {index.city}</b> <br /> <br /> <br />
-</div>
-<div>
-Street: <b className="fields"> {index.street}</b> <br /> <br /> <br />
-</div>
-<div>
-Zip: <b className="fields"> {index.zip}</b> <br /> <br /> <br />
-</div>
-<div>
-State: <b className="fields"> {index.state}</b> <br /> <br /> <br />
-</div>
+<div className="grid p-3 grid-cols-1 md:grid-cols-2  lg:grid-cols-3">
 
 
 
+
+<span  className="fields">
+ Customer: <b>{index.name} {index.last}</b> 
+</span>
+<span className="fields">
+Phone: <b> {index.phone}</b>
+</span>
+<span className="fields">
+Vin: <b> {index.vin}</b> 
+</span>
+<span className="fields">
+Millage: <b> {index.millage}</b>
+</span>
+<span className="fields">
+Plate: <b> {index.plate}</b>
+</span>
+<span className="fields">
+State: <b > {index.state}</b>
+</span>
+<span className="fields">
+City: <b> {index.city}</b> 
+</span>
+<span className="fields">
+Street: <b> {index.street}</b> 
+</span>
+<span className="fields">
+Zip: <b> {index.zip}</b> 
+</span>
+
+
 </div>
+</div>
+
+
+
 {arrayMedia.map((i:any)=>{
     return(
         <img src={i} width={50} style={{display:'inline' , cursor:'pointer'}} onClick={()=>window.open(i)} />

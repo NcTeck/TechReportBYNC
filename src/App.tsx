@@ -12,6 +12,8 @@ import { History } from './MyComponents/HistoryPage'
 import { getDatabase, onValue, ref as refDB } from 'firebase/database'
 import { Approval } from './MyComponents/ApprovalPage'
 import { ResponseA } from './MyComponents/ResponsePage'
+import exit from './MyComponents/imgs/exit.png'
+import menu from './MyComponents/imgs/menu.png'
 
 function App() {
 const auth = getAuth(app)
@@ -29,7 +31,8 @@ const [nameUser , setname] = useState<string>()
 const [stateuser , setstateuser] = useState<any>()
 
 useEffect(()=>{
-console.log(stateuser);
+  document.getElementById("mySidepanel")!.style.width = "0";
+
 
   onAuthStateChanged(auth , (user)=>{
 
@@ -74,6 +77,8 @@ setaAdmin(false)
 
 },[ grade])
 
+
+
   return (
   <body>
     
@@ -81,7 +86,9 @@ setaAdmin(false)
   <div>logo</div> 
 
 
-  <div>
+  <div> 
+ <span className='text-green-500 font-extrabold'>  {nameUser?.toUpperCase()}</span>
+  
 <button className='btnMain' onClick={()=>{
 
 if (showLogin) {
@@ -151,7 +158,7 @@ if (emailuser ==null || passuser == null) {
 </div>
 
 {/* Main bar */}
-<div className='bar'>
+<div className=' hidden md:flex '>
 
 <button className='btnMain' onClick={()=>{
 
@@ -182,15 +189,7 @@ if (grade == "Tech") {
   Approval
 </button>
 
-<button className='btnMain' onClick={()=>{
 
-const container:any = document.getElementById('forRender')
-const root = createRoot(container)
-root.render(<Review/>)
-
-}}>
-  Review
-</button>
 <button className='btnMain' onClick={()=>{
 
 const container:any = document.getElementById('forRender')
@@ -200,7 +199,15 @@ root.render(<History/>)
 }} >
 History
 </button>
+<button className='btnMain' onClick={()=>{
 
+const container:any = document.getElementById('forRender')
+const root = createRoot(container)
+root.render(<Review/>)
+
+}}>
+  Set week
+</button>
 
 {/* Admin Access */}
 <span hidden={showAdmin}>
@@ -230,9 +237,104 @@ root.render(<Config/>)
 </span>
 
 
-User:{nameUser?.toUpperCase()}
-  
+
 </div>
+
+{/* Main bar */}
+<div id='mySidepanel'  className='sidepanel grid md:hidden'>
+
+<button onClick={()=>{
+    document.getElementById("mySidepanel")!.style.width = "0";
+
+}}><img src={exit} width={30} /></button>
+
+<button className='btnMain' onClick={()=>{
+    document.getElementById("mySidepanel")!.style.width = "0";
+
+const container:any = document.getElementById('forRender')
+const root = createRoot(container)
+root.render(<Today/>)
+
+}}>
+  Today
+</button >
+
+<button className='btnMain'onClick={()=>{
+    document.getElementById("mySidepanel")!.style.width = "0";
+
+if (grade == "Admin") {
+  const container:any = document.getElementById('forRender')
+const root = createRoot(container)
+root.render(<Approval/>)
+} 
+if (grade == "Tech") {
+  const container:any = document.getElementById('forRender')
+  const root = createRoot(container)
+  root.render(<ResponseA/>)
+}
+
+
+
+}}  >
+  Approval
+</button>
+
+
+<button className='btnMain' onClick={()=>{
+    document.getElementById("mySidepanel")!.style.width = "0";
+
+const container:any = document.getElementById('forRender')
+const root = createRoot(container)
+root.render(<History/>)
+
+}} >
+History
+</button>
+<button className='btnMain' onClick={()=>{
+    document.getElementById("mySidepanel")!.style.width = "0";
+
+const container:any = document.getElementById('forRender')
+const root = createRoot(container)
+root.render(<Review/>)
+
+}}>
+  Set week
+</button>
+
+{/* Admin Access */}
+
+
+  <button hidden={showAdmin} className='btnMain'onClick={()=>{
+    document.getElementById("mySidepanel")!.style.width = "0";
+
+const container:any = document.getElementById('forRender')
+const root = createRoot(container)
+root.render(<FlatRate/>)
+
+}}  >
+  Set Hours
+</button>
+<button hidden={showAdmin} className='btnMain' onClick={()=>{
+    document.getElementById("mySidepanel")!.style.width = "0";
+
+const container:any = document.getElementById('forRender')
+const root = createRoot(container)
+root.render(<Config/>)
+
+}}  >
+  Config
+</button>
+
+
+
+</div>
+
+<button className='md:hidden' id="openbtn" onClick={()=>{
+    document.getElementById("mySidepanel")!.style.width = "250px";
+
+}}> <img src={menu} width={30} /> </button>
+
+
 
 
 

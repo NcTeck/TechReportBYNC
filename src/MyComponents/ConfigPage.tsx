@@ -80,6 +80,8 @@ if (svc == null || srvValue == null) {
 
 <div className="CEmployee">
 
+<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 text-center justify-center " >
+
 
 <input type="text" placeholder="Name Employee" onChange={(e)=>setName(e.target.value)} /> <br /> <br />
 <input type="text" placeholder="Email Employee" onChange={(e)=>setEmail(e.target.value)} /> <br /> <br />
@@ -89,13 +91,17 @@ if (svc == null || srvValue == null) {
 <option>
         Please Select...
     </option>
-    <option>
+    <option value="Tech">
         Tech
     </option>
-    <option>
+    <option value="Admin">
         Admin
     </option>
 </select>
+
+</div>
+
+
 <br /> <br />
 
 <button className="btn" onClick={()=>createEmp()} >Create Employee</button> <br /> <br />
