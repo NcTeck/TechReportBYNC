@@ -657,83 +657,240 @@ transition: 1s;
 }
 
 
-/* CSS */
-.btnMain {
-    background: #377071;
-    border: 1px solid #128197;
-    border-radius: 6px;
-    box-shadow: rgba(71, 33, 33, 0.1) 1px 2px 4px;
-    box-sizing: border-box;
-    color: #FFFFFF;
-    cursor: pointer;
-    display: inline-block;
-    font-family: nunito,roboto,proxima-nova,"proxima nova",sans-serif;
-    font-size: 16px;
-    font-weight: 800;
-    line-height: 16px;
-    min-height: 40px;
-    outline: 0;
-    padding: 12px 14px;
-    text-align: center;
-    text-rendering: geometricprecision;
-    text-transform: none;
-    user-select: none;
-    -webkit-user-select: none;
-    touch-action: manipulation;
-    vertical-align: middle;
-  }
-  
-  .btnMain:hover,
-  .btnMain:active {
-    background-color: initial;
-    background-position: 0 0;
-    color: #FF4742;
-  }
-  
-  .btnMain:active {
-    opacity: .5;
-  }
+
   
 .btn{
   
     border: 1px solid grey;
-    padding: .7em;
-    opacity: 1;
+    padding: .5em; 
+    font-weight: bolder;
+    color: white;
+    opacity: 9;
     margin: 5px;
-    background-color: #345f7d;
+    background-color: #3a76a1;
     border-radius: 4px;
-    text-decoration:#FF4742;
     text-shadow: 2px 2px 2px #348AC7;
-transition: 1s;
+transition: .5s;
 
 }
 
 .btn:hover{
-transform: scale(1.1);
-background-color: #43738a;
+transform: scale(.9);
+background-color: #164a5f;
 }
 
 
 .sidepanel {
     height: 100%; /* Specify a height */
  /* 0 width - change this with JavaScript */
-    position: absolute; /* Stay in place */
-    z-index: 1; /* Stay on top */
-    color: red;
+    position:fixed; /* Stay in place */
     font-size: x-large;
-    box-shadow: 2px 2px 2px rgb(213, 224, 226);
-    padding-bottom: 1em;
+    box-shadow: 2px 2px 2px rgb(41, 139, 156);
     top: 0;
     left: 0;
-border-radius: .5em;
-    background-color: #e8e8e8; /* Black*/
+border-radius: .2em;
+overflow: scroll;
+    background-color: #fdfcfc; /* Black*/
     overflow-x: hidden; /* Disable horizontal scroll */
-    padding-top: 10px; /* Place content 60px from the top */
     transition: 0.6s; /* 0.5 second transition effect to slide in the sidepanel */
   }
   
+ .btnSide{
+color: #d3d9db;
+display: grid;
+font-weight: bolder;
+background: #485563;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to right, #29323c, #485563);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right, #29323c, #485563); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+align-items: center;
+transition: 1s;
+
+}
+.btnSide:hover{
+    color: rgb(124, 176, 225);
+}
+  .btnSide::before{
+    left: 0;
+    content: "";
+    position: absolute;
+    width: 7%;
+    transition: 1s;
+border: 2px solid rgb(255, 255, 255);
+    border-top-right-radius: 1em;
+    border-bottom-right-radius: 1em;
+    background-color: rgb(230, 234, 236);
+
+    height: 30px;
+}
+
+.btnSide:hover::before{
+    width: 20%; 
+   
+    
+  }
  
-  
- 
-  
- 
+  .btnLabel{
+    background-color: rgb(245, 245, 245);  
+      border-top: 1px solid rgb(215, 208, 208);
+    border-left: 1px solid rgb(215, 208, 208);
+    border-right: 1px solid grgb(215, 208, 208)ray;
+width: 200px;
+    color: #128197;
+    border-top-left-radius: 2em;
+    font-weight: bolder;
+
+    border-top-right-radius: 2em;
+    transition: .6s;
+  }
+  .btnLabel:hover{
+    background-color:rgb(233, 231, 231);
+    box-shadow: 3px 3px 3px rgb(232, 231, 231);
+    color: #ffffff;
+    font-weight: bolder;
+  }
+
+
+  .btnLog{
+    background: #EC6F66;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to right, #F3A183, #EC6F66);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right, #F3A183, #EC6F66); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+text-align: right;
+
+
+
+border: 1px solid  #ffffff;
+    color: #ffffff;
+ padding-left: .4em;
+    transition: .6s;  
+     width: 40px;
+    font-weight: bolder;
+margin: 20px;
+    box-shadow: 3px 3px 3px rgb(167, 162, 162);
+    border-top-right-radius: 2em;
+    border-bottom-right-radius: 2em;
+  }
+  .btnLog2{
+    text-align: right;
+
+    background: #7474BF;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to right, #348AC7, #7474BF);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to right, #348AC7, #7474BF); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    
+    border: 1px solid  #ffffff;
+    color: #ffffff;
+ padding-left: .4em;
+    transition: .6s;  
+    width: 35px;
+    font-weight: bolder;
+margin: 20px;
+    box-shadow: 3px 3px 3px rgb(167, 162, 162);
+    border-top-right-radius: 2em;
+    border-bottom-right-radius: 2em;
+  }
+
+.btnLog::before{
+    box-shadow: 2px 2px 2px rgb(200, 199, 199);
+background-image: url('./MyComponents/imgs/exit.png');
+background-position: center;
+background-repeat: no-repeat;
+
+    margin-left: -30px;
+    margin-top: -3px;
+
+    border-radius: 50%;
+    content: "";
+    position: absolute;
+    background-color: whitesmoke;
+    width: 30px;
+    height: 30px;
+}
+.btnLog2::before{
+    box-shadow: 2px 2px 2px rgb(200, 199, 199);
+background-image: url('./MyComponents/imgs/key.png');
+background-size: cover;
+margin-left: -30px;
+margin-top: -3px;
+
+border-radius: 50%;
+content: "";
+position: absolute;
+background-color: whitesmoke;
+width: 30px;
+height: 30px;
+}
+
+
+  .btnLog:hover{
+    background-color:rgb(233, 231, 231);
+    box-shadow: 2px 2px 2px rgb(255, 255, 255);
+    color: #92bad3;
+    font-weight: bolder;
+
+  }
+
+
+
+  .btnLog2:hover{
+    background-color:rgb(233, 231, 231);
+    box-shadow: 2px 2px 2px rgb(255, 255, 255);
+    color: #92bad3;
+    font-weight: bolder;
+
+  }
+
+
+
+  @import url(
+    'https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+    
+  .box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 28px;
+    width: 28px;
+    border: 1px solid rgb(127, 124, 124);
+    cursor: pointer;
+    border-radius: 10px;
+    box-shadow: rgba(74, 62, 62, 0.45) 0px 5px 10px;
+
+}
+
+.divmenu{
+    width: 80%;
+    height: 3px;
+    margin-top: 1px;
+    margin-bottom: 1px;
+    background-color: #164a5f;
+}
+
+.box:hover{
+    box-shadow: rgba(25, 120, 149, 0.45) 1px 7px 19px;
+    background-color: #d2dddc;
+
+}
+
+.customerTAble{
+    background-color: rgb(248, 248, 248);
+    margin: 2em;
+    padding: 1em;
+    border-radius: .4em;
+    box-shadow: 2px 1px 2px rgb(199, 205, 207);
+}
+
+.htsbloq{
+    display: grid;
+justify-content: center;
+    background-color: #ffffff;
+    width: 80%;
+    margin-left: 10%;
+    padding: 1em;
+    overflow: scroll;
+    height: 80%;
+    border-radius: .5em;
+    box-shadow: 2px 2px 2px #d6d6d6;
+    margin-top: 3em;
+    position: fixed;
+}

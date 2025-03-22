@@ -2,11 +2,37 @@ import { getDatabase, onValue, ref, ref as refDB, set, update } from "firebase/d
 import app from "../fireconfig";
 import { useEffect, useState } from "react";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
+import { Page, Text,  Document , PDFDownloadLink, View, StyleSheet } from '@react-pdf/renderer';
 
 
 
 
 export function Approval() {
+
+    
+// Create styles
+const styles = StyleSheet.create({
+    page: {
+      backgroundColor: "#fff",
+      color: "black",
+      margin: 10,
+      padding: 10,
+    },
+    text: {
+      margin: 12,
+      fontSize: 14,
+      textAlign: 'justify',
+      fontFamily: 'Times-Roman'
+    },
+    section: {
+      margin: 10,
+      padding: 10,
+    },
+    viewer: {
+      width: "100%", //the pdf viewer will take up all of the width and height
+      height: 500,
+    },
+  });
 
     let today = new Date();
     let dd = String(today.getDate()).padStart(2, '0');
@@ -114,17 +140,18 @@ const [serviceExtra , setServiceExtra] = useState<any>();
 const [info , setInfo] = useState<any[]>([])
 
 
+
+
 useEffect(()=>{
 
     
-
-
     onAuthStateChanged(auth , user =>{
 
 if (user != null) {
     onValue(nameUserRef , snap =>{
     snap.forEach(snap2=>{
         snap2.forEach(snap3=>{
+           
             if (user?.email ==snap3.child("email").val() ) {
                 setnameogin(snap3.child("name").val())
                 setGrade(snap3.child('condition').val())
@@ -171,6 +198,7 @@ if (grade=="Admin") {
 }else{false}
 
 
+
 },[namelogin ,grade , mins , visible , info  ])
 
 
@@ -195,15 +223,23 @@ const toggleVisibility =(itm:any)=>{
 
 {ros.map((item:any , index )=>{
 
-//INFO
-//srvSelected
+
 let arrayInfo:any =[]
 let servicios:any =[]
+let marca:string =''
+let modelo:string =''
+let ano:string =''
 
 const refInfo = refDB(datab , 'PreAprobal/'+item.ros+"/"+"Information")
 onValue(refInfo , snap =>{
 snap.forEach(snap2=>{
+
+
    arrayInfo.push(snap2.val())
+
+   marca = snap2.child('make').val();
+modelo = snap2.child('model').val();
+ano = snap2.child('yearcar').val();
 
 snap2.child("srvSelected").forEach(snap3=>{
 servicios.push({
@@ -659,7 +695,7 @@ const toSend =(index:any)=>{
         <div key={index} >
 
 
-            <button className="bg-opacity-50 bg-slate-700 rounded p-3 w-full" onClick={()=>{
+<table className="cursor-pointer" onClick={()=>{
                 toggleVisibility(index)
                 setfsus(fsusArray)
                 setrsus(rsusArray)
@@ -683,13 +719,25 @@ update(refDB(datab , "PreAprobal/"+item.ros) ,{
 
 } )
 
-            }} >{item.ros}  {item.redux == "NOAP" ?  <span className="text-orange-700 m-20">*NEW</span> : <span>v</span> }   </button>
+            }} >
+
+<tr>
+  <th   className="bg-teal-600 text-gray-100">RO</th>
+<th  className="bg-teal-600 text-gray-100">Vehicle</th>
+</tr>
+
+<tr >
+  <td>{item.ros} {item.redux == "NOAP" ?  <span className="text-orange-700 m-20">*NEW</span> : <span>v</span> }  </td>
+  <td>{marca} {modelo} {ano}</td>
+</tr>
+
+</table>
+
 
             {visible == index  ? <div>
 
 
-
-<button className="btnBar" onClick={()=>{
+<button className="btn" onClick={()=>{
 
 if(hiddenInfo){
     setHiddeninfo(false)
@@ -698,16 +746,267 @@ if(hiddenInfo){
 }}>SEE INFORMATION</button>
 
 
+
+
+<PDFDownloadLink document={
+    
+    <Document>
+
+
+  <Page size="A4" style={styles.page}>
+    
+          <View style={styles.section}>
+            {info.map((i:any)=>{
+    return(
+        <View>
+
+
+
+
+<Text>RO:  <Text style={{color:"purple"}}>  {item.ros}  </Text>     </Text> 
+
+
+ <Text style={styles.text}>Vehicle: <Text style={{color:"purple"}}>   {i.make} - {i.model} - {i.year}   </Text>  Millage:  <Text style={{color:"purple"}}>  {i.millage}  </Text>   </Text>
+         
+
+
+{/* {i.fotos.map((x:any)=>{
+    return(
+        <img src={x} width={50} />
+    )
+})} */}
+
+<Text  style={styles.text}>
+Vin:  <Text style={{color:"purple"}}>  {i.vin}  </Text> - 
+Technician:   <Text style={{color:"purple"}}>{i.tech}</Text> -
+Advisor:   <Text style={{color:"purple"}}>{i.advisor}</Text>
+</Text>
+<Text  style={styles.text}>
+
+
+{info.map((f:any)=>{
+    return(
+        <Text> Date In {f.currentMonth}/{f.currentDay}/{f.currentYear}-{f.currentHour}</Text> 
+    )
+})}
+
+</Text>
+<Text> --------------------------------------------------------------------------------------------  </Text>
+<Text  style={styles.text}>
+Name:  <Text style={{color:"purple"}}>  {i.name}  {i.last}  </Text> - 
+Phone:   <Text style={{color:"purple"}}>{i.phone}</Text>
+</Text>
+<Text  style={styles.text}>
+State:  <Text style={{color:"purple"}}>  {i.state}  </Text> - 
+City:   <Text style={{color:"purple"}}>{i.city}</Text> -
+Street:   <Text style={{color:"purple"}}>{i.street}</Text> -
+Zip:   <Text style={{color:"purple"}}>{i.zip}</Text> 
+</Text>
+
+
+
+{/* <Text> --------------------------------------------------------------------------------------------  </Text>
+
+<Text>Services</Text>
+
+<View>
+    {i.svc.map((n:any)=>{
+        return(
+<Text  style={styles.text}>* {n.name}  -  <Text style={{color:"green"}}>{n.flat}</Text> </Text>
+
+
+        )
+    })}
+</View> */}
+
+<Text> --------------------------------------------------------------------------------------------  </Text>
+
+<Text>Road Test</Text>
+<Text  style={styles.text}>* Road Test -  <Text style={{color:"green"}}>{roadTest}</Text> * Stiker -  <Text style={{color:"green"}}>{stiker}</Text>      </Text>
+
+<Text> --------------------------------------------------------------------------------------------  </Text>
+
+<Text>HVAC</Text>
+
+{hvac.map((k:any)=>{
+  return(
+    <Text  style={styles.text}>* {k.valor} ( {k.note} ) / {k.status} /  <Text style={{color:"green"}}>{k.comp}  </Text> <Text style={{color:"green"}}>{k.flat}  </Text> </Text>
+  )
+})}
+
+<Text> --------------------------------------------------------------------------------------------  </Text>
+
+<Text>INTERIOR</Text>
+
+{interior.map((k:any)=>{
+  return(
+    <Text  style={styles.text}>* {k.valor} ( {k.note} ) / {k.status} /  <Text style={{color:"green"}}>{k.comp}  </Text> <Text style={{color:"green"}}>{k.flat}  </Text> </Text>
+  )
+})}
+
+<Text> --------------------------------------------------------------------------------------------  </Text>
+
+<Text>EXTERIOR</Text>
+
+{exterior.map((k:any)=>{
+  return(
+    <Text  style={styles.text}>* {k.valor} ( {k.note} ) / {k.status} /  <Text style={{color:"green"}}>{k.comp}  </Text> <Text style={{color:"green"}}>{k.flat}  </Text> </Text>
+  )
+})}
+
+
+<Text> --------------------------------------------------------------------------------------------  </Text>
+
+<Text>BATTERY</Text>
+
+{battery.map((k:any)=>{
+  return(
+    <Text  style={styles.text}>* {k.valor} ( {k.note} ) / {k.status} /  <Text style={{color:"green"}}>{k.comp}  </Text> <Text style={{color:"green"}}>{k.flat}  </Text> </Text>
+  )
+})}
+
+<Text> --------------------------------------------------------------------------------------------  </Text>
+
+<Text>UNDER HOOD</Text>
+
+{underh.map((k:any)=>{
+  return(
+    <Text  style={styles.text}>* {k.valor} ( {k.note} ) / {k.status} /  <Text style={{color:"green"}}>{k.comp}  </Text> <Text style={{color:"green"}}>{k.flat}  </Text> </Text>
+  )
+})}
+
+<Text> --------------------------------------------------------------------------------------------  </Text>
+
+<Text>FLUIDS</Text>
+
+{fluids.map((k:any)=>{
+  return(
+    <Text  style={styles.text}>* {k.valor} ( {k.note} ) / {k.status} /  <Text style={{color:"green"}}>{k.comp}  </Text> <Text style={{color:"green"}}>{k.flat}  </Text> </Text>
+  )
+})}
+
+<Text> --------------------------------------------------------------------------------------------  </Text>
+
+<Text>TIRES</Text>
+
+{tires.map((k:any)=>{
+  return(
+    <Text  style={styles.text}>* {k.valor} ( {k.note} ) / {k.status} /  <Text style={{color:"green"}}>{k.comp}  </Text> <Text style={{color:"green"}}>{k.flat}  </Text> </Text>
+  )
+})}
+
+{llantasArray.map((l:any)=>{
+  return(
+    <View>
+
+    <Text  style={styles.text}>*LF  : {l.tire1}</Text>
+    <Text  style={styles.text}>*RF  : {l.tire2}</Text>
+    <Text  style={styles.text}>*LR  : {l.tire3}</Text>
+    <Text  style={styles.text}>*RR  : {l.tire4}</Text>
+    </View>
+  )
+})}
+
+
+
+<Text> --------------------------------------------------------------------------------------------  </Text>
+
+<Text>BRAKES</Text>
+
+{brakes.map((k:any)=>{
+  return(
+    <Text  style={styles.text}>* {k.valor} ( {k.note} ) / {k.status} /  <Text style={{color:"green"}}>{k.comp}  </Text> <Text style={{color:"green"}}>{k.flat}  </Text> </Text>
+  )
+})}
+
+
+{frenosArray.map((l:any)=>{
+  return(
+    <View>
+
+    <Text  style={styles.text}>*LF  : {l.pad1}</Text>
+    <Text  style={styles.text}>*RF  : {l.pad2}</Text>
+    <Text  style={styles.text}>*LR  : {l.pad3}</Text>
+    <Text  style={styles.text}>*RR  : {l.pad4}</Text>
+    </View>
+  )
+})}
+
+
+<Text> --------------------------------------------------------------------------------------------  </Text>
+
+<Text>STEERING</Text>
+
+{steering.map((k:any)=>{
+  return(
+    <Text  style={styles.text}>* {k.valor} ( {k.note} ) / {k.status} /  <Text style={{color:"green"}}>{k.comp}  </Text> <Text style={{color:"green"}}>{k.flat}  </Text> </Text>
+  )
+})}
+
+<Text> --------------------------------------------------------------------------------------------  </Text>
+
+<Text>FRONT SUSPENSION</Text>
+
+{fsus.map((k:any)=>{
+  return(
+    <Text  style={styles.text}>* {k.valor} ( {k.note} ) / {k.status} /  <Text style={{color:"green"}}>{k.comp}  </Text> <Text style={{color:"green"}}>{k.flat}  </Text> </Text>
+  )
+})}
+
+<Text> --------------------------------------------------------------------------------------------  </Text>
+
+<Text>REAR SUSPENSION</Text>
+
+{rsus.map((k:any)=>{
+  return(
+    <Text  style={styles.text}>* {k.valor} ( {k.note} ) / {k.status} /  <Text style={{color:"green"}}>{k.comp}  </Text> <Text style={{color:"green"}}>{k.flat}  </Text> </Text>
+  )
+})}
+
+
+<Text> --------------------------------------------------------------------------------------------  </Text>
+
+<Text>OTHERS</Text>
+
+{service.map((k:any)=>{
+  return(
+    <Text  style={styles.text}>* {k.valor} ( {k.note} ) / {k.status} /  <Text style={{color:"green"}}>{k.comp}  </Text> <Text style={{color:"green"}}>{k.flat}  </Text> </Text>
+  )
+})}
+
+
+
+
+
+
+
+
+
+
+
+        </View>
+    )
+})}
+
+          </View>
+        </Page>
+
+</Document> } fileName={"RO:"+item.ros}>
+
+{({loading})  =>  (loading ? "Wait" : <button className="btn"> Get Report</button> )}
+
+
+</PDFDownloadLink>
+
                 <div hidden={hiddenInfo} className="infoBloq">
 
 
-               INFORMATION
                     <table>
 <tr>
-    <th>Name</th>
-    <th>LastName</th>
-    <th>Phone</th>
-    <th>Date </th>
+    <th className="bg-teal-700 text-white">Name</th>
+    <th className="bg-teal-700 text-white">LastName</th>
+    <th className="bg-teal-700 text-white">Phone</th>
+    <th className="bg-teal-700 text-white">Date </th>
 
 </tr>
 {info.map((id:any)=>{
@@ -725,10 +1024,10 @@ if(hiddenInfo){
 })}
 
 <tr>
-    <th>State</th>
-    <th>City</th>
-    <th>Street</th>
-    <th>zip</th>
+    <th className="bg-teal-700 text-white">State</th>
+    <th className="bg-teal-700 text-white">City</th>
+    <th className="bg-teal-700 text-white">Street</th>
+    <th className="bg-teal-700 text-white">zip</th>
 </tr>
 {info.map((id:any)=>{
 
@@ -746,10 +1045,10 @@ if(hiddenInfo){
 
 
 <tr>
-    <th>Vehicle</th>
-    <th>Model</th>
-    <th>Year</th>
-    <th>Plate</th>
+    <th className="bg-teal-700 text-white">Vehicle</th>
+    <th className="bg-teal-700 text-white">Model</th>
+    <th className="bg-teal-700 text-white">Year</th>
+    <th className="bg-teal-700 text-white">Plate</th>
 </tr>
 
 {info.map((id:any)=>{
@@ -767,10 +1066,10 @@ return(
 })}
 
 <tr>
-    <th>Advisor</th>
-    <th>Technician</th>
-    <th>Milage in</th>
-    <th>Vin</th>
+    <th className="bg-teal-700 text-white">Advisor</th>
+    <th className="bg-teal-700 text-white">Technician</th>
+    <th className="bg-teal-700 text-white">Milage in</th>
+    <th className="bg-teal-700 text-white">Vin</th>
 </tr>
 
 {info.map((id:any)=>{
@@ -791,8 +1090,8 @@ return(
 })}
 
 <tr>
-    <th>Service</th>
-    <th>flat</th>
+    <th className="bg-teal-700 text-white">Service</th>
+    <th className="bg-teal-700 text-white">flat</th>
 </tr>
 
 {servicios.map((id:any)=>{
@@ -810,8 +1109,8 @@ return(
 
 </div>
 
-<div>
 
+<table>
 
 
 <div >
@@ -833,11 +1132,11 @@ return(
 
 
 
+<hr />
+ <h3 className="text-gray-300 text-2xl">HVAC</h3> 
 
- <h3 className="text-gray-300 text-2xl">HVAC</h3> <hr />
 
-
-<div className=" float-right "><input type="text" placeholder="Add" onChange={(e)=>sethvacExtra(e.target.value)} /> <button className="btn" onClick={()=>{
+<div className=" float-right "><input type="text" placeholder="Description" onChange={(e)=>sethvacExtra(e.target.value)} /> <button className="btn" onClick={()=>{
 
 sethvac([...hvac , {
     valor:hvacExtra,
@@ -910,21 +1209,21 @@ sethvacDef([...hvacDef , "Declined"])
  </table>
 
 <br />
-<hr />
-<br />
+ <hr />
+<h3 className="text-gray-300 text-2xl">INTERIOR / DASH</h3>
 
-
-
-<h3 className="text-gray-300 text-2xl">INTERIOR / DASH</h3> <hr />
-
-<div className=" float-right "><input type="text" placeholder="Add" onChange={(e)=>setInteriorExtra(e.target.value)} /> <button className="btn" onClick={()=>{
+<div className=" float-right ">
+    
+    <input type="text" placeholder="Description" onChange={(e)=>setInteriorExtra(e.target.value)} /> <button className="btn" onClick={()=>{
 
 setinterior([...interior , {
     valor:interiorExtra,
     color:"bg-green-300"
 }])
 
-}}>Add</button> </div>
+}}>Add</button> 
+
+</div>
  
 
 <table> 
@@ -989,13 +1288,11 @@ setinteriorDef([...interiorDef , "Declined"])
     
  </table>
 
-<br />
+
 <hr />
-<br />
+<h3 className="text-gray-300 text-2xl">EXTERIOR</h3>
 
-<h3 className="text-gray-300 text-2xl">EXTERIOR</h3> <hr />
-
-<div className=" float-right "><input type="text" placeholder="Add" onChange={(e)=>setExteriorExtra(e.target.value)} /> <button className="btn" onClick={()=>{
+<div className=" float-right "><input type="text" placeholder="Description" onChange={(e)=>setExteriorExtra(e.target.value)} /> <button className="btn" onClick={()=>{
 
 setexterior([...exterior , {
     valor:exteriorExtra,
@@ -1065,13 +1362,11 @@ setexteriorDef([...exteriorDef , "Declined"])
     
     
  </table>
-
 <br />
 <hr />
-<br />
 
-<h3 className="text-gray-300 text-2xl">BATTERY / WIPER BLADES</h3> <hr />
-<div className=" float-right "><input type="text" placeholder="Add" onChange={(e)=>setBatteryExtra(e.target.value)} /> <button className="btn" onClick={()=>{
+<h3 className="text-gray-300 text-2xl">BATTERY / WIPER BLADES</h3>
+<div className=" float-right "><input type="text" placeholder="Description" onChange={(e)=>setBatteryExtra(e.target.value)} /> <button className="btn" onClick={()=>{
 
 setbattery([...battery , {
     valor:BatteryExtra,
@@ -1146,11 +1441,11 @@ setbatteryDef([...batteryDef , "Declined"])
 
 <br />
 <hr />
-<br />
 
 
-<h3 className="text-gray-300 text-2xl">UNDERHOOD</h3> <hr />
-<div className=" float-right "><input type="text" placeholder="Add" onChange={(e)=>setUnderhExtra(e.target.value)} /> <button className="btn" onClick={()=>{
+
+<h3 className="text-gray-300 text-2xl">UNDERHOOD</h3> 
+<div className=" float-right "><input type="text" placeholder="Description" onChange={(e)=>setUnderhExtra(e.target.value)} /> <button className="btn" onClick={()=>{
 
 setunderh([...underh , {
     valor:underhExtra,
@@ -1222,11 +1517,11 @@ setunderDef([...underDef , "Declined"])
 
 <br />
 <hr />
-<br />
 
-<h3 className="text-gray-300 text-2xl"> FLUIDS</h3> <hr />
 
-<div className=" float-right "><input type="text" placeholder="Add" onChange={(e)=>setFluidsExtra(e.target.value)} /> <button className="btn" onClick={()=>{
+<h3 className="text-gray-300 text-2xl"> FLUIDS</h3> 
+
+<div className=" float-right "><input type="text" placeholder="Description" onChange={(e)=>setFluidsExtra(e.target.value)} /> <button className="btn" onClick={()=>{
 
 setFluids([...fluids , {
     valor:fluidsExtra,
@@ -1300,12 +1595,11 @@ setfluidDef([...fluidDef , "Declined"])
 
 <br />
 <hr />
-<br />
 
 
-<h3 className="text-gray-300 text-2xl">TIRES</h3> <hr />
+<h3 className="text-gray-300 text-2xl">TIRES</h3> 
 
-<div className=" float-right "><input type="text" placeholder="Add" onChange={(e)=>setTiresExtra(e.target.value)} /> <button className="btn" onClick={()=>{
+<div className=" float-right "><input type="text" placeholder="Description" onChange={(e)=>setTiresExtra(e.target.value)} /> <button className="btn" onClick={()=>{
 
 setTires([...tires , {
     valor:tiresExtra,
@@ -1393,10 +1687,9 @@ settireDef([...tireDef , "Declined"])
 
 <br />
 <hr />
-<br />
 
-<h3 className="text-gray-300 text-2xl">BRAKES</h3> <hr />
-<div className=" float-right "><input type="text" placeholder="Add" onChange={(e)=>setBrakesExtra(e.target.value)} /> <button className="btn" onClick={()=>{
+<h3 className="text-gray-300 text-2xl">BRAKES</h3> 
+<div className=" float-right "><input type="text" placeholder="Description" onChange={(e)=>setBrakesExtra(e.target.value)} /> <button className="btn" onClick={()=>{
 
 setBrakes([...brakes , {
     valor:brakesExtra,
@@ -1483,10 +1776,9 @@ setbatteryDef([...brakeDef , "Declined"])
 
 <br />
 <hr />
-<br />
 
-<h3 className="text-gray-300 text-2xl">STEERING</h3> <hr />
-<div className=" float-right "><input type="text" placeholder="Add" onChange={(e)=>setSteeringExtra(e.target.value)} /> <button className="btn" onClick={()=>{
+<h3 className="text-gray-300 text-2xl">STEERING</h3>
+<div className=" float-right "><input type="text" placeholder="Description" onChange={(e)=>setSteeringExtra(e.target.value)} /> <button className="btn" onClick={()=>{
 
 setSteering([...steering , {
     valor:steeringExtra,
@@ -1559,11 +1851,11 @@ setsteerinDef([...steerinDef , "Declined"])
 
 <br />
 <hr />
-<br />
 
-<h3 className="text-gray-300 text-2xl">FRONT SUSPENSION</h3> <hr />
 
-<div className=" float-right "><input type="text" placeholder="Add" onChange={(e)=>setFsusExtra(e.target.value)} /> <button className="btn" onClick={()=>{
+<h3 className="text-gray-300 text-2xl">FRONT SUSPENSION</h3>
+
+<div className=" float-right "><input type="text" placeholder="Description" onChange={(e)=>setFsusExtra(e.target.value)} /> <button className="btn" onClick={()=>{
 
 setfsus([...fsus , {
     valor:fsusExtra,
@@ -1637,10 +1929,9 @@ setfluidDef([...fsusDef , "Declined"])
 
 <br />
 <hr />
-<br />
 
-<h3 className="text-gray-300 text-2xl">REAR SUSPENSION</h3> <hr />
-<div className=" float-right "><input type="text" placeholder="Add" onChange={(e)=>setrsusExtra(e.target.value)} /> <button className="btn" onClick={()=>{
+<h3 className="text-gray-300 text-2xl">REAR SUSPENSION</h3> 
+<div className=" float-right "><input type="text" placeholder="Description" onChange={(e)=>setrsusExtra(e.target.value)} /> <button className="btn" onClick={()=>{
 
 setrsus([...rsus , {
     valor:rsusExtra,
@@ -1714,11 +2005,11 @@ setrsusDef([...rsusDef , "Declined"])
 
 <br />
 <hr />
-<br />
 
-<h3 className="text-gray-300 text-2xl">Services</h3> <hr />
 
-<div className=" float-right "><input type="text" placeholder="Add" onChange={(e)=>setServiceExtra(e.target.value)} /> <button className="btn" onClick={()=>{
+<h3 className="text-gray-300 text-2xl">Services</h3> 
+
+<div className=" float-right "><input type="text" placeholder="Description" onChange={(e)=>setServiceExtra(e.target.value)} /> <button className="btn" onClick={()=>{
 
 setService([...service , {
     valor:serviceExtra,
@@ -1800,14 +2091,23 @@ setserviceDef([...serviceDef , "Declined"])
 
 </div>
 
+</table>
 
 
-<button className="btnBar" onClick={()=>toSend(item.ros)}>Send</button>
+<button className="btnBar" onClick={()=>{
 
-</div>
+let msj = confirm("Confirm sumbit?")
+
+if(msj){
+    toSend(item.ros)
+}
+
+}
     
-   
+    }>Send</button>
 
+
+    
 
 
 
@@ -1821,7 +2121,7 @@ setserviceDef([...serviceDef , "Declined"])
 </div> : null }
 
 
-<br /> <br />
+<br /> 
 
         </div>
     )

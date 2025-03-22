@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import app from "../fireconfig";
 import upper from './imgs/thumb-up.png'
 import downer from './imgs/thumb-down.png'
+import exit from './imgs/exit.png'
 
 
 
@@ -49,6 +50,7 @@ const [info , setInfo] = useState<any[]>([])
 
 
 useEffect(()=>{
+  document.getElementById("resPanel")!.style.width = "0";
 
 onAuthStateChanged(auth , (user)=>{
   if (user != null) {
@@ -68,7 +70,7 @@ let arrayros:any =[]
 onValue(nameAdvRef , snap=>{
     snap.forEach(snap2=>{
         snap2.child("Information").forEach(snap3 =>{
-          if ( namelogin == snap3.child("emp").val()  ) {
+          if ( namelogin == snap3.child("emp").val() || namelogin == snap3.child("advisor").val()   ) {
             arrayros.push(snap2.key)
           }  
           setros(arrayros)
@@ -83,7 +85,7 @@ let array2:any =[]
 onValue(promiseref , snap =>{
   snap.forEach(snap2=>{
     snap2.child("Information").forEach(snap3 =>{
-      if ( namelogin == snap3.child("emp").val()  ) {
+      if ( namelogin == snap3.child("emp").val() || namelogin == snap3.child("advisor").val()  ) {
         array2.push(snap2.key)
 setros2(array2)
 
@@ -119,32 +121,48 @@ const toggleVisibility =(itm:any)=>{
 
   return (
     <div>
-<h2>Response</h2>
+<h2>Responses</h2>
+<button className="rows" onClick={()=>{
+        document.getElementById("resPanel")!.style.width = "250px";
+
+}}>Unattended</button>
+<div className="sidepanel" id="resPanel">
+
+<button onClick={()=>{
+      document.getElementById("resPanel")!.style.width = "0";
+
+
+}}><img src={exit} width={30} /></button>
 
 {
   ros.map((index:any)=>{
     return(
-      <div>
-        {index} - NO ATTENDED
-      </div>
+      <li >
+       <b className="text-green-700">{index} </b>  NO-A
+      </li>
     )
   })
 }
 
+  </div>
 
 {ros2.map((index:any)=>{
 
 let arrayInfo:any =[]
 let totalInfo:any=[]
-
+let marca:string =''
+let modelo:string =''
+let ano:string =''
 const refInfo = refDB(datab , 'Promise/'+index+"/"+"Information")
 onValue(refInfo , snap =>{
 snap.forEach(snap2=>{
 totalInfo.push(snap2.val())
+marca = snap2.child('make').val();
+modelo = snap2.child('model').val();
+ano = snap2.child('yearcar').val();
 
 snap2.child('srvSelected').forEach(snap3 =>{
  
-    
     arrayInfo.push({
       nameSRV: snap3.child('name').val(),
       flat: snap3.child('flat').val()
@@ -473,6 +491,19 @@ snap.forEach(snap2=>{
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 const toSend =(index:any)=>{
 let total:number = 0
 
@@ -637,20 +668,20 @@ if(n.completed == true){
 
   try {
   
-      set(refDB(datab , "Completed/"+ index +"/"+"RoadTest" ) ,{
+      set(refDB(datab , "Toclose/"+ index +"/"+"RoadTest" ) ,{
   
           road:roadTest,
           stike:stiker,
              
   } )
   
-  set(refDB(datab , "Completed/"+ index +"/"+"HVAC" ) ,{
+  set(refDB(datab , "Toclose/"+ index +"/"+"HVAC" ) ,{
   
   hvac
          
   } )
   
-  set(refDB(datab , "Completed/"+ index +"/"+"Interior" ) ,{
+  set(refDB(datab , "Toclose/"+ index +"/"+"Interior" ) ,{
   
       interior
       
@@ -658,57 +689,57 @@ if(n.completed == true){
       
   
   
-  set(refDB(datab , "Completed/"+ index +"/"+"Exterior" ) ,{
+  set(refDB(datab , "Toclose/"+ index +"/"+"Exterior" ) ,{
   
   exterior
   
   } )
   
-  set(refDB(datab , "Completed/"+ index +"/"+"Battery" ) ,{
+  set(refDB(datab , "Toclose/"+ index +"/"+"Battery" ) ,{
   
       battery
   
   } )
   
-  set(refDB(datab , "Completed/"+ index +"/"+"Underhood" ) ,{
+  set(refDB(datab , "Toclose/"+ index +"/"+"Underhood" ) ,{
   
   underh
   
   } )
   
-  set(refDB(datab , "Completed/"+ index +"/"+"UnderhoodFluids" ) ,{
+  set(refDB(datab , "Toclose/"+ index +"/"+"UnderhoodFluids" ) ,{
   
   fluids
   
   } )
   
-  set(refDB(datab , "Completed/"+ index +"/"+"Tires" ) ,{
+  set(refDB(datab , "Toclose/"+ index +"/"+"Tires" ) ,{
   
   tires,
   llantasArray
   
   } )
   
-  set(refDB(datab , "Completed/"+ index +"/"+"Brakes" ) ,{
+  set(refDB(datab , "Toclose/"+ index +"/"+"Brakes" ) ,{
   
    brakes,
    frenosArray
   
   } )
   
-  set(refDB(datab , "Completed/"+ index +"/"+"Steering" ) ,{
+  set(refDB(datab , "Toclose/"+ index +"/"+"Steering" ) ,{
   
   steering
   
   } )
   
-  set(refDB(datab , "Completed/"+ index +"/"+"FrontSuspension" ) ,{
+  set(refDB(datab , "Toclose/"+ index +"/"+"FrontSuspension" ) ,{
   
     fsus
   
   } )
   
-  set(refDB(datab , "Completed/"+ index +"/"+"RearSuspension" ) ,{
+  set(refDB(datab , "Toclose/"+ index +"/"+"RearSuspension" ) ,{
   
   rsus
   
@@ -716,18 +747,18 @@ if(n.completed == true){
   
   
   
-  set(refDB(datab , "Completed/"+ index +"/"+"Services" ) ,{
+  set(refDB(datab , "Toclose/"+ index +"/"+"Services" ) ,{
   
       service
       
       } )
-      set(refDB(datab , "Completed/"+ index +"/"+"Total" ) ,{
+      set(refDB(datab , "Toclose/"+ index +"/"+"Total" ) ,{
   
         total
         
         } )
 
-      set(refDB(datab , "Completed/"+ index +"/"+"Time" ) ,{
+      set(refDB(datab , "Toclose/"+ index +"/"+"Time" ) ,{
   
         yy:yy,
         mm:mm,
@@ -740,7 +771,7 @@ if(n.completed == true){
   //set(refDB(datab, "Promise/"+ index +"/"+"Estado"  ) , "NOAP")
   
   
-  set(refDB(datab , "Completed/"+ index +"/"+"Information" ), totalInfo )
+  set(refDB(datab , "Toclose/"+ index +"/"+"Information" ), totalInfo )
 
   {totalInfo.map((op:any)=>{
 
@@ -750,10 +781,10 @@ if(n.completed == true){
   })}
 
 
-  set(refDB(datab , "Completed/"+ index +"/"+"Infoflat" ), info )
+  set(refDB(datab , "Toclose/"+ index +"/"+"Infoflat" ), info )
       alert("COMPLETED")
   
-    set(refDB(datab , "Promise/"+index),null)
+   // set(refDB(datab , "Promise/"+index),null)
   
       window.location.reload();
 
@@ -770,10 +801,25 @@ if(n.completed == true){
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
   return(
     <div>
 
-    <button className="bg-opacity-80 bg-emerald-800 rounded p-3 w-full" onClick={()=>{
+<table className="cursor-pointer" onClick={()=>{
                 toggleVisibility(index)
 sethvac(hvacArray)
 setinterior(interiorArry)
@@ -790,8 +836,20 @@ setservice(servicesArray)
 setInfo(arrayInfo)
 
     }}>
-      {index}
-    </button>
+
+<tr>
+  <th   className="bg-indigo-300 text-gray-100">RO</th>
+<th  className="bg-indigo-300 text-gray-100">Vehicle</th>
+</tr>
+
+<tr >
+  <td>{index}</td>
+  <td>{marca} {modelo} {ano}</td>
+</tr>
+
+</table>
+
+
 
 {visible == index ? <div>
 
@@ -815,7 +873,7 @@ setInfo(arrayInfo)
     <tr>
       <td>{k.nameSRV}</td>
       <td>{k.flat}</td>
-      <td><input type="radio" onClick={()=>{
+      <td><input  type="radio" onClick={()=>{
 
 k.completed = true
 
@@ -1046,7 +1104,7 @@ ind.completed = true
            Left front : {i.tire1} <br />
            Right front : {i.tire2} <br />
            Left Rear : {i.tire3} <br />
-           Left Rear : {i.tire4} <br />
+           Right Rear : {i.tire4} <br />
           </div>
         )
       })}
@@ -1090,7 +1148,7 @@ ind.completed = true
         Left front : {i.pad1} <br />
            Right front : {i.pad2} <br />
            Left Rear : {i.pad3} <br />
-           Left Rear : {i.pad4} <br />
+           Right Rear : {i.pad4} <br />
     </div>
   )
 })}
@@ -1265,7 +1323,7 @@ ind.completed = true
 </div>
  : null }
 
-<br /><br />
+<br />
 
     </div>
   )

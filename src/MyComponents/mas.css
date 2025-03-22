@@ -31,3 +31,20 @@
     padding: 1em;
     margin: 1em;
 }
+
+.formula{
+    background-color: rgb(138, 167, 171);
+    padding: .4em;
+    margin: .8em;
+    border-radius: .5em;
+}
+
+.formula input[type="number"]{
+    width: 6em;
+}
+
+
+
+
+
+

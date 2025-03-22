@@ -27,6 +27,7 @@ export const Forms:React.FC<propi> =({test})=>{
    const datab = getDatabase(app)
 
    const infoRef = ref(datab , "NewSet/" + test)
+   const infoDone = ref(datab , "Completed")
 
 
 
@@ -37,6 +38,7 @@ export const Forms:React.FC<propi> =({test})=>{
     
     const [roadCoor , setRoadColor] =useState<string>()
     const [roadShot , setRoadShow] =useState(true)
+    const [hideROS , sethideROS] =useState(true)
     const [roadTest , setRoadTest] =useState<string>("NO")
     const [stikercolor , setstikerClor] =useState<string>()
     const [stiker , setStiker] =useState<string>("NO")
@@ -156,22 +158,177 @@ const [serviceNotes , setserviceNotes] =useState<string>("Empty")
 const [serviceShow , setserviceShow] =useState(true)
 
 
+const [oldAC , setoldAc] =useState<any[]>([])
+const [oldInterior , setoldInterior] =useState<any[]>([])
+const [oldExterior , setoldExterior] =useState<any[]>([])
+const [oldBattery , setoldBattery] =useState<any[]>([])
+const [oldFluids , setOldFluids] =useState<any[]>([])
+const [oldCapo , setoldCapo] =useState<any[]>([])
+const [oldtires , setoldtires] =useState<any[]>([])
+const [oldBrakes , setoldBrakes] =useState<any[]>([])
+const [oldSteering , setoldSteering] =useState<any[]>([])
+const [oldfsus , setoldfsus] =useState<any[]>([])
+const [oldrsus , setoldrsus] =useState<any[]>([])
+const [oldSVC , setoldSVC] =useState<any[]>([])
+const [oldROS , setoldROS] =useState<any[]>([])
+
 const [info , setInfo] = useState<any[]>([])
 
 
 useEffect(()=>{
 
+
     setgreen('bg-green-300')
     setred('bg-red-300')
     setyellow('bg-yellow-300')
-
-let arrayInfo:any[] =[];
-onValue(infoRef , snap =>{
-   arrayInfo.push(snap.val())
     
+    
+    
+    let currentVin:any=''
+    let arrayInfo:any[] =[];
+    onValue(infoRef , snap =>{
+        arrayInfo.push(snap.val())
+        
+        currentVin= snap.child('vin').val()
+        
 })
 setInfo(arrayInfo)
 
+let oldMillage:number=0
+let arrOldRoS:any=[]
+onValue(infoDone , snap=>{
+    snap.forEach(snap2=>{
+        snap2.child("Information").forEach(snap3=>{
+            if(currentVin == snap3.child('vin').val()){
+arrOldRoS.push(snap2.key)
+                
+                if (oldMillage < snap3.child("millage").val() ) {
+                    oldMillage=snap3.child("millage").val();
+                }
+                
+                
+                
+                
+            }
+            
+        })
+    })
+})
+
+
+let arrayoldhvac:any=[]
+let arrayoldInterior:any=[]
+let arrayoldExterior:any=[]
+let OldunderH:any=[]
+let arrayOldFluids:any=[]
+let arrayoldBarrty:any=[]
+let arrOldTires:any=[]
+let arrOldBrakes:any=[]
+let arrOldSteering:any=[]
+let arrOldFsus:any=[]
+let arrOldRsus:any=[]
+let arrOldSVC:any=[]
+onValue(infoDone ,snap=>{
+    snap.forEach(snap2=>{
+        
+        snap2.child("Information").forEach(snap3=>{
+            if(oldMillage == snap3.child('millage').val() && currentVin == snap3.child('vin').val() ){
+
+
+
+                snap2.child('HVAC').child('hvac').forEach(snap3=>{
+                    arrayoldhvac.push(snap3.val())
+                    
+                            })
+
+                            snap2.child('Interior').child('interior').forEach(snap3=>{
+                                arrayoldInterior.push(snap3.val())
+                                
+                                        })
+
+                                        snap2.child('Exterior').child('exterior').forEach(snap3=>{
+                                            arrayoldExterior.push(snap3.val())
+                                            
+                                                    })
+                                                    snap2.child('Underhood').child('underh').forEach(snap3=>{
+                                                        OldunderH.push(snap3.val())
+                                                        
+                                                                })
+
+                                                                snap2.child('Battery').child('battery').forEach(snap3=>{
+                                                                    arrayoldBarrty.push(snap3.val())
+                                                                    
+                                                                            })
+
+                                                                            snap2.child('UnderhoodFluids').child('fluids').forEach(snap3=>{
+                                                                                arrayOldFluids.push(snap3.val())
+                                                                                
+                                                                                        })
+
+                                                                                        snap2.child('Tires').child('tires').forEach(snap3=>{
+                                                                                            arrOldTires.push(snap3.val())
+                                                                                            
+                                                                                                    })
+
+                                                                                                    snap2.child('Brakes').child('brakes').forEach(snap3=>{
+                                                                                                        arrOldBrakes.push(snap3.val())
+                                                                                                        
+                                                                                                                })
+
+                                                                                                                snap2.child('Steering').child('steering').forEach(snap3=>{
+                                                                                                                    arrOldSteering.push(snap3.val())
+                                                                                                                    
+                                                                                                                            })
+                                                                                                                            snap2.child('FrontSuspension').child('fsus').forEach(snap3=>{
+                                                                                                                                arrOldFsus.push(snap3.val())
+                                                                                                                                
+                                                                                                                                        })
+
+                                                                                                                                        snap2.child('RearSuspension').child('rsus').forEach(snap3=>{
+                                                                                                                                            arrOldRsus.push(snap3.val())
+                                                                                                                                            
+                                                                                                                                                    })
+
+                                                                                                                                                    snap2.child('Services').child('service').forEach(snap3=>{
+                                                                                                                                                        arrOldSVC.push(snap3.val())
+                                                                                                                                                        
+                                                                                                                                                                })
+
+
+
+
+
+
+            }
+            
+        })
+
+
+   
+        
+      
+
+
+    })
+})
+
+
+
+
+
+setoldCapo(OldunderH)
+setoldAc(arrayoldhvac)
+setoldInterior(arrayoldInterior)
+setoldExterior(arrayoldExterior)
+setOldFluids(arrayOldFluids)
+setoldBattery(arrayoldBarrty)
+setoldtires(arrOldTires)
+setoldBrakes(arrOldBrakes)
+setoldSteering(arrOldSteering)
+setoldfsus(arrOldFsus)
+setoldrsus(arrOldRsus)
+setoldSVC(arrOldSVC)
+setoldROS(arrOldRoS)
 },[])
 
 
@@ -306,6 +463,19 @@ set(refDB(datab , "PreAprobal/"+ test +"/"+"Information" ), info )
 
     return(
         <div>
+            <button onClick={()=>{
+                if (hideROS) {
+                    sethideROS(false)
+                }else{sethideROS(true)}
+            }}>Previous Ro ↴</button> <br />
+<span hidden={hideROS}>
+
+{oldROS.map(x=>{
+    return(
+        <span> / <b>{x} </b>  </span>
+    )
+})}
+</span>
 
             {/* ROAD TEST  */}
             <button className="btDiag"  onClick={()=>{
@@ -369,6 +539,14 @@ set(refDB(datab , "PreAprobal/"+ test +"/"+"Information" ), info )
             }}>    Ac / Heat  { hvacArray.length == 0 ? <span className="text-red-800 m-5 font-bold">*</span> : <span className="text-red-700 m-5">({hvacArray.length})</span> } </button>
 <div className="rows" hidden={acShow}>
 
+<span className=" font-extrabold">Last visit</span> <br />
+{oldAC.map((m:any)=>{
+    return(
+        <div className="rows">
+            <span className=" text-gray-800"> {m.valor == "All OK" ? "All OK" : m.valor } - <span className=" font-extrabold text-orange-900">     { m.valor != "All OK" ? <span>    {(m.flat >= 0 ) ? <span>Approved</span> : "Declined"}  </span> : null } </span> </span>
+            </div>
+    )
+})}
 
 
 <hr />
@@ -512,7 +690,14 @@ sethvacArray( hvacArray.filter((e:any) => e!=index) )
                 }else{setinteriorShow(true)}
             }}>Interior / Dash  { interiorArray.length == 0 ? <span className="text-red-800 m-5 font-bold">*</span> : <span className="text-red-700 m-5">({interiorArray.length})</span> }</button>
 <div  className="rows" hidden={interiorShow}>
-
+<span className=" font-extrabold">Last visit</span> <br />
+{oldInterior.map((m:any)=>{
+    return(
+        <div className="rows">
+            <span className=" text-gray-800"> {m.valor == "All OK" ? "All OK" : m.valor } - <span className=" font-extrabold text-orange-900">     { m.valor != "All OK" ? <span>    {(m.flat >= 0 ) ? <span>Approved</span> : "Declined"}  </span> : null } </span> </span>
+            </div>
+    )
+})}
 
 
 
@@ -595,7 +780,7 @@ setinteriorUrl("Empty")
 
     <tr>
 
-    <td>Descriptionn</td>
+    <td>Description</td>
   <td>Status</td>
     <td>Media</td>
     <td>Note</td>
@@ -660,7 +845,14 @@ setinteriorArray( interiorArray.filter((e:any) => e!=index) )
                 }else{setexteriorShow(true)}
             }}>Exterior / Lights  { exteriorArray.length == 0 ? <span className="text-red-800 m-5 font-bold">*</span> : <span className="text-red-700 m-5">({exteriorArray.length})</span> }</button>
 <div  className="rows" hidden={exteriorShow}>
-
+<span className=" font-extrabold">Last visit</span> <br />
+{oldExterior.map((m:any)=>{
+    return(
+        <div className="rows">
+            <span className=" text-gray-800"> {m.valor == "All OK" ? "All OK" : m.valor } - <span className=" font-extrabold text-orange-900">     { m.valor != "All OK" ? <span>    {(m.flat >= 0 ) ? <span>Approved</span> : "Declined"}  </span> : null } </span> </span>
+            </div>
+    )
+})}
 
 <hr />
 <br /><br />
@@ -748,7 +940,7 @@ setexteriorUrl("Empty")
 
     <tr>
 
-    <td>Descriptionn</td>
+    <td>Description</td>
   <td>Status</td>
     <td>Media</td>
     <td>Note</td>
@@ -811,7 +1003,14 @@ setexteriorArray( exteriorArray.filter((e:any) => e!=index) )
                 }else{setbatteryShow(true)}
             }}>Battery / Wiper Blades  { batteryArray.length == 0 ? <span className="text-red-800 m-5 font-bold">*</span> : <span className="text-red-700 m-5">({batteryArray.length})</span> }</button>
 <div  className="rows" hidden={batteryShow}>
-
+<span className=" font-extrabold">Last visit</span> <br />
+{oldBattery.map((m:any)=>{
+    return(
+        <div className="rows">
+            <span className=" text-gray-800"> {m.valor == "Battery" ? null : m.valor } - <span className=" font-extrabold text-orange-900"> {(m.flat >= 0  ) ? <span>Approved</span> : "Declined" }  </span> </span>
+        </div>
+    )
+})}
 
 <hr />
 <br /><br />
@@ -890,7 +1089,7 @@ setbatteryUrl("Empty")
 
     <tr>
 
-    <td>Descriptionn</td>
+    <td>Description</td>
   <td>Status</td>
     <td>Media</td>
     <td>Note</td>
@@ -956,6 +1155,14 @@ setbatteryArray( batteryArray.filter((e:any) => e!=index) )
                 }else{setunderHShow(true)}
             }}>Underhood  { underHArray.length == 0 ? <span className="text-red-800 m-5 font-bold">*</span> : <span className="text-red-700 m-5">({underHArray.length})</span> }</button>
 <div  className="rows" hidden={underHShow}>
+<span className=" font-extrabold">Last visit</span> <br />
+{oldCapo.map((m:any)=>{
+    return(
+        <div className="rows">
+            <span className=" text-gray-800"> {m.valor == "All OK" ? "All OK" : m.valor } - <span className=" font-extrabold text-orange-900">     { m.valor != "All OK" ? <span>    {(m.flat >= 0 ) ? <span>Approved</span> : "Declined"}  </span> : null } </span> </span>
+        </div>
+    )
+})}
 
 <hr />
 <br /><br />
@@ -1037,7 +1244,7 @@ setunderHUrls("Empty")
 
     <tr>
 
-    <td>Descriptionn</td>
+    <td>Description</td>
   <td>Status</td>
     <td>Media</td>
     <td>Note</td>
@@ -1104,7 +1311,14 @@ setunderHArray( underHArray.filter((e:any) => e!=index) )
                 }else{setfluidShow(true)}
             }}>Underhood Fluids  { fluidsArray.length == 0 ? <span className="text-red-800 m-5 font-bold">*</span> : <span className="text-red-700 m-5">({fluidsArray.length})</span> }</button>
 <div  className="rows" hidden={fluidShow}>
-
+<span className=" font-extrabold">Last visit</span> <br />
+{oldFluids.map((m:any)=>{
+    return(
+        <div className="rows">
+            <span className=" text-gray-800"> {m.valor == "All OK" ? "All OK" : m.valor } - <span className=" font-extrabold text-orange-900">     { m.valor != "All OK" ? <span>    {(m.flat >= 0 ) ? <span>Approved</span> : "Declined"}  </span> : null } </span> </span>
+        </div>
+    )
+})}
 
 <hr />
 <br /><br />
@@ -1186,7 +1400,7 @@ setfluidUrls("Empty")
 
     <tr>
 
-    <td>Descriptionn</td>
+    <td>Description</td>
   <td>Status</td>
     <td>Media</td>
     <td>Note</td>
@@ -1250,7 +1464,14 @@ setfluidsArray( fluidsArray.filter((e:any) => e!=index) )
                 }else{settiresShow(true)}
             }}>Tires  { tiresArray.length == 0 ? <span className="text-red-800 m-5 font-bold">*</span> : <span className="text-red-700 m-5">({tiresArray.length})</span> }</button>
 <div  className="rows" hidden={tiresShow}>
-
+<span className=" font-extrabold">Last visit</span> <br />
+{oldtires.map((m:any)=>{
+    return(
+        <div className="rows">
+            <span className=" text-gray-800"> {m.valor == "All OK" ? "All OK" : m.valor } - <span className=" font-extrabold text-orange-900">     { m.valor != "All OK" ? <span>    {(m.flat >= 0 ) ? <span>Approved</span> : "Declined"}  </span> : null } </span> </span>
+        </div>
+    )
+})}
 <hr />
 <br /><br />
 
@@ -1348,7 +1569,7 @@ settiresUrl("Empty")
 
     <tr>
 
-    <td>Descriptionn</td>
+    <td>Description</td>
   <td>Status</td>
     <td>Media</td>
     <td>Note</td>
@@ -1411,7 +1632,14 @@ settiresArray( tiresArray.filter((e:any) => e!=index) )
                 }else{setbrakeShow(true)}
             }}>Brakes  { brakesArray.length == 0 ? <span className="text-red-800 m-5 font-bold">*</span> : <span className="text-red-700 m-5">({brakesArray.length})</span> }</button>
 <div className="rows" hidden={brakeShow}>
-
+<span className=" font-extrabold">Last visit</span> <br />
+{oldBrakes.map((m:any)=>{
+    return(
+        <div className="rows">
+            <span className=" text-gray-800"> {m.valor == "All OK" ? "All OK" : m.valor } - <span className=" font-extrabold text-orange-900">     { m.valor != "All OK" ? <span>    {(m.flat >= 0 ) ? <span>Approved</span> : "Declined"}  </span> : null } </span> </span>
+        </div>
+    )
+})}
  
 <hr />
 <br /><br />
@@ -1518,7 +1746,7 @@ setbrakesUrl("Empty")
 
     <tr>
 
-    <td>Descriptionn</td>
+    <td>Description</td>
   <td>Status</td>
     <td>Media</td>
     <td>Note</td>
@@ -1582,7 +1810,14 @@ setbrakesArray( brakesArray.filter((e:any) => e!=index) )
                 }else{setsteeringShow(true)}
             }}>Steering  { steeringArray.length == 0 ? <span className="text-red-800 m-5 font-bold">*</span> : <span className="text-red-700 m-5">({steeringArray.length})</span> }</button>
 <div className="rows" hidden={steeringShow}>
-
+<span className=" font-extrabold">Last visit</span> <br />
+{oldSteering.map((m:any)=>{
+    return(
+        <div className="rows">
+            <span className=" text-gray-800"> {m.valor == "All OK" ? "All OK" : m.valor } - <span className=" font-extrabold text-orange-900">     { m.valor != "All OK" ? <span>    {(m.flat >= 0 ) ? <span>Approved</span> : "Declined"}  </span> : null } </span> </span>
+        </div>
+    )
+})}
 
 <hr />
 <br /><br />
@@ -1666,7 +1901,7 @@ setsteerinUrl("Empty")
 
     <tr>
 
-    <td>Descriptionn</td>
+    <td>Description</td>
   <td>Status</td>
     <td>Media</td>
     <td>Note</td>
@@ -1731,7 +1966,14 @@ setSteeringArray( steeringArray.filter((e:any) => e!=index) )
                 }else{setfsuspeShow(true)}
             }}>Front Suspension  { fSuspeArray.length == 0 ? <span className="text-red-800 m-5 font-bold">*</span> : <span className="text-red-700 m-5">({fSuspeArray.length})</span> }</button>
 <div className="rows" hidden={fsuspeShow}>
-
+<span className=" font-extrabold">Last visit</span> <br />
+{oldfsus.map((m:any)=>{
+    return(
+        <div className="rows">
+            <span className=" text-gray-800"> {m.valor == "All OK" ? "All OK" : m.valor } - <span className=" font-extrabold text-orange-900">     { m.valor != "All OK" ? <span>    {(m.flat >= 0 ) ? <span>Approved</span> : "Declined"}  </span> : null } </span> </span>
+        </div>
+    )
+})}
 <hr />
 <br /><br />
 
@@ -1815,7 +2057,7 @@ setfSusspeUrl("Empty")
 
     <tr>
 
-    <td>Descriptionn</td>
+    <td>Description</td>
   <td>Status</td>
     <td>Media</td>
     <td>Note</td>
@@ -1879,7 +2121,14 @@ setfSuspeArray( fSuspeArray.filter((e:any) => e!=index) )
                 }else{setrsuspeShow(true)}
             }}>Rear Suspension  { rSuspeArray.length == 0 ? <span className="text-red-800 m-5 font-bold">*</span> : <span className="text-red-700 m-5">({rSuspeArray.length})</span> }</button>
 <div className="rows" hidden={rsuspeShow}>
-
+<span className=" font-extrabold">Last visit</span> <br />
+{oldrsus.map((m:any)=>{
+    return(
+        <div className="rows">
+            <span className=" text-gray-800"> {m.valor == "All OK" ? "All OK" : m.valor } - <span className=" font-extrabold text-orange-900">     { m.valor != "All OK" ? <span>    {(m.flat >= 0 ) ? <span>Approved</span> : "Declined"}  </span> : null } </span> </span>
+        </div>
+    )
+})}
 
 <hr />
 <br /><br />
@@ -1961,7 +2210,7 @@ setrSusspeUrl("Empty")
 
     <tr>
 
-    <td>Descriptionn</td>
+    <td>Description</td>
   <td>Status</td>
     <td>Media</td>
     <td>Note</td>
@@ -2026,7 +2275,14 @@ setrSuspeArray( rSuspeArray.filter((e:any) => e!=index) )
                 }else{setserviceShow(true)}
             }}>Services  { serviceArray.length == 0 ? <span className="text-red-800 m-5 font-bold">*</span> : <span className="text-red-700 m-5">({serviceArray.length})</span> }</button>
 <div className="rows" hidden={serviceShow}>
-
+<span className=" font-extrabold">Last visit</span> <br />
+{oldSVC.map((m:any)=>{
+    return(
+        <div className="rows">
+            <span className=" text-gray-800"> {m.valor == "All OK" ? "All OK" : m.valor } - <span className=" font-extrabold text-orange-900">     { m.valor != "All OK" ? <span>    {(m.flat >= 0 ) ? <span>Approved</span> : "Declined"}  </span> : null } </span> </span>
+        </div>
+    )
+})}
 <hr />
 <br /><br />
 
@@ -2105,7 +2361,7 @@ setserviceUrl("Empty")
 
     <tr>
 
-    <td>Descriptionn</td>
+    <td>Description</td>
   <td>Status</td>
     <td>Media</td>
     <td>Note</td>
@@ -2163,8 +2419,28 @@ setserviceArray( serviceArray.filter((e:any) => e!=index) )
 
 
 <br />
-<button className="btn" onClick={()=>toSend()}>SEND</button>
+<br /><br />
+<span  className="grid justify-center">
 
+
+<button className="approve w-36" onClick={()=>{
+    
+    
+    let result = confirm("Ready to submit?");
+
+if (result) {
+  toSend()
+}
+
+
+
+}
+
+}>SEND</button>
+</span>
+
+<br />
+<br /><br />
 
 <br />
 

@@ -2,8 +2,35 @@ import { getDatabase, onValue, ref as refDB} from "firebase/database";
 import app from "../fireconfig";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import { useEffect, useState } from "react";
+import { Page, Text, View, Document, StyleSheet , PDFDownloadLink} from '@react-pdf/renderer';
 
 
+// Create styles
+const styles = StyleSheet.create({
+    page: {
+      backgroundColor: "#fff",
+      color: "black",
+ 
+    },
+    section: {
+      margin: 20,
+      padding: 20,
+    },
+    text: {
+      margin: 12,
+      fontSize: 14,
+      textAlign: 'justify',
+      fontFamily: 'Times-Roman'
+    },
+    imgs: {
+      marginVertical:15,
+      marginHorizontal:100,
+    },
+    viewer: {
+      width: "95%", //the pdf viewer will take up all of the width and height
+      height: 500,
+    },
+  });
 
 export const History =()=>{
  
@@ -16,6 +43,7 @@ export const History =()=>{
     const [namelogin , setnameogin] = useState<string>();
     const [findRo , setFindRo] = useState<number>();
     const [finddate , setFindDate] = useState<any>();
+    const [findName , setfindname] = useState<any>();
     const [ros , setros] = useState<number[]>([]);
     const [visible , setvisible] = useState<any>();
 
@@ -85,22 +113,36 @@ const toggleVisibility =(itm:any)=>{
 
 <h2>History</h2>
 
+<div className="grid grid-cols-3 justify-center">
 
 
-<input type="number" placeholder="Search RO" onChange={(e)=>setFindRo(parseInt(e.target.value))} />
 
-<input type="date" onChange={(e)=>setFindDate(e.target.value)}  />
+<input type="number" className="w-4/5" placeholder="Search RO" onChange={(e)=>setFindRo(parseInt(e.target.value))} />
 
+<input type="date" className="w-4/5" placeholder="Date Out" onChange={(e)=>setFindDate(e.target.value)}  />
+<input type="text" className="w-4/5" placeholder="Customer Name" onChange={(e)=>setfindname(e.target.value)}  />
+
+</div>
 
 
 
 
 {ros.map((index:any)=>{
 
+let marca:string =''
+let modelo:string =''
+let ano:string =''
+let fecha:string=''
+let nameCUstomer=''
 let informationarray:any =[]
 const refdatesinfo = refDB(datab , 'Completed/' + index + "/"+ 'Information' )
 onValue(refdatesinfo ,snap =>{
     snap.forEach(snap2 =>{
+        marca = snap2.child('make').val();
+modelo = snap2.child('model').val();
+ano = snap2.child('yearcar').val();
+nameCUstomer = snap2.child('name').val()+" "+snap2.child('last').val();
+fecha = snap2.child('currentMonth').val()+"/"+snap2.child('currentDay').val()+"/"+snap2.child('currentYear').val();
         informationarray.push(snap2.val())
       
         
@@ -457,9 +499,9 @@ snap.forEach(snap2=>{
 
 
 
- for (let n = 0; n <= index.length; n++) {
+ for (let n = 0; n <= nameCUstomer.length; n++) {
 
-        if (index.substring(0, n) == findRo ||  finddate == yy+"-"+mm+"-"+dd ) {
+        if (index.substring(0, n) == findRo ||  finddate == yy+"-"+mm+"-"+dd || findName == nameCUstomer.substring(0, n)  ) {
 
             return(
 
@@ -471,20 +513,303 @@ snap.forEach(snap2=>{
 
 
 
-        <button className="bg-opacity-80 bg-orange-300 rounded p-3 w-full" onClick={()=>{
+<table className="cursor-pointer" onClick={()=>{
                             toggleVisibility(index)
 
 
-        }}>{index}</button>
-<br /> <br />
-        {visible == index ? <div>
-  <table>
-    INFORMATION
+        }} >
+
+
+
+
+
+
+
+
 <tr>
-    <th>Name</th>
-    <th>LastName</th>
-    <th>Phone</th>
-    <th>Date </th>
+  <th   className="bg-slate-400 text-gray-100">RO</th>
+<th  className="bg-slate-400 text-gray-100">Vehicle</th>
+<th  className="bg-slate-400 text-gray-100">Date in</th>
+</tr>
+
+<tr >
+  <td>{index}</td>
+  <td>{marca} {modelo} {ano}</td>
+  <td>{fecha}</td>
+</tr>
+
+</table>
+
+
+
+        
+<br /> 
+        {visible == index ? <div>
+
+
+
+  
+
+
+
+<PDFDownloadLink document={    
+
+<Document>
+<Page style={styles.page}>
+
+<View style={styles.section}>
+    {informationarray.map((i:any)=>{
+return(
+<View>
+
+
+
+
+<Text>RO:  <Text style={{color:"purple"}}>  {index}  </Text>     </Text> 
+
+
+<Text style={styles.text}>Vehicle: <Text style={{color:"purple"}}>   {i.make} - {i.model} - {i.year}   </Text>  Millage:  <Text style={{color:"purple"}}>  {i.millage}  </Text>   </Text>
+ 
+
+
+{/* {i.fotos.map((x:any)=>{
+return(
+<img src={x} width={50} />
+)
+})} */}
+
+<Text style={styles.text}>
+Vin:  <Text style={{color:"purple"}}>  {i.vin}  </Text> - 
+Technician:   <Text style={{color:"purple"}}>{i.tech}</Text> -
+Advisor:   <Text style={{color:"purple"}}>{i.advisor}</Text>
+</Text>
+<Text style={styles.text}>
+in:   <Text style={{color:"purple"}}>{i.currentMonth}/{i.currentDay}/{i.currentYear}-{i.currentHour}</Text> -
+finish:   <Text style={{color:"purple"}}>{mm}/{dd}/{yy} - {hh}:{mins}</Text>
+</Text>
+<Text> --------------------------------------------------------------------------------------------  </Text>
+<Text style={styles.text}>
+Name:  <Text style={{color:"purple"}}>  {i.name}  {i.last}  </Text> - 
+Phone:   <Text style={{color:"purple"}}>{i.phone}</Text>
+</Text>
+<Text style={styles.text}>
+State:  <Text style={{color:"purple"}}>  {i.state}  </Text> - 
+City:   <Text style={{color:"purple"}}>{i.city}</Text> -
+Street:   <Text style={{color:"purple"}}>{i.street}</Text> -
+Zip:   <Text style={{color:"purple"}}>{i.zip}</Text> 
+</Text>
+
+
+
+<Text> --------------------------------------------------------------------------------------------  </Text>
+
+<Text>Services</Text>
+
+<View >
+{totalInfo.map((n:any)=>{
+return(
+<Text style={styles.text}>* {n.nameSRV}  -  <Text style={{color:"green"}}>{n.flat}</Text>  </Text>
+
+
+)
+})}
+</View>
+
+<Text> --------------------------------------------------------------------------------------------  </Text>
+
+<Text>Road Test</Text>
+<Text style={styles.text}>* Road Test -  <Text style={{color:"green"}}>{roadTest}</Text> * Stiker -  <Text style={{color:"green"}}>{stiker}</Text>      </Text>
+
+<Text> --------------------------------------------------------------------------------------------  </Text>
+
+<Text>HVAC</Text>
+
+{hvacArray.map((k:any)=>{
+return(
+<Text style={styles.text}>* {k.valor} ( {k.note} ) / {k.status} /  <Text style={{color:"green"}}>{k.comp}  </Text> <Text style={{color:"green"}}>{k.flat}  </Text> </Text>
+)
+})}
+
+<Text> --------------------------------------------------------------------------------------------  </Text>
+
+<Text>INTERIOR</Text>
+
+{interiorarray.map((k:any)=>{
+return(
+<Text style={styles.text}>* {k.valor} ( {k.note} ) / {k.status} /  <Text style={{color:"green"}}>{k.comp}  </Text> <Text style={{color:"green"}}>{k.flat}  </Text> </Text>
+)
+})}
+
+<Text> --------------------------------------------------------------------------------------------  </Text>
+
+<Text>EXTERIOR</Text>
+
+{exterirArray.map((k:any)=>{
+return(
+<Text style={styles.text}>* {k.valor} ( {k.note} ) / {k.status} /  <Text style={{color:"green"}}>{k.comp}  </Text> <Text style={{color:"green"}}>{k.flat}  </Text> </Text>
+)
+})}
+
+
+<Text> --------------------------------------------------------------------------------------------  </Text>
+
+<Text>BATTERY</Text>
+
+{batteryArray.map((k:any)=>{
+return(
+<Text style={styles.text}>* {k.valor} ( {k.note} ) / {k.status} /  <Text style={{color:"green"}}>{k.comp}  </Text> <Text style={{color:"green"}}>{k.flat}  </Text> </Text>
+)
+})}
+
+<Text> --------------------------------------------------------------------------------------------  </Text>
+
+<Text >UNDER HOOD</Text>
+
+{underhArray.map((k:any)=>{
+return(
+<Text style={styles.text}>* {k.valor} ( {k.note} ) / {k.status} /  <Text style={{color:"green"}}>{k.comp}  </Text> <Text style={{color:"green"}}>{k.flat}  </Text> </Text>
+)
+})}
+
+<Text> --------------------------------------------------------------------------------------------  </Text>
+
+<Text>FLUIDS</Text>
+
+{arrayfluids.map((k:any)=>{
+return(
+<Text style={styles.text}>* {k.valor} ( {k.note} ) / {k.status} /  <Text style={{color:"green"}}>{k.comp}  </Text> <Text style={{color:"green"}}>{k.flat}  </Text> </Text>
+)
+})}
+
+<Text> --------------------------------------------------------------------------------------------  </Text>
+
+<Text>TIRES</Text>
+
+{tiresArray.map((k:any)=>{
+return(
+<Text style={styles.text}>* {k.valor} ( {k.note} ) / {k.status} /  <Text style={{color:"green"}}>{k.comp}  </Text> <Text style={{color:"green"}}>{k.flat}  </Text> </Text>
+)
+})}
+
+{llantasArray.map((l:any)=>{
+return(
+<View>
+
+<Text style={styles.text}>*LF  : {l.tire1}</Text>
+<Text style={styles.text}>*RF  : {l.tire2}</Text>
+<Text style={styles.text}>*LR  : {l.tire3}</Text>
+<Text style={styles.text}>*RR  : {l.tire4}</Text>
+</View>
+)
+})}
+
+
+
+<Text> --------------------------------------------------------------------------------------------  </Text>
+
+<Text>BRAKES</Text>
+
+{brakesArray.map((k:any)=>{
+return(
+<Text style={styles.text}>* {k.valor} ( {k.note} ) / {k.status} /  <Text style={{color:"green"}}>{k.comp}  </Text> <Text style={{color:"green"}}>{k.flat}  </Text> </Text>
+)
+})}
+
+
+{frenosArray.map((l:any)=>{
+return(
+<View>
+
+<Text style={styles.text}>*LF  : {l.pad1}</Text>
+<Text style={styles.text}>*RF  : {l.pad2}</Text>
+<Text style={styles.text}>*LR  : {l.pad3}</Text>
+<Text style={styles.text}>*RR  : {l.pad4}</Text>
+</View>
+)
+})}
+
+
+<Text> --------------------------------------------------------------------------------------------  </Text>
+
+<Text>STEERING</Text>
+
+{steringarray.map((k:any)=>{
+return(
+<Text style={styles.text}>* {k.valor} ( {k.note} ) / {k.status} /  <Text style={{color:"green"}}>{k.comp}  </Text> <Text style={{color:"green"}}>{k.flat}  </Text> </Text>
+)
+})}
+
+<Text> --------------------------------------------------------------------------------------------  </Text>
+
+<Text>FRONT SUSPENSION</Text>
+
+{fsusarray.map((k:any)=>{
+return(
+  <View>
+<Text style={styles.text}>* {k.valor} ( {k.note} ) / {k.status} /  <Text style={{color:"green"}}>{k.comp}  </Text> <Text style={{color:"green"}}>{k.flat}  </Text> </Text>
+
+  </View>
+)
+})}
+
+<Text> --------------------------------------------------------------------------------------------  </Text>
+
+<Text>REAR SUSPENSION</Text>
+
+{rsusarray.map((k:any)=>{
+return(
+<Text style={styles.text}>* {k.valor} ( {k.note} ) / {k.status} /  <Text style={{color:"green"}}>{k.comp}  </Text> <Text style={{color:"green"}}>{k.flat}  </Text> </Text>
+)
+})}
+
+
+<Text> --------------------------------------------------------------------------------------------  </Text>
+
+<Text>OTHERS</Text>
+
+{servicesarray.map((k:any)=>{
+return(
+<Text style={styles.text}>* {k.valor} ( {k.note} ) / {k.status} /  <Text style={{color:"green"}}>{k.comp}  </Text> <Text style={{color:"green"}}>{k.flat}  </Text> </Text>
+)
+})}
+
+
+
+
+
+</View>
+
+
+
+
+)
+})}
+
+  </View>
+
+
+  
+</Page>
+</Document>
+
+} fileName={"RO:"+index}>
+
+
+
+{({loading})=> loading ? "WAIT" : <button className="btn">Download PDF</button> }
+
+</PDFDownloadLink>
+
+
+
+
+
+  <table>
+<tr>
+    <th className="bg-teal-700 text-white">Name</th>
+    <th className="bg-teal-700 text-white">LastName</th>
+    <th className="bg-teal-700 text-white">Phone</th>
+    <th className="bg-teal-700 text-white">Date </th>
 
 </tr>
 
@@ -501,10 +826,10 @@ return(
 })}
 
 <tr>
-    <th>State</th>
-    <th>City</th>
-    <th>Street</th>
-    <th>zip</th>
+    <th className="bg-teal-700 text-white">State</th>
+    <th className="bg-teal-700 text-white">City</th>
+    <th className="bg-teal-700 text-white">Street</th>
+    <th className="bg-teal-700 text-white">zip</th>
 </tr>
 
 {informationarray.map((l:any)=>{
@@ -519,10 +844,10 @@ return(
 })}
 
 <tr>
-    <th>Vehicle</th>
-    <th>Model</th>
-    <th>Year</th>
-    <th>Plate</th>
+    <th className="bg-teal-700 text-white">Vehicle</th>
+    <th className="bg-teal-700 text-white">Model</th>
+    <th className="bg-teal-700 text-white">Year</th>
+    <th className="bg-teal-700 text-white">Plate</th>
 </tr>
 
 {informationarray.map((l:any)=>{
@@ -540,10 +865,10 @@ return(
 
 
 <tr>
-    <th>Advisor</th>
-    <th>Technician</th>
-    <th>Milage in</th>
-    <th>Vin</th>
+    <th className="bg-teal-700 text-white">Advisor</th>
+    <th className="bg-teal-700 text-white">Technician</th>
+    <th className="bg-teal-700 text-white">Milage in</th>
+    <th className="bg-teal-700 text-white">Vin</th>
 </tr>
 
 {informationarray.map((l:any)=>{

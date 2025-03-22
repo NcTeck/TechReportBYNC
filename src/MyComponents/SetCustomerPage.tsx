@@ -4,7 +4,8 @@ import { getDownloadURL, getStorage, ref as refSto, uploadBytes } from "firebase
 import { useEffect, useState } from "react"
 import app from "../fireconfig";
 import removeAccents from 'remove-accents';
-
+import axios from "axios";
+//import useScanDetection from "use-scan-detection";
 
 
 
@@ -57,6 +58,7 @@ export const SetCustomer =()=>{
     const [ro , setRo]=useState<number>(0);
     const [state , setstate]=useState<number>(0);
     const [millage , setMillsge]=useState<number>();
+    const [findVin , setFindVin]=useState<any>();
 
     const [urls , setUrls]=useState<any[]>([])
 
@@ -140,6 +142,7 @@ setServises(arraySvc)
 
 },[ro])
 
+
 const handleFiles = async ( e:any)=>{
 
     if (ro!=null) {
@@ -215,17 +218,61 @@ set(refDb(datab , "NewSet/" + ro ) , {
     return(
         <div className="bloq1">
 
-<div>
 
-Customer exist?
+
+
+<div className="grid-cols-2 justify-between">
+
+
+
+
+
+
+<span>
+
+Customer
 
 
 <input type="text" placeholder="Search Name" onChange={(e:any)=>setfindName(e.target.value)} />
 
+</span>
+
+<span>
+    
+<input type="text" id="b12" onChange={(e)=>setFindVin(e.target.value)} placeholder="Enter VINs-separated by ;" name="b12" />
+
+
+<button className="rows" onClick={()=>{
+
+let config = {
+    method: 'GET',
+    url: 'https://zylalabs.com/api/74/vin+decoder+api/139/usa+vin+decoder?vin='+findVin,
+    headers: { 
+        'Authorization': 'Bearer 5937|sTvMyLu4Iq20HNJET87y4iOxkDfaTNS9l7UW840m'
+        },
+    };
+    axios(config).then((response:any)=> {
+   // console.log(JSON.stringify(response.data.Make));
+setmake(response.data.Make)
+setmodel(response.data.Model)
+setYearCar(response.data.Year)
+setVin(response.data.VIN)
 
 
 
+    })
+    .catch(function (error:any) {
+    alert(error);
+    });
+                                                                            
 
+}}>Search VIN</button>
+</span>
+
+
+</div>
+
+{findName != null  ? <div className="rows h-80 overflow-scroll">
 
 
 {allNames.map((i:any)=>{
@@ -237,7 +284,7 @@ for (let m = 0; m < fullname.length; m++) {
      
     return(
         <li>
-{i.name} {i.last} <button className="btnBar" onClick={()=>{
+{i.name} {i.last} <button className="btn" onClick={()=>{
 setCustName(i.name)
 setCustLast(i.last)
 setCustPhone(i.phone)
@@ -264,6 +311,12 @@ setCustZip(i.zip)
 
 
 })}
+</div> : null}
+
+
+
+
+<div>
 
 <hr />
 
@@ -332,7 +385,7 @@ setCustZip(i.zip)
 
 
 
-
+Ro:
 <input type="number" value={ro} onChange={(e)=>setRo(parseInt(e.target.value))} /> <br /> <br />
 </span>
 <span>
@@ -341,7 +394,7 @@ setCustZip(i.zip)
 </span>
 <span>
 
-<input type="file"  accept="*image/jpeg" capture={true} className="camera"  onChange={handleFiles}  /> <br /> <br />
+<input type="file"   className="camera"  onChange={handleFiles}  /> <br /> <br />
 </span>
 
 </div>

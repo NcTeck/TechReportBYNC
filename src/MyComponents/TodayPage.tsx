@@ -25,6 +25,7 @@ const [nameUser , setNamrU] = useState<string>();
   const refDataAct = ref(datab , "NewSet")
   const [data , setdata] =useState<any[]>([])
   const [allVisible , setAllVisible] =useState<boolean>(true)
+  const [seeInfo , setseeInfo] =useState<boolean>(true)
   const [showActButton , setActviveButton] =useState<boolean>(true)
   const [visibleItems , setVisibleItems]= useState<number>()
 
@@ -68,6 +69,7 @@ useEffect(()=>{
                     if (nameUser ==  snap2.child('emp').val() || grade == "Admin") {
                             arrayDataAct.push({
                             ro:snap2.key,
+                            estado:snap2.child('estado').val(),
                             phone:snap2.child('phone').val(),
                             currentYear:snap2.child('currentYear').val(),
                             currentMonth:snap2.child('currentMonth').val(),
@@ -114,7 +116,7 @@ useEffect(()=>{
 
     }
     
-},[grade , nameUser])
+},[grade,  nameUser])
 
 
 const toggleVisibility =(itm:any)=>{
@@ -133,12 +135,12 @@ const toggleVisibility =(itm:any)=>{
 return(
     <div>
 
+<h2>Inspection</h2>
 
-<h2>Today</h2>
 
 
 {/* hidden Admin Functions */}
-<button hidden={showButtonC} className="btnBar" onClick={()=>{
+<button hidden={showButtonC} className="approve" onClick={()=>{
 if (showCustomer) {
     setShowCustomer(false)
 }else{setShowCustomer(true)}
@@ -150,7 +152,10 @@ if (showCustomer) {
 
 </div>
 
-<hr />
+
+<br /> <br />
+
+
 <div className="bg-neutral-100 " hidden={allVisible}>
 
 
@@ -181,7 +186,11 @@ return(
 <div>
     
 
-<table onClick={()=> toggleVisibility(item)}>
+<table  onClick={()=>{
+
+     toggleVisibility(item)
+
+}}>
 
 
 <tr>
@@ -194,8 +203,8 @@ return(
 </tr>
 
 <tr>
- <td> {index.ro} </td>
-        <td  className=" text-yellow-500 font-extrabold  "  style={{backgroundImage: `url(${index.url})` , backgroundSize:'cover' , backgroundRepeat:'no-repeat' , backgroundPosition:'center center' }} >    {index.make }  {index.model}   </td>
+ <td > {index.ro}  </td>
+        <td  className=" text-green-600 font-extrabold  "  style={{backgroundImage: `url(${index.url})` , backgroundSize:'cover' , backgroundRepeat:'no-repeat' , backgroundPosition:'center center' }} >    {index.make }  {index.model}   </td>
         <td> {index.currentMonth}/{index.currentDay}/{index.currentYear} - {index.currentHour}  </td>
          <td>Advisor: <b>{index.advisor}</b>  <br />
         Tech: <b> {index.emp} </b>
@@ -204,33 +213,48 @@ return(
              <td>
                     <div hidden={showActButton}>
 <button onClick={()=>{
+let result = confirm("Are you sure you want to delete this item?");
 
-setBD(ref(datab , "NewSet/" + index.ro) , null).then(()=>{
+if (result) {
+    setBD(ref(datab , "NewSet/" + index.ro) , null).then(()=>{
     alert('Deleted')
      window.location.reload()
     }).catch((err)=>alert(err))
+}
+
+
 
 }}> <img src={borrar} width={25} /> </button>
        </div>
              </td>
                    
 
-{/* 
-// Show sub menu
-   */}
 
- <br />
+
+
  </tr>
+
+
+
  </table>
+
+
+
+ 
        <table>
 
 
        {visibleItems === item  ? <div>
+<button className="btn" onClick={()=>{
+if (seeInfo) {
+        setseeInfo(false)
+}else{setseeInfo(true)}
+}}>See Information</button><br />
 
-<br />
-<div className="bloq1">
 
-<div className="grid p-3 grid-cols-1 md:grid-cols-2  lg:grid-cols-3">
+<div hidden={seeInfo} className="bloq1">
+
+<div className="grid p-3 grid-cols-2   lg:grid-cols-3">
 
 
 
@@ -267,24 +291,25 @@ Zip: <b> {index.zip}</b>
 </div>
 </div>
 
-
-
 {arrayMedia.map((i:any)=>{
     return(
         <img src={i} width={50} style={{display:'inline' , cursor:'pointer'}} onClick={()=>window.open(i)} />
     )
 })}
+
+
+
  <table>
      <tr>
-    <td>Description</td>
-    <td>Flat Rate</td>
+    <th className="bg-blue-300 text-white">Description</th>
+    <th className="bg-blue-300 text-white">Flat Rate</th>
 </tr>       
      { arraysvcs.map((idx:any)=>{
                 return(
                     
                         <tr>
-                                 <td>{idx.name}</td>
-                    <td> {idx.flat}  </td>
+                                 <td className="bg-cyan-700 text-white">{idx.name}</td>
+                    <td  className="bg-cyan-700 text-white"> {idx.flat}  </td>
                         </tr>
                        
                     
@@ -299,6 +324,7 @@ Zip: <b> {index.zip}</b>
 <Forms test={index.ro} />
 
 </div> : null }
+  
    </table>  
    
 
